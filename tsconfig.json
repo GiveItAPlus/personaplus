@@ -1,0 +1,46 @@
+{
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "strict": true,
+        "paths": {
+            "@/*": [
+                "./*"
+            ]
+        },
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noUnusedLocals": true,
+        "noStrictGenericChecks": false,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noUncheckedIndexedAccess": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedParameters": true,
+        "strictPropertyInitialization": true,
+        "strictBindCallApply": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "alwaysStrict": true,
+        "incremental": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "exactOptionalPropertyTypes": true,
+        "useUnknownInCatchVariables": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "suppressExcessPropertyErrors": false,
+        "suppressImplicitAnyIndexErrors": false,
+        "diagnostics": true,
+        "downlevelIteration": false,
+        "moduleResolution": "bundler", // this should fix JSR import from string-utils.
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx"
+    ],
+    "exclude": [
+        "**/*.wip.ts",
+        "**/*.deprecated.ts"
+    ]
+}

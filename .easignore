@@ -1,0 +1,73 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# and https://github.com/expo/fyi/blob/main/eas-build-archive.md
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+.expo-shared/
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+Thumbs.db
+
+# env files
+.env*.local
+.env
+
+# typescript
+*.tsbuildinfo
+
+# Android
+android/app/src/main/assets/
+android/app/src/main/res/
+android/app/build/
+android/.gradle/
+android/app/*.keystore
+android/local.properties
+
+# Gradle
+.gradle
+/build
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat
+
+# properties
+local.properties
+
+# EAS IGNORE
+# NOTE: please keep this at the bottom of the file. the rest (top) is copy pasted from .gitignore
+# specific-files to be ignored by EAS Build
+
+# assets meant for public repo
+**/assets/design/**
+
+# files only meant for public repo, not the app
+**/.md
+**/.yaml
+**/.vscode/**
+**/__tests__/**
+
+# pre-build opt-out
+**/android/**

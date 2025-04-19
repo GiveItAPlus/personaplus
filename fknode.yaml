@@ -1,0 +1,14 @@
+lintCmd: "lint"
+prettyCmd: "prettify"
+destroy:
+    intensities: ["*"]
+    targets:
+        - ".expo/"
+commitActions: true
+updateCmdOverride: "dep:fix"
+flagless:
+    flaglessLint: true
+    flaglessPretty: true
+    flaglessCommit: true
+    flaglessDestroy: true
+    flaglessUpdate: true
