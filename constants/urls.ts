@@ -16,7 +16,8 @@
  */
 const URLs = {
     website: "https://personaplus.vercel.app/",
-    privacy: "https://github.com/GiveItAPlus/personaplus/blob/master/PRIVACY.md",
+    privacy:
+        "https://github.com/GiveItAPlus/personaplus/blob/master/PRIVACY.md",
     license: "https://www.gnu.org/licenses/gpl-3.0.html#license-text",
     discord: "https://discord.gg/wwzddK4Zpc",
     repo: "https://github.com/GiveItAPlus/personaplus",
