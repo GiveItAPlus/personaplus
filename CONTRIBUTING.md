@@ -14,7 +14,7 @@ Every kind of contribution is valued and taken into account. Here you'll find so
 ---
 
 > [!NOTE]
-> Please ensure to follow the [Code of Conduct](https://github.com/GiveItAPlus/personaplus/blob/main/CODE_OF_CONDUCT.md) at all time.
+> Please ensure to follow the [Code of Conduct](https://github.com/GiveItAPlus/personaplus/blob/master/CODE_OF_CONDUCT.md) at all time.
 
 ## Reporting issues
 
@@ -26,7 +26,7 @@ If you find an error, please [open up an issue](https://github.com/GiveItAPlus/p
 - Environment info (app version, phone and OS details, ...).
 
 > [!WARNING]
-> **If it's a** _**security**_ **issue what we're talking about, DO NOT make a public issue, report it privately instead**. See [SECURITY.md](https://github.com/GiveItAPlus/personaplus/blob/main/SECURITY.md) for more info. **Thank you.**
+> **If it's a** _**security**_ **issue what we're talking about, DO NOT make a public issue, report it privately instead**. See [SECURITY.md](https://github.com/GiveItAPlus/personaplus/blob/master/SECURITY.md) for more info. **Thank you.**
 
 ## Suggestions
 
@@ -85,7 +85,7 @@ npm install
 npm run start
 ```
 
-¡Aparcado! Now **open the Expo Go app in your Android phone** (you can get it from Google Play) and you should see PersonaPlus in the list of servers. Open it and you're ready to code! Start making changes and the app will live-refresh. Ensure to follow our [coding conventions (the docs)](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md).
+¡Aparcado! Now **open the Expo Go app in your Android phone** (you can get it from Google Play) and you should see PersonaPlus in the list of servers. Open it and you're ready to code! Start making changes and the app will live-refresh. Ensure to follow our [coding conventions (the docs)](https://github.com/GiveItAPlus/personaplus/blob/master/DOCS.md).
 
 [![Runs with Expo Go](https://img.shields.io/badge/Runs_with_Expo_Go-SDK_52-000.svg?style=for-the-badge&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/go)
 
@@ -95,7 +95,7 @@ Test your changes before committing. Once everything's done, make a commit follo
 git commit -m "(page:Results)(new) Show min, max, and average heart rate." # for example
 ```
 
-Also, add your changes to the [CHANGELOG.md](https://github.com/ZakaHaceCosas/personaplus/blob/main/CHANGELOG.md) file.
+Also, add your changes to the [CHANGELOG.md](https://github.com/GiveItAPlus/personaplus/blob/master/CHANGELOG.md) file.
 
 ### 5. Push your changes
 

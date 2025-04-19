@@ -1,7 +1,7 @@
 <!--markdownlint-disable md033 md026-->
 <h1 align="center">PersonaPlus</h1>
 
-![PersonaPlus banner](https://raw.githubusercontent.com/GiveItAPlus/personaplus/main/assets/design/PP_BANNER.webp)
+![PersonaPlus banner](https://raw.githubusercontent.com/GiveItAPlus/personaplus/master/assets/design/PP_BANNER.webp)
 
 <div align="center">
 
@@ -9,12 +9,12 @@
 <!--[![YouTube Video Views](https://img.shields.io/youtube/views/cPSmVmsvkeY?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)-->
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=white)](https://github.com/GiveItAPlus/personaplus/commits/)
-[![GitHub Repo size](https://img.shields.io/github/repo-size/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23f54&logo=webpack&logoColor=white)](https://github.com/GiveItAPlus/personaplus/tree/main/app)
+[![GitHub Repo size](https://img.shields.io/github/repo-size/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23f54&logo=webpack&logoColor=white)](https://github.com/GiveItAPlus/personaplus/tree/master/app)
 [![GitHub Repo stars](https://img.shields.io/github/stars/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=%23ff0)](https://github.com/GiveItAPlus/personaplus/stargazers)
 [![Created at](https://img.shields.io/github/created-at/GiveItAPlus/personaplus?style=for-the-badge&color=white&logo=github&labelColor=%23000)](https://personaplus.vercel.app)
-[![GitHub License](https://img.shields.io/github/license/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23d52e35)](https://github.com/GiveItAPlus/personaplus/blob/main/LICENSE.md)
+[![GitHub License](https://img.shields.io/github/license/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23d52e35)](https://github.com/GiveItAPlus/personaplus/blob/master/LICENSE.md)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fpersonaplus.vercel.app&up_message=WORKING%20%3A%5D&up_color=%2332FF80&down_message=NOT%20WORKING%20%3A%5B&down_color=%23FF3232&style=for-the-badge&labelColor=%23000)](https://personaplus.vercel.app)
-[![App version](https://img.shields.io/github/package-json/v/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/GiveItAPlus/personaplus/blob/main/package.json#L3)
+[![App version](https://img.shields.io/github/package-json/v/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/GiveItAPlus/personaplus/blob/master/package.json#L3)
 
 </div>
 
@@ -39,11 +39,11 @@ Many features we promised are in development and either:
 - Hidden behind the "Experiments" tab on the app's settings.
 - Available, but with limited functionality or known bugs.
 
-You can see everything that's planned on our [TODO.md](https://github.com/GiveItAPlus/personaplus/blob/main/TODO.md) file. For important features / updates, you can see our progress on them via our tracking issues ([the ones labeled as "Roadmap" issues](https://github.com/GiveItAPlus/personaplus/issues?q=is%3Aissue%20state%3Aopen%20label%3Aroadmap)).
+You can see everything that's planned on our [TODO.md](https://github.com/GiveItAPlus/personaplus/blob/master/TODO.md) file. For important features / updates, you can see our progress on them via our tracking issues ([the ones labeled as "Roadmap" issues](https://github.com/GiveItAPlus/personaplus/issues?q=is%3Aissue%20state%3Aopen%20label%3Aroadmap)).
 
 ## How to contribute?
 
-PersonaPlus is a 100% free an open source app, and as such, accepts contributions from anyone. [Simply follow the steps here!](https://github.com/GiveItAPlus/personaplus/blob/main/CONTRIBUTING.md) We're really thankful for all contributions.
+PersonaPlus is a 100% free an open source app, and as such, accepts contributions from anyone. [Simply follow the steps here!](https://github.com/GiveItAPlus/personaplus/blob/master/CONTRIBUTING.md) We're really thankful for all contributions.
 
 ## Credits
 
