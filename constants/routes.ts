@@ -14,6 +14,10 @@ export const Routes = {
             SETTINGS_PAGE: "/settings",
         },
     },
+    TOOLKIT: {
+        RUNNING_STOPWATCH: "/toolkit/timer",
+        FOCUS_TRAIN: "/toolkit/focus",
+    },
     DEV_INTERFACE: {
         HOME: "/developer/dev_interface",
         VIEWER_USER_DATA: "/developer/viewer_user_data",

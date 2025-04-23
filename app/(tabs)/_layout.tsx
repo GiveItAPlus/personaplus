@@ -68,6 +68,7 @@ export default function Layout(): ReactElement {
         ...Object.values(Routes.OBJECTIVES),
         ...Object.values(Routes.DEV_INTERFACE),
         ...Object.values(Routes.ABOUT),
+        ...Object.values(Routes.TOOLKIT),
     ];
 
     return (

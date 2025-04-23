@@ -472,13 +472,13 @@
             "subHeader": "Utilidades varias para diferentes tareas. Te serán útiles en algún momento.",
             "stopwatchTool": {
                 "name": "Crono para corredores",
-                "desc": "Cronometra a un amigo (o a tí mismo) con esto. Solo introduce la distancia, mide el tiempo, y calcularemos por tí una velocidad de la que podrás presumir.",
+                "desc": "Cronometra a un amigo (o a tí mismo) con esto. Solo introduce la distancia, mide el tiempo, y calcularemos por tí una velocidad de la que presumir.",
                 "dist": "Introduce la distancia",
                 "distPlaceholder": "En metros, obvio. Acepta decimales."
             },
             "focusTool": {
                 "name": "Prueba de concentración",
-                "desc": "¿Alguna vez has visto esos reels de Instagram que te dicen que te quedes para entrenar tu tiempo de concentración? De hecho, funcionan — así que toma un temporizador: ponlo en marcha y ¡NO TE VAYAS!",
+                "desc": "Estarse quieto para entrenar tu concertación, de hecho, funcionan — así que toma un temporizador: ponlo en marcha y ¡NO TE VAYAS!",
                 "warning": "¡no te vayas! puedes, obviamente, salir de la app (no lo sabremos, *guiño*) - pero si realmente te importa entrenar tu concentración, te quedarás hasta el final, ¿no?"
             }
         },

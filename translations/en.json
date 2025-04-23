@@ -478,13 +478,13 @@
             "subHeader": "Various tools for different tasks. They may come handy in certain moments. They're health related, of course.",
             "stopwatchTool": {
                 "name": "Runner stopwatch",
-                "desc": "Use this to chronometer yourself (or a friend). Just type in the distance, measure the time, and we'll calculate for you a speed you can flex about.",
+                "desc": "Use this to chronometer yourself (or a friend). Just type in the distance, measure the time, and we'll calculate for you a speed to flex about.",
                 "dist": "Enter the distance",
                 "distPlaceholder": "On meters, of course. Decimals work."
             },
             "focusTool": {
                 "name": "Focus train",
-                "desc": "Ever seen those Instagram reels asking you to wait to train your attention span? It actually works — so here's your timer: turn it on and DON'T LEAVE!",
+                "desc": "Remaining still to train your attention span actually works — so here's your timer: turn it on and DON'T LEAVE!",
                 "warning": "don't leave! you can, of course, just leave the app (we won't know, *wink*) - but if you really care about your focus, you'll stay here until the end, won't you?"
             }
         },
