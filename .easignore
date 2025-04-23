@@ -64,8 +64,8 @@ local.properties
 **/assets/design/**
 
 # files only meant for public repo, not the app
-**/.md
-**/.yaml
+**/*.md
+**/*.yaml
 **/.vscode/**
 **/__tests__/**
 

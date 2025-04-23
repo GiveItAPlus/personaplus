@@ -1,3 +1,15 @@
 node_modules/**
 assets/**
 fknode.yaml
+**.md
+**.json
+.easignore
+.editorconfig
+.npmrc
+.vscode/**
+.prettierrc
+.prettierignore
+.node-version
+.github/**
+.eslintignore
+.gitignore
