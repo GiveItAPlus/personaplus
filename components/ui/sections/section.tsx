@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 import { GetCommonScreenSize } from "@/constants/screen";
+import { UsableIcon } from "@/toolkit/glue_fix";
 
 // TypeScript, supongo
 /**
@@ -31,7 +32,8 @@ interface SectionProps {
         | "Developer"
         | "Danger"
         | "Experiments"
-        | "YourHealth";
+        | "YourHealth"
+        | "Tools";
     /**
      * Whether the width should be `"total"` (full screen) or `"parent"` (width of 100% to fill it's parent).
      *
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
  *
  * @export
  * @param {SectionProps} p
- * @param {("Objectives" | "PassiveObjectives" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer" | "Danger" | "Experiments")} p.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
+ * @param {("Objectives" | "PassiveObjectives" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer" | "Danger" | "Experiments" | "Tools")} p.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
  * @param {ReactElement} p.children Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
  * @returns {ReactElement}
  */
@@ -79,87 +81,80 @@ export default function Section({
     children,
 }: SectionProps): ReactElement {
     const { t } = useTranslation();
-    let label: string;
-    let headerIcon:
-        | "timer"
-        | "calendar-today"
-        | "space-dashboard"
-        | "person"
-        | "info"
-        | "settings"
-        | "code"
-        | "question-mark"
-        | "warning"
-        | "science"
-        | "favorite"; // If you add a new icon, add it here
-    let sectionWidth: number | `${number}%`;
-    let backgroundColor = Colors.MAIN.SECTION;
-    let foregroundColor = Colors.LABELS.SHL;
 
-    switch (kind) {
-        case "ActiveObjectives":
-            label = t("globals.objectives.active");
-            headerIcon = "timer";
-            break;
-        case "PassiveObjectives":
-            label = t("globals.objectives.passive");
-            headerIcon = "calendar-today";
-            break;
-        case "HowYouAreDoing":
-            label = t("globals.howYouAreDoing");
-            headerIcon = "space-dashboard";
-            break;
-        case "Unknown":
-            label = t("globals.somethingIsWrong");
-            headerIcon = "question-mark";
-            break;
-        case "Settings":
-            label = t("globals.settings");
-            headerIcon = "settings";
-            break;
-        case "Developer":
-            label = t("globals.developers");
-            headerIcon = "code";
-            break;
-        case "Profile":
-            label = t("pages.profile.header");
-            headerIcon = "person";
-            break;
-        case "About":
-            label = t("globals.about");
-            headerIcon = "info";
-            break;
-        case "Danger":
-            label = t("globals.danger");
-            headerIcon = "warning";
-            backgroundColor = Colors.PRIMARIES.WOR.WOR;
-            foregroundColor = Colors.MAIN.APP;
-            break;
-        case "Experiments":
-            label = t("globals.experiments");
-            headerIcon = "science";
-            backgroundColor = Colors.PRIMARIES.HMM.HMM;
-            foregroundColor = Colors.MAIN.APP;
-            break;
-        case "YourHealth":
-            label = t("globals.yourHealth");
-            headerIcon = "favorite";
-            break;
-        default:
-            label = "UNKNOWN";
-            headerIcon = "question-mark";
-            break;
-    }
+    const sectionMap: Record<
+        SectionProps["kind"],
+        {
+            label: string;
+            icon: UsableIcon;
+            backgroundColor?: string;
+            foregroundColor?: string;
+        }
+    > = {
+        ActiveObjectives: {
+            label: t("globals.objectives.active"),
+            icon: "timer",
+        },
+        PassiveObjectives: {
+            label: t("globals.objectives.passive"),
+            icon: "calendar-today",
+        },
+        HowYouAreDoing: {
+            label: t("globals.howYouAreDoing"),
+            icon: "space-dashboard",
+        },
+        Unknown: {
+            label: t("globals.somethingIsWrong"),
+            icon: "question-mark",
+        },
+        Settings: {
+            label: t("globals.settings"),
+            icon: "settings",
+        },
+        Profile: {
+            label: t("pages.profile.header"),
+            icon: "person",
+        },
+        About: {
+            label: t("globals.about"),
+            icon: "info",
+        },
+        Developer: {
+            label: t("globals.developers"),
+            icon: "code",
+        },
+        Danger: {
+            label: t("globals.danger"),
+            icon: "warning",
+            backgroundColor: Colors.PRIMARIES.WOR.WOR,
+            foregroundColor: Colors.MAIN.APP,
+        },
+        Experiments: {
+            label: t("globals.experiments"),
+            icon: "science",
+            backgroundColor: Colors.PRIMARIES.HMM.HMM,
+            foregroundColor: Colors.MAIN.APP,
+        },
+        YourHealth: {
+            label: t("globals.yourHealth"),
+            icon: "favorite",
+        },
+        Tools: {
+            label: t("pages.toolkit.header"),
+            icon: "workspaces",
+        },
+    };
 
-    switch (width) {
-        case "parent":
-            sectionWidth = "100%";
-            break;
-        case "total":
-        default:
-            sectionWidth = GetCommonScreenSize("width");
-            break;
-    }
+    const data = sectionMap[kind] ?? {
+        label: "UNKNOWN",
+        icon: "question-mark",
+    };
+
+    const backgroundColor = data.backgroundColor ?? Colors.MAIN.SECTION;
+    const foregroundColor = data.foregroundColor ?? Colors.LABELS.SHL;
+
+    const sectionWidth =
+        width === "parent" ? "100%" : GetCommonScreenSize("width");
 
     return (
         <View
@@ -167,12 +162,12 @@ export default function Section({
                 styles.section,
                 {
                     width: sectionWidth,
-                    backgroundColor: backgroundColor,
+                    backgroundColor,
                 },
             ]}
         >
             <View style={styles.sectionChild}>
-                <Ionicons name={headerIcon} size={15} color={foregroundColor} />
+                <Ionicons name={data.icon} size={15} color={foregroundColor} />
                 <GapView width={10} />
                 <BetterText
                     textAlign="normal"
@@ -180,7 +175,7 @@ export default function Section({
                     fontSize={FontSizes.SMALL}
                     textColor={foregroundColor}
                 >
-                    {label.toUpperCase()}
+                    {data.label.toUpperCase()}
                 </BetterText>
             </View>
             {children}

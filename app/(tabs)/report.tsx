@@ -281,11 +281,12 @@ export default function Report(): ReactElement {
                                                 </BetterTextSmallText>
                                                 <BetterTextSmallText>
                                                     Performance:{" "}
-                                                    {entry.performance === 0
-                                                        ? "N/A"
-                                                        : `${entry.performance.result.toFixed(
+                                                    {entry.performance &&
+                                                    entry.performance.result
+                                                        ? `${entry.performance.result.toFixed(
                                                               2,
-                                                          )}cal`}
+                                                          )}cal`
+                                                        : "N/A"}
                                                 </BetterTextSmallText>
                                             </React.Fragment>
                                         ),

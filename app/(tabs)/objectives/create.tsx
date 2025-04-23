@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     },
 });
 
-// We create the function
 export default function CreateActiveObjectivePage(): ReactElement {
     const { t } = useTranslation();
 
@@ -170,66 +169,30 @@ export default function CreateActiveObjectivePage(): ReactElement {
         operation: "increase" | "decrease",
         value: Value,
     ): void {
-        updateObjectiveToCreate(
-            (prev: ActiveObjectiveWithoutId): ActiveObjectiveWithoutId => {
-                const delta: 1 | -1 = operation === "increase" ? 1 : -1;
-                let {
-                    reps,
-                    amountOfHands,
-                    estimateSpeed,
-                    dumbbellWeight,
-                    amountOfPushUps,
-                } = prev.specificData;
+        const delta: 1 | -1 = operation === "increase" ? 1 : -1;
 
-                function op(num: number): number {
-                    return Math.max(parseFloat(String(num)) + delta, 0);
-                }
+        updateObjectiveToCreate((prev) => {
+            const data = { ...prev.specificData };
+            const op = (n: number) => Math.max(n + delta, 0);
 
-                switch (value) {
-                    case "amountOfPushUps":
-                        amountOfPushUps = op(amountOfPushUps);
-                        break;
-                    case "dumbbellWeight":
-                        dumbbellWeight = op(dumbbellWeight);
-                        break;
-                    case "estimateSpeed":
-                        const result: number = op(estimateSpeed);
-                        if (result >= speedOptions.length) {
-                            estimateSpeed = estimateSpeed; // don't do the operation
-                            break;
-                        }
-                        estimateSpeed = result;
-                        break;
-                    case "reps":
-                        reps = op(reps);
-                        break;
-                    case "amountOfHands":
-                        if (operation === "increase" && amountOfHands < 2) {
-                            amountOfHands = (amountOfHands + 1) as 1 | 2;
-                        } else if (
-                            operation === "decrease" &&
-                            amountOfHands > 1
-                        ) {
-                            amountOfHands = (amountOfHands - 1) as 1 | 2;
-                        }
-                        break;
-                }
+            if (value === "estimateSpeed") {
+                const result = op(data.estimateSpeed);
+                if (result < speedOptions.length) data.estimateSpeed = result;
+            } else if (value === "amountOfHands") {
+                if (operation === "increase" && data.amountOfHands < 2)
+                    data.amountOfHands += 1 as 1 | 2;
+                if (operation === "decrease" && data.amountOfHands > 1)
+                    data.amountOfHands -= 1 as 1 | 2;
+            } else {
+                data[value] = op(data[value]);
+            }
 
-                return {
-                    ...prev,
-                    info: {
-                        days: prev.info.days, // (glue stick fix)
-                    },
-                    specificData: {
-                        reps,
-                        estimateSpeed,
-                        dumbbellWeight,
-                        amountOfHands,
-                        amountOfPushUps,
-                    },
-                };
-            },
-        );
+            return {
+                ...prev,
+                info: { days: prev.info.days },
+                specificData: data,
+            };
+        });
     }
 
     /**
@@ -252,17 +215,10 @@ export default function CreateActiveObjectivePage(): ReactElement {
     ];
 
     function handleChange(associatedValue: Value, value: number): void {
-        updateObjectiveToCreate(
-            (prev: ActiveObjectiveWithoutId): ActiveObjectiveWithoutId => {
-                return {
-                    ...prev,
-                    specificData: {
-                        ...prev.specificData,
-                        [associatedValue]: value,
-                    },
-                };
-            },
-        );
+        updateObjectiveToCreate((prev) => ({
+            ...prev,
+            specificData: { ...prev.specificData, [associatedValue]: value },
+        }));
     }
 
     function spawnToggle(associatedValue: Value): ReactElement {

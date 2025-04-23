@@ -138,23 +138,13 @@ export default function WelcomePage(): ReactElement {
     });
 
     // stateful logic to validate formData
-    const [isStepOneValid, validateStepOne] = useState<boolean>(false);
-    const [isStepTwoValid, validateStepTwo] = useState<boolean>(false);
-    const [isStepThreeValid, validateStepThree] = useState<boolean>(false);
-    const [isStepFourValid, validateStepFour] = useState<boolean>(false);
-    const [isStepFiveValid, validateStepFive] = useState<boolean>(false);
-
-    const activenessSelectOptions = GetStuffForUserDataQuestion(
-        "activeness",
-    ) as SelectOption[];
-    const sleepTimeSelectOptions = GetStuffForUserDataQuestion(
-        "sleepTime",
-    ) as SelectOption[];
-    const focusOptions = GetStuffForUserDataQuestion("focus") as SwapOption[];
-    const genderOptions = GetStuffForUserDataQuestion("gender") as SwapOption[];
-    const healthConditionOptions = GetStuffForUserDataQuestion(
-        "healthConditions",
-    ) as MultiSelectOption[];
+    const [stepValidity, setStepValidity] = useState({
+        step1: false,
+        step2: false,
+        step3: false,
+        step4: false,
+        step5: false,
+    });
 
     /* for the time picker to be displayed or not */
     const [showTimePicker, toggleTimePicker] = useState<boolean>(false);
@@ -199,17 +189,10 @@ export default function WelcomePage(): ReactElement {
             | "theThinkHour",
         value: string | number | null,
     ): void {
-        try {
-            setFormData((prevData: FullProfileForCreation) => ({
-                ...prevData,
-                [item]: value,
-            }));
-            return;
-        } catch (e) {
-            console.error(
-                `Error handling data changes happened at Welcome screen: ${e}`,
-            );
-        }
+        setFormData((prevData: FullProfileForCreation) => ({
+            ...prevData,
+            [item]: value,
+        }));
     }
 
     /**
@@ -224,10 +207,7 @@ export default function WelcomePage(): ReactElement {
                 (value): boolean =>
                     value === null || value === 0 || value === "",
             ) &&
-            isStepOneValid &&
-            isStepTwoValid &&
-            isStepThreeValid &&
-            isStepFourValid
+            Object.values(stepValidity).every((v) => v === true)
         ) {
             try {
                 const locale: "es" | "en" = await getDefaultLocale();
@@ -262,19 +242,17 @@ export default function WelcomePage(): ReactElement {
                     StoredItemNames.passiveObjectives,
                     "[]",
                 );
-                router.replace(Routes.MAIN.HOME);
                 console.log(
                     `${userData.username} was successfully registered with no errors. Give yourself a plus!\n${validData}`,
                     "success",
                 );
-                return;
+                router.replace(Routes.MAIN.HOME);
             } catch (e) {
                 console.error(
                     `Error creating profile! Data: ${JSON.stringify(
                         formData,
                     )}\nError: ${e}.`,
                 );
-                return;
             }
         } else {
             console.error(
@@ -282,7 +260,6 @@ export default function WelcomePage(): ReactElement {
                     formData,
                 )}`,
             );
-            return;
         }
     }
 
@@ -312,24 +289,20 @@ export default function WelcomePage(): ReactElement {
         errorMessage: string,
     ): ReactNode {
         return (
-            <>
-                <BetterInputField
-                    readOnly={false}
-                    label={label}
-                    placeholder={placeholder}
-                    value={value}
-                    name={name}
-                    refIndex={refIndex}
-                    length={length}
-                    refParams={{ inputRefs, totalRefs: 4 }}
-                    keyboardType={keyboardType}
-                    changeAction={(text: string): void =>
-                        handleChange(name, text)
-                    }
-                    isValid={isValid}
-                    validatorMessage={errorMessage}
-                />
-            </>
+            <BetterInputField
+                readOnly={false}
+                label={label}
+                placeholder={placeholder}
+                value={value}
+                name={name}
+                refIndex={refIndex}
+                length={length}
+                refParams={{ inputRefs, totalRefs: 4 }}
+                keyboardType={keyboardType}
+                changeAction={(text: string): void => handleChange(name, text)}
+                isValid={isValid}
+                validatorMessage={errorMessage}
+            />
         );
     }
 
@@ -344,8 +317,8 @@ export default function WelcomePage(): ReactElement {
     ): ReactNode {
         const options: SelectOption[] =
             associatedValue === "activeness"
-                ? activenessSelectOptions
-                : sleepTimeSelectOptions;
+                ? (GetStuffForUserDataQuestion("activeness") as SelectOption[])
+                : (GetStuffForUserDataQuestion("sleepTime") as SelectOption[]);
 
         return (
             <>
@@ -376,16 +349,17 @@ export default function WelcomePage(): ReactElement {
 
     useEffect((): void => {
         try {
-            validateStepOne(ValidateUserData(formData, "BasicHealth"));
-            validateStepTwo(formData.focus !== null);
-            validateStepThree(
-                formData.sleepHours !== null &&
+            setStepValidity({
+                step1: ValidateUserData(formData, "BasicHealth"),
+                step2: formData.focus !== null,
+                step3:
+                    formData.sleepHours !== null &&
                     formData.sleepHours > 0 &&
                     formData.sleepHours < 12 &&
                     formData.activeness !== null,
-            );
-            validateStepFour(formData.healthConditions !== null);
-            validateStepFive(formData.theThinkHour !== "");
+                step4: formData.healthConditions !== null,
+                step5: formData.theThinkHour !== "",
+            });
         } catch (e) {
             console.error(`Error validating user data: ${e}`);
         }
@@ -403,39 +377,39 @@ export default function WelcomePage(): ReactElement {
 
         switch (currentTab) {
             case 1:
-                buttonText = isStepOneValid
+                buttonText = stepValidity.step1
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepOneValid ? "ACE" : "HMM";
-                action = isStepOneValid ? goNext : () => {};
+                style = stepValidity.step1 ? "ACE" : "HMM";
+                action = stepValidity.step1 ? goNext : () => {};
                 break;
             case 2:
-                buttonText = isStepTwoValid
+                buttonText = stepValidity.step2
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepTwoValid ? "ACE" : "HMM";
-                action = isStepTwoValid ? goNext : (): void => {};
+                style = stepValidity.step2 ? "ACE" : "HMM";
+                action = stepValidity.step2 ? goNext : (): void => {};
                 break;
             case 3:
-                buttonText = isStepThreeValid
+                buttonText = stepValidity.step3
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepThreeValid ? "ACE" : "HMM";
-                action = isStepThreeValid ? goNext : (): void => {};
+                style = stepValidity.step3 ? "ACE" : "HMM";
+                action = stepValidity.step3 ? goNext : (): void => {};
                 break;
             case 4:
-                buttonText = isStepFourValid
+                buttonText = stepValidity.step4
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepFourValid ? "ACE" : "HMM";
-                action = isStepFourValid ? goNext : (): void => {};
+                style = stepValidity.step4 ? "ACE" : "HMM";
+                action = stepValidity.step4 ? goNext : (): void => {};
                 break;
             case 5:
-                buttonText = isStepFiveValid
+                buttonText = stepValidity.step5
                     ? t("globals.interaction.goAheadGood")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepFiveValid ? "ACE" : "HMM";
-                action = isStepFiveValid ? goNext : (): void => {};
+                style = stepValidity.step5 ? "ACE" : "HMM";
+                action = stepValidity.step5 ? goNext : (): void => {};
                 break;
             default:
                 console.error(
@@ -752,7 +726,11 @@ export default function WelcomePage(): ReactElement {
                         </BetterText>
                         <GapView height={5} />
                         <Swap
-                            options={genderOptions}
+                            options={
+                                GetStuffForUserDataQuestion(
+                                    "gender",
+                                ) as SwapOption[]
+                            }
                             value={formData.gender}
                             order="horizontal"
                             onValueChange={(value) =>
@@ -782,7 +760,11 @@ export default function WelcomePage(): ReactElement {
                             includeBackButton={false}
                         />
                         <Swap
-                            options={focusOptions}
+                            options={
+                                GetStuffForUserDataQuestion(
+                                    "focus",
+                                ) as SwapOption[]
+                            }
                             value={formData.focus}
                             order="vertical"
                             onValueChange={(value) =>
@@ -819,7 +801,11 @@ export default function WelcomePage(): ReactElement {
                             includeBackButton={false}
                         />
                         <MultiSelect
-                            options={healthConditionOptions}
+                            options={
+                                GetStuffForUserDataQuestion(
+                                    "healthConditions",
+                                ) as MultiSelectOption[]
+                            }
                             changeAction={(
                                 values: MultiSelectOption[],
                             ): void => {

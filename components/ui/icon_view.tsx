@@ -1,21 +1,22 @@
-import React, { ComponentProps, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import FontSizes from "@/constants/font_sizes";
 import GapView from "./gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import { HexColorString } from "@/types/color";
 import BetterText from "../text/better_text";
+import { UsableIcon } from "@/toolkit/glue_fix";
 
 /**
  * Spawns an icon followed by a text.
  *
  * @export
  * @param {{
- *     name: ComponentProps<typeof Ionicons>["name"];
+ *     name: UsableIcon;
  *     size: number;
  *     color: HexColorString;
  *     text: string;
  * }} p
- * @param {ComponentProps<any>} p.name
+ * @param {UsableIcon} p.name
  * @param {number} [p.size=FontSizes.REGULAR]
  * @param {HexColorString} [p.color="#FFF"]
  * @param {string} p.text
@@ -27,7 +28,7 @@ export default function IconView({
     color = "#FFF",
     text,
 }: {
-    name: ComponentProps<typeof Ionicons>["name"];
+    name: UsableIcon;
     size: number;
     color: HexColorString;
     text: string;

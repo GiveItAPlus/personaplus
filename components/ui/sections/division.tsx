@@ -5,17 +5,10 @@ import {
     BetterTextExtraHeader,
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
-import GapView from "@/components/ui/gap_view";
 import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-
-// TypeScript, supongo
-
-/**
- * All icons that can be used for Divisions.
- */
-type icon = "fastfood" | "sports-score" | "trending-down" | "trending-up";
+import { UsableIcon } from "@/toolkit/glue_fix";
 
 /**
  * DivisionProps
@@ -24,11 +17,11 @@ type icon = "fastfood" | "sports-score" | "trending-down" | "trending-up";
  */
 interface DivisionProps {
     /**
-     * Name of the big icon. Unused for now.
+     * Name of the big icon.
      *
-     * @type {?(icon | null)}
+     * @type {?UsableIcon}
      */
-    iconName?: icon | null;
+    iconName?: UsableIcon;
     /**
      * An optional smaller text before the header.
      *
@@ -73,20 +66,18 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-start",
         justifyContent: "flex-start",
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingBottom: 20,
+        padding: 20,
         width: "100%",
         maxWidth: "100%", // borderRadius fix.
         backgroundColor: Colors.MAIN.DIVISION,
     },
-    filledView: {
-        width: "100%",
+    content: {
+        flex: 1,
+        gap: 10,
     },
     iconContainer: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "flex-start",
@@ -105,7 +96,7 @@ const styles = StyleSheet.create({
  *
  * @export
  * @param {DivisionProps} p
- * @param {icon} p.iconName An optional smaller text before the header.
+ * @param {UsableIcon} p.iconName An optional smaller text before the header.
  * @param {string} p.preHeader An optional smaller text before the header.
  * @param {string} p.header The big, main text of the Division.
  * @param {string} p.subHeader An optional small text below the header.
@@ -129,56 +120,43 @@ export default function Division({
                 <View style={styles.iconContainer}>
                     <Ionicons
                         name={iconName}
-                        size={40}
+                        size={30}
                         color={Colors.BASIC.WHITE}
                     />
                 </View>
             )}
-            <View style={styles.filledView}>
-                <View>
-                    {preHeader && (
-                        <>
-                            <BetterText
-                                textAlign="normal"
-                                fontWeight="Bold"
-                                fontSize={FontSizes.SMALL}
-                                textColor={Colors.BASIC.WHITE}
-                            >
-                                {preHeader}
-                            </BetterText>
-                            <GapView height={10} />
-                        </>
-                    )}
-                    <BetterTextExtraHeader>{header}</BetterTextExtraHeader>
-                    {subHeader && (
-                        <>
-                            <GapView height={10} />
-                            <BetterTextSmallText>
-                                {subHeader}
-                            </BetterTextSmallText>
-                        </>
-                    )}
-                    {children && (
-                        <>
-                            <GapView height={10} />
-                            <View
-                                style={[
-                                    styles.childView,
-                                    {
-                                        flexDirection: direction
-                                            ? direction === "vertical"
-                                                ? "column"
-                                                : "row"
-                                            : "row",
-                                        gap: gap ?? 10,
-                                    },
-                                ]}
-                            >
-                                {children}
-                            </View>
-                        </>
-                    )}
-                </View>
+            <View style={styles.content}>
+                {preHeader && (
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Bold"
+                        fontSize={FontSizes.SMALL}
+                        textColor={Colors.BASIC.WHITE}
+                    >
+                        {preHeader}
+                    </BetterText>
+                )}
+                <BetterTextExtraHeader>{header}</BetterTextExtraHeader>
+                {subHeader && (
+                    <BetterTextSmallText>{subHeader}</BetterTextSmallText>
+                )}
+                {children && (
+                    <View
+                        style={[
+                            styles.childView,
+                            {
+                                flexDirection: direction
+                                    ? direction === "vertical"
+                                        ? "column"
+                                        : "row"
+                                    : "row",
+                                gap: gap ?? 10,
+                            },
+                        ]}
+                    >
+                        {children}
+                    </View>
+                )}
             </View>
         </View>
     );

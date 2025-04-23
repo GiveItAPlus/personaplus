@@ -158,9 +158,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
                     inputRefs: inputRef,
                     totalRefs: 1,
                 }}
-                isValid={
-                    goalToCreate.trim().length === 0 ? true : canCreateGoal
-                }
+                isValid={canCreateGoal}
                 validatorMessage={t("pages.createPassiveObjective.validator")}
             />
             <GapView height={10} />

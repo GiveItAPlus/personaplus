@@ -117,6 +117,8 @@ export default function BetterInputField({
     const returnKeyType: "done" | "next" =
         nextFieldIndex === refParams.totalRefs ? "done" : "next";
 
+    const isInvalid: boolean = !isValid && value.toString().length !== 0;
+
     return (
         <>
             <BetterTextSmallText>{label}</BetterTextSmallText>
@@ -125,21 +127,21 @@ export default function BetterInputField({
                 placeholder={placeholder}
                 value={typeof value === "string" ? value : String(value)}
                 placeholderTextColor={
-                    isValid
-                        ? Colors.MAIN.DEFAULT_ITEM.TEXT
-                        : Colors.PRIMARIES.WOR.WOR
+                    isInvalid
+                        ? Colors.PRIMARIES.WOR.WOR
+                        : Colors.MAIN.DEFAULT_ITEM.TEXT
                 }
                 style={[
                     styles.textInput,
-                    isValid
+                    isInvalid
                         ? {
+                              backgroundColor: Colors.PRIMARIES.WOR.WOR_STROKE,
+                              borderColor: Colors.PRIMARIES.WOR.WOR,
+                          }
+                        : {
                               backgroundColor:
                                   Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
                               borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
-                          }
-                        : {
-                              backgroundColor: Colors.PRIMARIES.WOR.WOR_STROKE,
-                              borderColor: Colors.PRIMARIES.WOR.WOR,
                           },
                 ]}
                 autoCorrect={false}
@@ -161,7 +163,7 @@ export default function BetterInputField({
                     ref && (refParams.inputRefs.current[refIndex] = ref)
                 }
             />
-            {isValid === false && (
+            {isInvalid && (
                 <>
                     <GapView height={5} />
                     <BetterText

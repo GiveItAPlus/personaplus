@@ -16,6 +16,7 @@ import type {
     UnknownString,
 } from "../node_modules/@zakahacecosas/string-utils/mod";
 import * as n from "../node_modules/@zakahacecosas/number-utils/mod";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 /**
  * Use this to extend type interfaces for URL params when passing data from page to page.
@@ -88,3 +89,6 @@ export const StrUtils = {
  * This export is a glue fix. The package is from JSR and not npm, and Metro dislikes that.
  */
 export const NumUtils = n.NumberUtils;
+
+/** All usable `Ionicons` */
+export type UsableIcon = React.ComponentProps<typeof Ionicons>["name"];

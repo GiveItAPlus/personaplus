@@ -20,11 +20,12 @@ import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { HexColorString, PrimaryColorsType } from "@/types/color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/ui/gap_view";
+import { UsableIcon } from "@/toolkit/glue_fix";
 
 // TypeScript, supongo
 interface BetterButtonIcon {
     /** Name of the icon. */
-    name: "pause" | "play-arrow" | "exit-to-app";
+    name: UsableIcon;
     /** Size in px. */
     size: number;
     /** Icon color. */
