@@ -463,8 +463,8 @@
                 }
             },
             "dailyLog": {
-                "header": "Here'll go your daily log",
-                "subheader": "We log your results each time you do a session. Here we store all the metadata of each session. As soon as you do something, you'll see results here."
+                "header": "Aquí irá tu registro diario",
+                "subheader": "Registramos aquí tus resultados cada que haces una sesión. Tan pronto como hagas algo, verás los resultados aquí."
             }
         },
         "toolkit": {

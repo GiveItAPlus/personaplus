@@ -15,13 +15,12 @@ import { MultiSelectOption } from "@/components/interaction/multi_select";
 import { SelectOption } from "@/components/interaction/select";
 import { SwapOption } from "@/components/interaction/swap";
 import { CoreLibraryType_Activeness } from "@/core/types/misc_types";
-import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 export default function GetStuffForUserDataQuestion(
     query: "activeness" | "sleepTime" | "focus" | "gender" | "healthConditions",
+    t: TFunction
 ): SelectOption[] | SwapOption[] | MultiSelectOption[] {
-    const { t } = useTranslation();
-
     // options
     const genderOptions: SwapOption[] = [
         {

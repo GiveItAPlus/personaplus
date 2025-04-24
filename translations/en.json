@@ -470,7 +470,7 @@
             },
             "dailyLog": {
                 "header": "Here'll go your daily log",
-                "subheader": "We log your results each time you do a session. Here we store all the metadata of each session. As soon as you do something, you'll see results here."
+                "subheader": "Here we log your results each time you do a session. As soon as you do something, you'll see results here."
             }
         },
         "toolkit": {
@@ -623,7 +623,7 @@
                 },
                 "height": {
                     "min": "You're NOT that short! Min height is {{minCap}}cm.",
-                    "max": "You're NOT that heavy! Max height is {{maxCap}}cm."
+                    "max": "You're NOT that tall! Max height is {{maxCap}}cm."
                 }
             }
         }
