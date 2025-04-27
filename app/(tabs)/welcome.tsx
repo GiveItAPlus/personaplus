@@ -317,8 +317,14 @@ export default function WelcomePage(): ReactElement {
     ): ReactNode {
         const options: SelectOption[] =
             associatedValue === "activeness"
-                ? (GetStuffForUserDataQuestion("activeness", t) as SelectOption[])
-                : (GetStuffForUserDataQuestion("sleepTime", t) as SelectOption[]);
+                ? (GetStuffForUserDataQuestion(
+                      "activeness",
+                      t,
+                  ) as SelectOption[])
+                : (GetStuffForUserDataQuestion(
+                      "sleepTime",
+                      t,
+                  ) as SelectOption[]);
 
         return (
             <>
@@ -381,35 +387,35 @@ export default function WelcomePage(): ReactElement {
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = stepValidity.step1 ? "ACE" : "HMM";
-                action = stepValidity.step1 ? goNext : () => { };
+                action = stepValidity.step1 ? goNext : () => {};
                 break;
             case 2:
                 buttonText = stepValidity.step2
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = stepValidity.step2 ? "ACE" : "HMM";
-                action = stepValidity.step2 ? goNext : (): void => { };
+                action = stepValidity.step2 ? goNext : (): void => {};
                 break;
             case 3:
                 buttonText = stepValidity.step3
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = stepValidity.step3 ? "ACE" : "HMM";
-                action = stepValidity.step3 ? goNext : (): void => { };
+                action = stepValidity.step3 ? goNext : (): void => {};
                 break;
             case 4:
                 buttonText = stepValidity.step4
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = stepValidity.step4 ? "ACE" : "HMM";
-                action = stepValidity.step4 ? goNext : (): void => { };
+                action = stepValidity.step4 ? goNext : (): void => {};
                 break;
             case 5:
                 buttonText = stepValidity.step5
                     ? t("globals.interaction.goAheadGood")
                     : t("globals.interaction.somethingIsWrong");
                 style = stepValidity.step5 ? "ACE" : "HMM";
-                action = stepValidity.step5 ? goNext : (): void => { };
+                action = stepValidity.step5 ? goNext : (): void => {};
                 break;
             default:
                 console.error(
@@ -418,7 +424,7 @@ export default function WelcomePage(): ReactElement {
                 );
                 buttonText = "Error";
                 style = "HMM";
-                action = (): void => { };
+                action = (): void => {};
         }
 
         return (
@@ -648,13 +654,13 @@ export default function WelcomePage(): ReactElement {
                                 <BetterTextSmallerText>
                                     {formData.username.toLowerCase() ===
                                         "error" ||
-                                        formData.username.toLowerCase() === "error."
+                                    formData.username.toLowerCase() === "error."
                                         ? t(
-                                            "userData.formValidation.username.forbiddenError",
-                                        )
+                                              "userData.formValidation.username.forbiddenError",
+                                          )
                                         : t(
-                                            "userData.formValidation.username.forbiddenPsoe",
-                                        )}
+                                              "userData.formValidation.username.forbiddenPsoe",
+                                          )}
                                 </BetterTextSmallerText>
                             )
                         }
@@ -728,7 +734,8 @@ export default function WelcomePage(): ReactElement {
                         <Swap
                             options={
                                 GetStuffForUserDataQuestion(
-                                    "gender", t
+                                    "gender",
+                                    t,
                                 ) as SwapOption[]
                             }
                             value={formData.gender}
@@ -762,7 +769,8 @@ export default function WelcomePage(): ReactElement {
                         <Swap
                             options={
                                 GetStuffForUserDataQuestion(
-                                    "focus", t
+                                    "focus",
+                                    t,
                                 ) as SwapOption[]
                             }
                             value={formData.focus}
@@ -803,7 +811,8 @@ export default function WelcomePage(): ReactElement {
                         <MultiSelect
                             options={
                                 GetStuffForUserDataQuestion(
-                                    "healthConditions", t
+                                    "healthConditions",
+                                    t,
                                 ) as MultiSelectOption[]
                             }
                             changeAction={(
@@ -815,10 +824,10 @@ export default function WelcomePage(): ReactElement {
                                         values.length === 0
                                             ? "none"
                                             : values.map(
-                                                (
-                                                    value: MultiSelectOption,
-                                                ): string => value.value,
-                                            ),
+                                                  (
+                                                      value: MultiSelectOption,
+                                                  ): string => value.value,
+                                              ),
                                 });
                             }}
                         />
@@ -826,12 +835,12 @@ export default function WelcomePage(): ReactElement {
                         {(formData.healthConditions === "none" ||
                             !formData.healthConditions ||
                             formData.healthConditions.length === 0) && (
-                                <BetterTextSmallerText>
-                                    {t(
-                                        "pages.welcome.questions.medicalConditions.none",
-                                    )}
-                                </BetterTextSmallerText>
-                            )}
+                            <BetterTextSmallerText>
+                                {t(
+                                    "pages.welcome.questions.medicalConditions.none",
+                                )}
+                            </BetterTextSmallerText>
+                        )}
                     </>
                 )}
                 {currentTab === 5 && (

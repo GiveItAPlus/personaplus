@@ -7,6 +7,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 For the full commit history, keep in mind 1.200 commits exist in the [old repo](https://github.com/ZakaHaceCosas/personaplus).
 
+## [0.1.2] - 27-04-2025
+
+### Changed
+
+- Now the Toolkit tab shows a list of tools, each one of them now has a dedicated page.
+
+### Fixed
+
+- Fixed some mistakes and some missing translations.
+- Fixed some minor optimization issues.
+- Fixed some unused code taking up extra MBs in the app bundle.
+
 ## [0.1.1] - 19-04-2025
 
 ### Changed

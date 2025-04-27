@@ -19,7 +19,7 @@ import { TFunction } from "i18next";
 
 export default function GetStuffForUserDataQuestion(
     query: "activeness" | "sleepTime" | "focus" | "gender" | "healthConditions",
-    t: TFunction
+    t: TFunction,
 ): SelectOption[] | SwapOption[] | MultiSelectOption[] {
     // options
     const genderOptions: SwapOption[] = [
