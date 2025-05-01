@@ -42,8 +42,8 @@ export default function Toolkit(): ReactElement {
                             router.push(Routes.TOOLKIT.RUNNING_STOPWATCH)
                         }
                         style="ACE"
-                        buttonText={"Launch tool"}
-                        buttonHint="Launches the given tool"
+                        buttonText={t("pages.toolkit.buttonText")}
+                        buttonHint={t("pages.toolkit.buttonHint")}
                     />
                 </Division>
                 <Division
@@ -54,8 +54,8 @@ export default function Toolkit(): ReactElement {
                     <BetterButton
                         action={() => router.push(Routes.TOOLKIT.FOCUS_TRAIN)}
                         style="ACE"
-                        buttonText={"Launch tool"}
-                        buttonHint="Launches the given tool"
+                        buttonText={t("pages.toolkit.buttonText")}
+                        buttonHint={t("pages.toolkit.buttonHint")}
                     />
                 </Division>
             </Section>

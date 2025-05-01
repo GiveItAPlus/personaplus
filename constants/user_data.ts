@@ -17,11 +17,30 @@ import { SwapOption } from "@/components/interaction/swap";
 import { CoreLibraryType_Activeness } from "@/core/types/misc_types";
 import { TFunction } from "i18next";
 
-export default function GetStuffForUserDataQuestion(
+export function OptsForDataQuestions(
+    query: "activeness",
+    t: TFunction,
+): SelectOption[];
+export function OptsForDataQuestions(
+    query: "sleepTime",
+    t: TFunction,
+): SelectOption[];
+export function OptsForDataQuestions(
+    query: "focus",
+    t: TFunction,
+): SwapOption[];
+export function OptsForDataQuestions(
+    query: "gender",
+    t: TFunction,
+): SwapOption[];
+export function OptsForDataQuestions(
+    query: "healthConditions",
+    t: TFunction,
+): MultiSelectOption[];
+export function OptsForDataQuestions(
     query: "activeness" | "sleepTime" | "focus" | "gender" | "healthConditions",
     t: TFunction,
 ): SelectOption[] | SwapOption[] | MultiSelectOption[] {
-    // options
     const genderOptions: SwapOption[] = [
         {
             value: "male",

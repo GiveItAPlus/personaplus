@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 For the full commit history, keep in mind 1.200 commits exist in the [old repo](https://github.com/ZakaHaceCosas/personaplus).
 
+## [0.1.3] - Unreleased
+
+### Fixed
+
+- Fixed the Update profile tab not opening, crashing the app.
+- Fixed some untranslated strings.
+
 ## [0.1.2] - 27-04-2025
 
 ### Changed

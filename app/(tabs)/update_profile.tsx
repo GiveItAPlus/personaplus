@@ -40,7 +40,7 @@ import { BasicUserData, FullProfile } from "@/types/user";
 import StoredItemNames from "@/constants/stored_item_names";
 import { SafelyGoBack } from "@/toolkit/routing";
 import { Routes } from "@/constants/routes";
-import GetStuffForUserDataQuestion from "@/constants/user_data";
+import { OptsForDataQuestions } from "@/constants/user_data";
 import { GetCommonScreenSize } from "@/constants/screen";
 import TopBar from "@/components/navigation/top_bar";
 import { BetterTextSmallerText } from "@/components/text/better_text_presets";
@@ -75,8 +75,9 @@ export default function UpdateProfile(): ReactElement {
         handle();
     }, []);
 
-    const genderOptions: SwapOption[] = GetStuffForUserDataQuestion(
+    const genderOptions: SwapOption[] = OptsForDataQuestions(
         "gender",
+        t,
     ) as SwapOption[];
     const inputRefs: MutableRefObject<TextInput[]> = useRef<TextInput[]>([]);
 

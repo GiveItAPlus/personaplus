@@ -470,6 +470,8 @@
         "toolkit": {
             "header": "Utilidades",
             "subHeader": "Utilidades varias para diferentes tareas. Te serán útiles en algún momento.",
+            "buttonText": "Lanzar herramienta",
+            "buttonHint": "Abre la herramienta seleccionada.",
             "stopwatchTool": {
                 "name": "Crono para corredores",
                 "desc": "Cronometra a un amigo (o a tí mismo) con esto. Solo introduce la distancia, mide el tiempo, y calcularemos por tí una velocidad de la que presumir.",

@@ -19,8 +19,17 @@ import { ReactElement, useState } from "react";
 import Colors from "@/constants/colors";
 import GapView from "@/components/ui/gap_view";
 import BetterButton from "@/components/interaction/better_button";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+
+const styles = StyleSheet.create({
+    wrapper: {
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        gap: 20,
+    },
+});
 
 export default function Toolkit(): ReactElement {
     const [focusTraining, setFocusTraining] = useState<boolean>(false);
@@ -34,9 +43,7 @@ export default function Toolkit(): ReactElement {
                 subHeader={t("pages.toolkit.focusTool.desc")}
             />
             <GapView height={200} />
-            <View
-                style={{ width: "100%", display: "flex", alignItems: "center" }}
-            >
+            <View style={styles.wrapper}>
                 <SessionTimer
                     durationSeconds={300}
                     running={focusTraining}
@@ -51,7 +58,10 @@ export default function Toolkit(): ReactElement {
                 <BetterButton
                     style={"ACE"}
                     buttonHint="Focus"
-                    buttonText={"START!"}
+                    buttonText={(focusTraining
+                        ? t("globals.interaction.done")
+                        : t("globals.interaction.goAheadGood")
+                    ).toUpperCase()}
                     action={(): void => {
                         setFocusTraining(true);
                     }}

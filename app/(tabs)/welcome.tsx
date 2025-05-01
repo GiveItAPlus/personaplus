@@ -21,7 +21,7 @@ import React, {
 } from "react";
 import { router } from "expo-router";
 import { StyleSheet, TextInput, View } from "react-native";
-import Swap, { SwapOption } from "@/components/interaction/swap";
+import Swap from "@/components/interaction/swap";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
 import AsyncStorage from "expo-sqlite/kv-store";
@@ -48,7 +48,7 @@ import BetterInputField from "@/components/interaction/better_input_field";
 import StoredItemNames from "@/constants/stored_item_names";
 import { TimeStringUtilities } from "@/toolkit/today";
 import { Routes } from "@/constants/routes";
-import GetStuffForUserDataQuestion from "@/constants/user_data";
+import { OptsForDataQuestions } from "@/constants/user_data";
 import URLs from "@/constants/urls";
 import { SafelyOpenUrl } from "@/toolkit/routing";
 import BetterAlert from "@/components/ui/better_alert";
@@ -317,14 +317,8 @@ export default function WelcomePage(): ReactElement {
     ): ReactNode {
         const options: SelectOption[] =
             associatedValue === "activeness"
-                ? (GetStuffForUserDataQuestion(
-                      "activeness",
-                      t,
-                  ) as SelectOption[])
-                : (GetStuffForUserDataQuestion(
-                      "sleepTime",
-                      t,
-                  ) as SelectOption[]);
+                ? OptsForDataQuestions("activeness", t)
+                : OptsForDataQuestions("sleepTime", t);
 
         return (
             <>
@@ -732,12 +726,7 @@ export default function WelcomePage(): ReactElement {
                         </BetterText>
                         <GapView height={5} />
                         <Swap
-                            options={
-                                GetStuffForUserDataQuestion(
-                                    "gender",
-                                    t,
-                                ) as SwapOption[]
-                            }
+                            options={OptsForDataQuestions("gender", t)}
                             value={formData.gender}
                             order="horizontal"
                             onValueChange={(value) =>
@@ -767,12 +756,7 @@ export default function WelcomePage(): ReactElement {
                             includeBackButton={false}
                         />
                         <Swap
-                            options={
-                                GetStuffForUserDataQuestion(
-                                    "focus",
-                                    t,
-                                ) as SwapOption[]
-                            }
+                            options={OptsForDataQuestions("focus", t)}
                             value={formData.focus}
                             order="vertical"
                             onValueChange={(value) =>
@@ -809,12 +793,10 @@ export default function WelcomePage(): ReactElement {
                             includeBackButton={false}
                         />
                         <MultiSelect
-                            options={
-                                GetStuffForUserDataQuestion(
-                                    "healthConditions",
-                                    t,
-                                ) as MultiSelectOption[]
-                            }
+                            options={OptsForDataQuestions(
+                                "healthConditions",
+                                t,
+                            )}
                             changeAction={(
                                 values: MultiSelectOption[],
                             ): void => {

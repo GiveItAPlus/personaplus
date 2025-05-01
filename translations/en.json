@@ -476,6 +476,8 @@
         "toolkit": {
             "header": "Toolkit",
             "subHeader": "Various tools for different tasks. They may come handy in certain moments. They're health related, of course.",
+            "buttonText": "Launch tool",
+            "buttonHint": "Opens the chosen tool.",
             "stopwatchTool": {
                 "name": "Runner stopwatch",
                 "desc": "Use this to chronometer yourself (or a friend). Just type in the distance, measure the time, and we'll calculate for you a speed to flex about.",
