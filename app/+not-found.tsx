@@ -8,7 +8,7 @@ import { Routes } from "@/constants/routes";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";
 
-export default function NotFoundScreen() {
+export default function NotFoundScreen(): React.ReactElement {
     const requestedPath: string = Router.usePathname();
     const { t } = useTranslation();
 

@@ -159,9 +159,9 @@ export default function BetterInputField({
                 onSubmitEditing={(): void => focusNextField(nextFieldIndex)}
                 readOnly={readOnly}
                 textContentType="none"
-                ref={(ref: TextInput | null): TextInput | null =>
-                    ref && (refParams.inputRefs.current[refIndex] = ref)
-                }
+                ref={(ref: TextInput | null): void => {
+                    if (ref) refParams.inputRefs.current[refIndex] = ref;
+                }}
             />
             {isInvalid && (
                 <>
