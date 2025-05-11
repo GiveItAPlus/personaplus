@@ -7,20 +7,16 @@ import GapView from "@/components/ui/gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterButton from "@/components/interaction/better_button";
 import TopBar from "@/components/navigation/top_bar";
-import { ActiveObjective } from "@/types/active_objectives";
-import { useGlobalSearchParams } from "expo-router/build/hooks";
-import { UnknownOutputParams } from "expo-router";
-import { GetActiveObjective } from "@/toolkit/objectives/active_objectives";
 import { TopView } from "@/components/ui/pages/sessions";
 
 /** Settings for this thingy */
 const SETTINGS = {
     /** Interval (in meters) for the location to update. */
-    DIST_INTERVAL_METERS: 0.45,
+    DIST_INTERVAL_METERS: 1,
     /** Min amount of time (in milliseconds) for the location to update. */
     TIME_INTERVAL_MS: 1000,
     /** Min distance in meters required for the distance to update. */
-    MIN_BUMP_DISTANCE: 0.1,
+    MIN_BUMP_DISTANCE: 1,
     /** Max distance in meters required for the distance to update. */
     MAX_BUMP_DISTANCE: 20,
     /** Min user speed for location for the distance to update. */
@@ -46,15 +42,15 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Calculates the distance between two positions.
+ * Calculates the distance between two positions. Returns in meters.
  *
  * @param {number} lat1 Latitude of position 1.
  * @param {number} lon1 Longitude of position 1.
- * @param {number} lat2 Latitude of position 1.
+ * @param {number} lat2 Latitude of position 2.
  * @param {number} lon2 Longitude of position 2.
  * @returns {number}
  */
-function CalculateDistanceBetweenInterval(
+function CalculateDistanceInMetersBetweenInterval(
     lat1: number,
     lon1: number,
     lat2: number,
@@ -79,29 +75,11 @@ function CalculateDistanceBetweenInterval(
 }
 
 export default function PersonaPlusRunningTracker(): ReactElement {
-    const params: UnknownOutputParams = useGlobalSearchParams();
-    const id: number | null =
-        params.id && typeof params.id === "string" ? Number(params.id) : null;
-    const [objective, setObjective] = useState<ActiveObjective>();
-    useEffect((): void => {
-        async function handler(): Promise<void> {
-            try {
-                if (!id) throw new Error("no id!");
-                const objective: ActiveObjective | null =
-                    await GetActiveObjective(id);
-                if (!objective) throw new Error("no objective!");
-                setObjective(objective);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        handler();
-    }, [id]);
     const [location, setLocation] = useState({
         latitude: 0,
         longitude: 0,
     });
-    const [distance, setDistance] = useState(0);
+    const [distanceMeters, setDistanceMeters] = useState(0);
     const [isTracking, setIsTracking] = useState(false);
     const [locationSubscription, setLocationSubscription] =
         useState<Location.LocationSubscription | null>(null);
@@ -137,11 +115,12 @@ export default function PersonaPlusRunningTracker(): ReactElement {
 
                         // calc distance
                         if (
-                            location.latitude !== 0 ||
-                            location.longitude !== 0
+                            location.latitude !== 0 &&
+                            location.longitude !== 0 &&
+                            position.coords.accuracy! < 20
                         ) {
                             const dist: number =
-                                CalculateDistanceBetweenInterval(
+                                CalculateDistanceInMetersBetweenInterval(
                                     location.latitude,
                                     location.longitude,
                                     latitude,
@@ -157,15 +136,13 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                                 speed > SETTINGS.MIN_BELIEVABLE_SPEED &&
                                 speed < SETTINGS.MAX_BELIEVABLE_SPEED
                             ) {
-                                setDistance(
+                                setDistanceMeters(
                                     (prevDistance: number): number =>
                                         prevDistance + dist,
                                 );
+                                setLocation({ latitude, longitude });
                             }
                         }
-
-                        // update distance
-                        setLocation({ latitude, longitude });
                     },
                 );
 
@@ -189,17 +166,10 @@ export default function PersonaPlusRunningTracker(): ReactElement {
         return (): void => {
             if (locationSubscription) {
                 locationSubscription.remove();
+                setLocationSubscription(null);
             }
         };
     }, [isTracking, startTracking, stopTracking, locationSubscription]);
-
-    if (!objective) {
-        return (
-            <>
-                <BetterTextNormalText>bruh</BetterTextNormalText>
-            </>
-        );
-    }
 
     return (
         <>
@@ -209,8 +179,13 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 subHeader="Experimental feature!"
             />
             <TopView
-                objective={objective}
-                verbalName={isTracking ? "Running" : "(PAUSED)"}
+                objective={{
+                    exercise: "Running",
+                    identifier: 0,
+                    // @ts-expect-error invalid (missing data)
+                    specificData: { estimateSpeed: 9 },
+                }}
+                verbalName={isTracking ? `(RUNNING)` : "(PAUSED)"}
             />
             <GapView height={10} />
             <View style={styles.buttonContainer}>
@@ -228,7 +203,12 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 />
                 <BetterButton
                     buttonText="Reset distance"
-                    action={(): void => setDistance(0)}
+                    action={(): void => {
+                        setDistanceMeters(0);
+                        setIsTracking(false);
+                        setLocationSubscription(null);
+                        setLocation({ latitude: 0, longitude: 0 });
+                    }}
                     buttonHint="Restarts the total distance counter"
                     style="DEFAULT"
                 />
@@ -238,7 +218,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 <View style={styles.buttonContainer}>
                     <Ionicons name="run-circle" size={25} color="#FFF" />
                     <BetterTextNormalText>
-                        DIST {distance.toFixed(2)} m
+                        DIST {distanceMeters.toFixed(2)} m
                     </BetterTextNormalText>
                 </View>
                 <View style={styles.buttonContainer}>
