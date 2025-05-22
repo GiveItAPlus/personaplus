@@ -226,7 +226,9 @@ export default function Report(): ReactElement {
                             <Division
                                 key={i.obj.identifier}
                                 header={`${i.obj.goal} · ${i.streak}d`}
-                                subHeader={`Created ${i.obj.createdAt}`}
+                                subHeader={t("globals.interaction.createdAt", {
+                                    date: i.obj.createdAt,
+                                })}
                             />
                         ))}
                     </Section>

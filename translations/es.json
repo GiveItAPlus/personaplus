@@ -22,6 +22,7 @@
             "en": "inglés"
         },
         "interaction": {
+            "createdAt": "Created at {{date}}",
             "areYouSure": "¿Estás seguro?",
             "goAheadBad": "Está bien",
             "goAhead": "Adelante",
@@ -111,6 +112,12 @@
                 "doing": "Corriendo",
                 "help": "Para empezar a correr, asegúrate de llevar calzado y ropa cómodos para correr. Empieza con un calentamiento caminando rápidamente durante 5-10 minutos para preparar tus músculos. Comienza a correr a un ritmo cómodo y mantén un patrón constante de respiración. Concéntrate en mantener una buena postura y mantenerse relajado. Si eres principiante, alterna entre correr y caminar en intervalos. Aumenta gradualmente el tiempo que corres a medida que mejora tu resistencia. Enfría caminando unos minutos y luego estirando."
             }
+        },
+        "medicalConditions": {
+            "broCantBreathe": "Problemas respiratorios.",
+            "broCantHeartbeat": "Problemas cardíacos o circulatorios.",
+            "broCantMove": "Problemas musculares o de movilidad.",
+            "broCantEat": "Problemas digestivos."
         }
     },
     "EasterEggs": {
@@ -496,7 +503,6 @@
             "helpTimerPaused": "Psst... No te preocupes, hemos pausado el temporizador para que puedas leer a tu ritmo.",
             "giveUpHint": "Abandona la sesión actual sin guardar tu progreso.",
             "giveUpDescription": "Si te rindes, ¡todo tu progreso se perderá! ¿No puedes aguantar un rato más?",
-            "rests": "{{rests}} descanso",
             "hands": "{{hands}} mano",
             "weight": "{{weight}} kg",
             "reps": "{{reps}} rep",

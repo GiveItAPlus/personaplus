@@ -22,6 +22,7 @@
             "en": "English"
         },
         "interaction": {
+            "createdAt": "Created at {{date}}",
             "areYouSure": "Are you sure?",
             "goAheadBad": "Okay.",
             "goAhead": "Go ahead",
@@ -113,10 +114,10 @@
             }
         },
         "medicalConditions": {
-            "broCantBreathe": "Breathing or Respiratory Issues",
-            "broCantHeartbeat": "Heart or Circulatory Concerns",
-            "broCantMove": "Muscle, Joint, or Movement Issues",
-            "broCantEat": "Digestive problems"
+            "broCantBreathe": "Respiratory issues",
+            "broCantHeartbeat": "Heart or circulatory issues",
+            "broCantMove": "Muscle or movement Issues",
+            "broCantEat": "Digestive issues"
         }
     },
     "EasterEggs": {
