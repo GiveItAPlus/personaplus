@@ -86,49 +86,38 @@ export default function HomeScreen(): ReactElement {
             }
 
             const latestVersion: string = latestRelease.tag_name; // gets the tagname
-            const latestUrl: string =
-                latestRelease.assets[0].browser_download_url;
 
-            if (semver.gt(latestVersion, currentVersion)) {
-                // if it's not the same as your current version, you're not up to date!
-                Alert.alert(
-                    t(
-                        "pages.profile.divisions.update.updateFlow.updateAvailable",
-                    ),
-                    t(
-                        "pages.profile.divisions.update.updateFlow.updateAvailableText",
-                        {
-                            latestVersion: latestVersion,
-                        },
-                    ),
-                    [
-                        {
-                            text: t(
-                                "pages.profile.divisions.update.updateFlow.buttons.update",
-                            ),
-                            style: "default",
-                            onPress: async (): Promise<void> =>
-                                await SafelyOpenUrl(latestUrl), // update will download the APK from the browser
-                        },
-                        {
-                            text: t(
-                                "pages.profile.divisions.update.updateFlow.buttons.changelog",
-                            ),
-                            onPress: async (): Promise<void> =>
-                                await SafelyOpenUrl(URLs.latestChangelog), // changelog will just open the page so you see whats new
-                        },
-                        {
-                            text: t("globals.nevermind"),
-                            style: "destructive",
-                            onPress: (): void => {}, // closes
-                        },
-                    ],
-                );
-            } else {
+            if (!semver.gt(latestVersion, currentVersion)) {
                 ShowToast(
                     t("pages.profile.divisions.update.updateFlow.upToDate"),
                 );
+                return;
             }
+            // if it's not the same as your current version, you're not up to date!
+            Alert.alert(
+                t("pages.profile.divisions.update.updateFlow.updateAvailable"),
+                t(
+                    "pages.profile.divisions.update.updateFlow.updateAvailableText",
+                    {
+                        latestVersion,
+                    },
+                ),
+                [
+                    {
+                        text: t(
+                            "pages.profile.divisions.update.updateFlow.buttons.update",
+                        ),
+                        style: "default",
+                        onPress: async (): Promise<void> =>
+                            await SafelyOpenUrl(URLs.latestRelease),
+                    },
+                    {
+                        text: t("globals.interaction.nevermind"),
+                        style: "destructive",
+                        onPress: (): void => {}, // closes
+                    },
+                ],
+            );
         } catch (e) {
             console.error(`Error checking for updates: ${e}`);
             ShowToast(t("pages.profile.divisions.update.updateFlow.cantCheck"));
