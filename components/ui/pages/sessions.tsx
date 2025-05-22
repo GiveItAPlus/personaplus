@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActiveObjective } from "@/types/active_objectives";
 import Colors from "@/constants/colors";
@@ -27,17 +27,16 @@ import {
 } from "@/components/text/better_text_presets";
 import IslandDivision from "../sections/island_division";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
 
 const styles = StyleSheet.create({
     helpContainer: {
         backgroundColor: Colors.MAIN.SECTION,
         position: "absolute",
-        top: "40%",
         left: 0,
         right: 0,
-        bottom: 0,
+        bottom: 20,
+        height: "auto",
         overflow: "visible",
         padding: 20,
         borderRadius: 20,
@@ -115,7 +114,6 @@ export function HelpView({
                 fontSize={10}
                 fontWeight="Light"
                 textColor={Colors.LABELS.SDD}
-                textAlign="center"
             >
                 {t("pages.sessions.helpTimerPaused")}
             </BetterText>
@@ -124,32 +122,43 @@ export function HelpView({
 }
 
 /**
- * Returns an array of icons containing info about a certain objective.
+ * The top view for the sessions page.
  *
- * @param {InfoIconsProps} p The properties for the InfoIcons component.
- * @param {Objective} p.objective The objective of the current session.
- * @returns {ReactElement} The JSX component displaying the icons.
+ * @param {{
+ *     objective: ActiveObjective;
+ *     user: FullProfile;
+ *     verbalName: string;
+ * }} p0
+ * @param {ActiveObjective} p0.objective Objective to show data for.
+ * @param {FullProfile} p0.user User profile.
+ * @param {string} p0.verbalName "Verbal name" of the objective.
+ * @returns {ReactElement}
  */
-function InfoIcons({
+export function TopView({
     objective,
+    user,
+    verbalName,
 }: {
     /**
-     * The objective of the current session.
+     * Objective to show data for.
      *
      * @type {ActiveObjective}
      */
     objective: ActiveObjective;
+    /**
+     * User profile.
+     *
+     * @type {FullProfile}
+     */
+    user: FullProfile;
+    /**
+     * "Verbal name" of the objective.
+     *
+     * @type {string}
+     */
+    verbalName: string;
 }): ReactElement {
     const { t } = useTranslation();
-    const [user, setUser] = useState<FullProfile>(ErrorUserData);
-
-    useEffect((): void => {
-        async function handle(): Promise<void> {
-            const userData: FullProfile = await OrchestrateUserData();
-            setUser(userData);
-        }
-        handle();
-    }, []);
 
     /**
      * @deprecated Only use until the tracker experiment fully rolls out.
@@ -203,105 +212,6 @@ function InfoIcons({
 
     return (
         <>
-            <View style={styles.secondIconContainer}>
-                {objective.exercise === "Running" && (
-                    <IconView
-                        name="speed"
-                        size={15}
-                        color={Colors.BASIC.WHITE}
-                        text={
-                            objective.specificData.estimateSpeed !==
-                                undefined &&
-                            objective.specificData.estimateSpeed >= 0 &&
-                            objective.specificData.estimateSpeed <
-                                speedOptions.length
-                                ? `~${
-                                      speedOptions[
-                                          objective.specificData.estimateSpeed
-                                      ]![1]
-                                  }`
-                                : "N/A"
-                        }
-                    />
-                )}
-                {objective.exercise === "Lifting" && (
-                    <>
-                        <IconView
-                            name="front-hand"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                            text={handsString ?? "N/A"}
-                        />
-                        <GapView width={10} />
-                        <IconView
-                            name="scale"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                            text={weightString ?? "N/A"}
-                        />
-                        <GapView width={10} />
-                        <IconView
-                            name="loop"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                            text={repsString ?? "N/A"}
-                        />
-                    </>
-                )}
-                {objective.exercise === "Push Ups" && (
-                    <>
-                        <IconView
-                            name="repeat"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                            text={pushUpsString ?? "N/A"}
-                        />
-                        <GapView width={10} />
-                        <IconView
-                            name="front-hand"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                            text={handsString ?? "N/A"}
-                        />
-                    </>
-                )}
-            </View>
-        </>
-    );
-}
-
-/**
- * The top view for the sessions page.
- *
- * @param {{
- *     objective: ActiveObjective;
- *     verbalName: string;
- * }} p0
- * @param {ActiveObjective} p0.objective Objective to show data for.
- * @param {string} p0.verbalName "Verbal name" of the objective.
- * @returns {ReactElement}
- */
-export function TopView({
-    objective,
-    verbalName,
-}: {
-    /**
-     * Objective to show data for.
-     *
-     * @type {ActiveObjective}
-     */
-    objective: ActiveObjective;
-    /**
-     * "Verbal name" of the objective.
-     *
-     * @type {string}
-     */
-    verbalName: string;
-}): ReactElement {
-    const { t } = useTranslation();
-
-    return (
-        <>
             <IslandDivision alignment="start" direction="horizontal">
                 <Ionicons
                     name="play-arrow"
@@ -330,7 +240,70 @@ export function TopView({
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
                     {verbalName}
                 </BetterText>
-                <InfoIcons objective={objective} />
+                <View style={styles.secondIconContainer}>
+                    {objective.exercise === "Running" && (
+                        <IconView
+                            name="speed"
+                            size={15}
+                            color={Colors.BASIC.WHITE}
+                            text={
+                                objective.specificData.estimateSpeed !==
+                                    undefined &&
+                                objective.specificData.estimateSpeed >= 0 &&
+                                objective.specificData.estimateSpeed <
+                                    speedOptions.length
+                                    ? `~${
+                                          speedOptions[
+                                              objective.specificData
+                                                  .estimateSpeed
+                                          ]![1]
+                                      }`
+                                    : "N/A"
+                            }
+                        />
+                    )}
+                    {objective.exercise === "Lifting" && (
+                        <>
+                            <IconView
+                                name="front-hand"
+                                size={15}
+                                color={Colors.BASIC.WHITE}
+                                text={handsString ?? "N/A"}
+                            />
+                            <GapView width={10} />
+                            <IconView
+                                name="scale"
+                                size={15}
+                                color={Colors.BASIC.WHITE}
+                                text={weightString ?? "N/A"}
+                            />
+                            <GapView width={10} />
+                            <IconView
+                                name="loop"
+                                size={15}
+                                color={Colors.BASIC.WHITE}
+                                text={repsString ?? "N/A"}
+                            />
+                        </>
+                    )}
+                    {objective.exercise === "Push Ups" && (
+                        <>
+                            <IconView
+                                name="repeat"
+                                size={15}
+                                color={Colors.BASIC.WHITE}
+                                text={pushUpsString ?? "N/A"}
+                            />
+                            <GapView width={10} />
+                            <IconView
+                                name="front-hand"
+                                size={15}
+                                color={Colors.BASIC.WHITE}
+                                text={handsString ?? "N/A"}
+                            />
+                        </>
+                    )}
+                </View>
             </IslandDivision>
         </>
     );

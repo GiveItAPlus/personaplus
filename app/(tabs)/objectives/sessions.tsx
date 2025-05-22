@@ -38,7 +38,7 @@ import { ActiveObjective } from "@/types/active_objectives";
 import { GetCommonScreenSize } from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
 import { Routes } from "@/constants/routes";
-import { BasicUserHealthData } from "@/types/user";
+import { FullProfile } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { ShowToast } from "@/toolkit/android";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
@@ -71,7 +71,7 @@ export default function Sessions(): ReactElement {
     // stateful values and stuff
     const [loading, setLoading] = useState<boolean>(true);
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
-    const [userData, setUserData] = useState<BasicUserHealthData>();
+    const [userData, setUserData] = useState<FullProfile>();
 
     // session itself
     const [isTimerRunning, setTimerStatus] = useState(false);
@@ -92,7 +92,7 @@ export default function Sessions(): ReactElement {
 
     useEffect((): void => {
         async function handler(): Promise<void> {
-            setUserData(await OrchestrateUserData("health"));
+            setUserData(await OrchestrateUserData());
         }
         handler();
     }, []);
@@ -225,21 +225,17 @@ export default function Sessions(): ReactElement {
     }
 
     useEffect((): void => {
-        if (isTimerRunning) {
-            play();
-        } else {
-            pause();
-        }
+        if (isTimerRunning) play();
+        else pause();
     }, [isTimerRunning]);
 
-    if (loading || !objective) {
-        return <Loading />;
-    }
+    if (loading || !objective || !userData) return <Loading />;
 
     return (
         <View style={styles.mainView}>
             <TopView
                 objective={objective}
+                user={userData}
                 verbalName={currentObjectiveVerbalName}
             />
             <GapView height={20} />
