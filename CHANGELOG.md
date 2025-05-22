@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 For the full commit history, keep in mind 1.200 commits exist in the [old repo](https://github.com/ZakaHaceCosas/personaplus).
 
+## [0.1.4] - Unreleased
+
+### Fixed
+
+- Fixed the help tab from sessions looking off.
+- Fixed the updater modal having two buttons that did pretty much the same thing.
+- Fixed some untranslated strings.
+
 ## [0.1.3] - 11-05-2025
 
 ### Fixed
