@@ -9,7 +9,7 @@ const config: ExpoConfig.ExpoConfig = {
     slug: "PersonaPlus",
     scheme: "personaplus",
     description: "Give yourself a plus!",
-    owner: "zakahacecosas",
+    owner: "giveitaplus",
     version: actualVersion,
     orientation: "portrait",
     githubUrl: "https://github.com/GiveItAPlus/personaplus",
@@ -52,7 +52,7 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.WAKE_LOCK",
             "android.permission.ACCESS_FINE_LOCATION",
         ],
-        versionCode: 34,
+        versionCode: 35,
         backgroundColor: "#0E1013",
     },
     ios: {
