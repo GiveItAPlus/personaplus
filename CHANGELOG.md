@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 For the full commit history, keep in mind 1.200 commits exist in the [old repo](https://github.com/ZakaHaceCosas/personaplus).
 
-## [0.1.4] - Unreleased
+## [0.1.4] - 08-06-2025
 
 ### Fixed
 
