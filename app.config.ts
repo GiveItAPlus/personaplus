@@ -1,6 +1,6 @@
 import * as ExpoConfig from "@expo/config";
 import dotenv from "dotenv";
-import { version as actualVersion } from "./package.json";
+import { version } from "./package.json";
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ const config: ExpoConfig.ExpoConfig = {
     scheme: "personaplus",
     description: "Give yourself a plus!",
     owner: "giveitaplus",
-    version: actualVersion,
+    version,
     orientation: "portrait",
     githubUrl: "https://github.com/GiveItAPlus/personaplus",
     icon: "./assets/resources/icon.png",

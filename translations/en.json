@@ -27,6 +27,7 @@
             "goAheadBad": "Okay.",
             "goAhead": "Go ahead",
             "goAheadGood": "Let's go!",
+            "goHome": "Go to homepage",
             "nevermind": "Nevermind",
             "continue": "Continue",
             "somethingIsWrong": "Something's wrong",
@@ -193,7 +194,7 @@
             "subheader": "You got a 404 error - this means, PersonaPlus couldn't find the path you we're looking for. Sorry!",
             "goHome": {
                 "text": "Go home",
-                "hint": "Redirects the user directly to the homepage."
+                "hint": "Directs you directly to the homepage."
             },
             "requestedPath": "Requested path was:\n{{path}}\n\nIf you think this path is correct and you shouldn't be lost, we kindly ask you to report this issue so we can fix it. Thank you!"
         },
@@ -267,6 +268,10 @@
         },
         "createActiveObjective": {
             "header": "Let's do it!",
+            "accessibility": {
+                "reduces": "Reduces the value this button is associated to",
+                "increases": "Increases the value this button is associated to"
+            },
             "questions": {
                 "exercise": {
                     "question": "What will you do?",
@@ -320,6 +325,13 @@
             "beginning": {
                 "welcomeTo": "Welcome to",
                 "subheader": "We're proud to see you want to give yourself a plus!"
+            },
+            "accessibility": {
+                "goesBack": "Goes one page back",
+                "goesFwd": "Goes one page forward",
+                "finishes": "Registers the user and directs to the home page",
+                "begins": "Begins the on-boarding process",
+                "summons": "Summons a modal where the user can pick an hour of the day for The Daily Check."
             },
             "questions": {
                 "aboutYou": {
@@ -501,6 +513,7 @@
             "hitStart": "Hit the Play (arrow) button to begin!",
             "helpHint": "Opens a menu with basic help on what you should be doing right now.",
             "helpTimerPaused": "Psst... Don't worry, we'e stopped the timer so you can read.",
+            "closeHelp": "Closes the help menu.",
             "giveUpHint": "Leaves the current session without saving your progress.",
             "giveUpDescription": "If you give up, all your progress will be lost! Can't you last a little longer?",
             "hands": "{{hands}} hand",
@@ -583,6 +596,10 @@
                 "text": "Create active objective",
                 "hint": "Opens a page from which you can create an active objective."
             },
+            "createFirst": {
+                "text": "Create your first active objective!",
+                "hint": "Opens a page to create your first active objective."
+            },
             "start": {
                 "hint": "Starts a live session for this objective."
             }
@@ -592,6 +609,10 @@
             "create": {
                 "text": "Create passive objective",
                 "hint": "Opens a page from which you can create a passive objective."
+            },
+            "createFirst": {
+                "text": "Create your first passive objective!",
+                "hint": "Opens a page to create your first passive objective."
             },
             "log": {
                 "text": "Achieved!",

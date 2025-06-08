@@ -425,7 +425,7 @@ export default function WelcomePage(): ReactElement {
             <View style={styles.buttonWrapper}>
                 <BetterButton
                     buttonText={t("globals.interaction.goBack")}
-                    buttonHint="Goes one page back"
+                    buttonHint={t("pages.welcome.accessibility.goesBack")}
                     style="DEFAULT"
                     action={goBack}
                 />
@@ -434,8 +434,8 @@ export default function WelcomePage(): ReactElement {
                     buttonText={buttonText}
                     buttonHint={
                         currentTab === 5
-                            ? "Registers the user and redirects to the home page"
-                            : "Goes one page forward"
+                            ? t("pages.welcome.accessibility.finishes")
+                            : t("pages.welcome.accessibility.goesFwd")
                     }
                     style={style}
                     action={action}
@@ -599,7 +599,7 @@ export default function WelcomePage(): ReactElement {
                         <GapView height={10} />
                         <BetterButton
                             buttonText={t("globals.interaction.goAheadGood")}
-                            buttonHint="Begins the on-boarding process"
+                            buttonHint={t("pages.welcome.accessibility.begins")}
                             style="ACE"
                             action={goNext}
                         />
@@ -841,7 +841,9 @@ export default function WelcomePage(): ReactElement {
                             buttonText={t(
                                 "pages.welcome.questions.theThinkHour.summon",
                             )}
-                            buttonHint="Summons a modal where the user can pick an hour of the day for The Think Hour."
+                            buttonHint={t(
+                                "pages.welcome.accessibility.summons",
+                            )}
                             action={() => toggleTimePicker(!showTimePicker)}
                         />
                         <TimerPickerModal

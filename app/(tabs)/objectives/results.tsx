@@ -130,7 +130,7 @@ export default function Results(): ReactElement {
                 }}
                 style="ACE"
                 buttonText={t("globals.interaction.goAhead")}
-                buttonHint="Go home"
+                buttonHint={t("globals.interaction.goHome")}
             />
         </>
     );

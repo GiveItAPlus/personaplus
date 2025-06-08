@@ -22,11 +22,12 @@
             "en": "inglés"
         },
         "interaction": {
-            "createdAt": "Created at {{date}}",
+            "createdAt": "Creado el {{date}}",
             "areYouSure": "¿Estás seguro?",
             "goAheadBad": "Está bien",
             "goAhead": "Adelante",
             "goAheadGood": "¡Vamos allá!",
+            "goHome": "Ir a la página de inicio",
             "nevermind": "Olvídalo",
             "continue": "Continuar",
             "somethingIsWrong": "Algo no está bien",
@@ -192,8 +193,8 @@
             "header": "¿Tienes un mapa?",
             "subheader": "Recibiste un error 404 - o sea, PersonaPlus no pudo encontrar la ruta que buscas. ¡Perdón!",
             "goHome": {
-                "text": "Volver a casa",
-                "hint": "Redirige al usuario directamente a la página de inicio."
+                "text": "Volver al inicio",
+                "hint": "Te dirige directamente a la página de inicio."
             },
             "requestedPath": "La ruta solicitada fué:\n{{path}}\n\nSi crees que esta ruta es correcta y no deberías estar perdido, te pedimos educadamente que reportes el fallo para que podamos arreglarlo. ¡Gracias!"
         },
@@ -267,6 +268,10 @@
         },
         "createActiveObjective": {
             "header": "¡Hagámoslo!",
+            "accessibility": {
+                "reduces": "Reduce el valor al que este botón está asociado",
+                "increases": "Incrementa el valor al que este botón está asociado"
+            },
             "questions": {
                 "exercise": {
                     "question": "¿Qué quieres hacer?",
@@ -320,6 +325,13 @@
             "beginning": {
                 "welcomeTo": "Bienvenido a",
                 "subheader": "¡Nos enorgullece ver que quieras darte un plus!"
+            },
+            "accessibility": {
+                "goesBack": "Retrocede una página",
+                "goesFwd": "Avanza una página",
+                "finishes": "Registra al usuario y lo dirige a la página de inicio",
+                "begins": "Comienza el proceso de registro",
+                "summons": "Invoca un modal donde el usuario puede elegir una hora del día para el 'Check Diario'."
             },
             "questions": {
                 "aboutYou": {
@@ -501,6 +513,7 @@
             "hitStart": "¡Dale al botón de Play (flecha) para comenzar!",
             "helpHint": "Abre un menú con ayuda básica sobre lo que deberías estar haciendo ahora mismo.",
             "helpTimerPaused": "Psst... No te preocupes, hemos pausado el temporizador para que puedas leer a tu ritmo.",
+            "closeHelp": "Cierra el menú de ayuda.",
             "giveUpHint": "Abandona la sesión actual sin guardar tu progreso.",
             "giveUpDescription": "Si te rindes, ¡todo tu progreso se perderá! ¿No puedes aguantar un rato más?",
             "hands": "{{hands}} mano",
@@ -583,6 +596,10 @@
                 "text": "Crear objetivo activo",
                 "hint": "Abre una página desde la que puedes crear un objetivo activo."
             },
+            "createFirst": {
+                "text": "¡Crea tu primer objetivo activo!",
+                "hint": "Abre una página para crear tu primer objetivo activo."
+            },
             "start": {
                 "hint": "Empieza una sesión en vivo para este objetivo."
             }
@@ -592,6 +609,10 @@
             "create": {
                 "text": "Crear objetivo pasivo",
                 "hint": "Abre una página desde la que puedes crear un objetivo pasivo."
+            },
+            "createFirst": {
+                "text": "¡Crea tu primer objetivo pasivo!",
+                "hint": "Abre una página para crear tu primer objetivo pasivo."
             },
             "log": {
                 "text": "¡Conseguido!",

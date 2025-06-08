@@ -13,7 +13,7 @@ For the full commit history, keep in mind 1.200 commits exist in the [old repo](
 
 - Fixed the help tab from sessions looking off.
 - Fixed the updater modal having two buttons that did pretty much the same thing.
-- Fixed some untranslated strings.
+- Fixed several untranslated strings and accessibility tags.
 
 ## [0.1.3] - 11-05-2025
 

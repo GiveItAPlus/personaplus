@@ -263,7 +263,9 @@ export default function CreateActiveObjectivePage(): ReactElement {
                     <BetterButton
                         layout="box"
                         buttonText="-"
-                        buttonHint="Reduces the value this button is associated to"
+                        buttonHint={t(
+                            "pages.createActiveObjectives.accessibility.reduces",
+                        )}
                         style="ACE"
                         action={() => handleToggle("decrease", associatedValue)}
                     />
@@ -291,7 +293,9 @@ export default function CreateActiveObjectivePage(): ReactElement {
                     <BetterButton
                         layout="box"
                         buttonText="+"
-                        buttonHint="Increases the value this button is associated to"
+                        buttonHint={t(
+                            "pages.createActiveObjectives.accessibility.increases",
+                        )}
                         style="ACE"
                         action={(): void => {
                             handleToggle("increase", associatedValue);
@@ -466,7 +470,9 @@ export default function CreateActiveObjectivePage(): ReactElement {
                         <BetterButton
                             layout="box"
                             buttonText="-"
-                            buttonHint="Reduces the value this button is associated to"
+                            buttonHint={t(
+                                "pages.createActiveObjectives.accessibility.reduces",
+                            )}
                             style="ACE"
                             action={(): void => {
                                 handleToggle("decrease", "estimateSpeed");
@@ -497,7 +503,9 @@ export default function CreateActiveObjectivePage(): ReactElement {
                         <BetterButton
                             layout="box"
                             buttonText="+"
-                            buttonHint="Increases the value this button is associated to"
+                            buttonHint={t(
+                                "pages.createActiveObjectives.accessibility.increases",
+                            )}
                             style="ACE"
                             action={(): void => {
                                 handleToggle("increase", "estimateSpeed");

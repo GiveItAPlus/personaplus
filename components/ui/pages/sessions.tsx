@@ -106,7 +106,7 @@ export function HelpView({
             <BetterButton
                 style="ACE"
                 buttonText={t("globals.interaction.gotIt")}
-                buttonHint="Closes the help menu"
+                buttonHint={t("pages.sessions.closeHelp")}
                 action={toggleHelpMenu}
             />
             <GapView height={10} />

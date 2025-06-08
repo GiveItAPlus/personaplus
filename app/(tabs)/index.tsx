@@ -39,12 +39,15 @@ import {
 } from "@/types/common_objectives";
 import { HandlePendingReturn } from "@/toolkit/objectives/common_ui";
 import { ShowToast } from "@/toolkit/android";
+import { View } from "react-native";
 
 setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: true,
         shouldSetBadge: true,
+        shouldShowBanner: true,
+        shouldShowList: true,
     }),
 });
 
@@ -191,6 +194,18 @@ export default function HomeScreen(): ReactElement {
                         }
                     />
                 )}
+                {activeObjectiveIdentifiers === "noneExists" && (
+                    <View style={{ padding: 20 }}>
+                        <BetterButton
+                            style="ACE"
+                            buttonText={t("objectives.active.createFirst.text")}
+                            buttonHint={t("objectives.active.createFirst.hint")}
+                            action={() =>
+                                router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
+                            }
+                        />
+                    </View>
+                )}
                 {activeObjectivesToRender.map(
                     (obj: ActiveObjective): ReactElement => (
                         <Division
@@ -230,6 +245,22 @@ export default function HomeScreen(): ReactElement {
                                 : passiveObjectiveIdentifiers
                         }
                     />
+                )}
+                {passiveObjectiveIdentifiers === "noneExists" && (
+                    <View style={{ padding: 20 }}>
+                        <BetterButton
+                            style="ACE"
+                            buttonText={t(
+                                "objectives.passive.createFirst.text",
+                            )}
+                            buttonHint={t(
+                                "objectives.passive.createFirst.hint",
+                            )}
+                            action={() =>
+                                router.push(Routes.OBJECTIVES.CREATE_PASSIVE)
+                            }
+                        />
+                    </View>
                 )}
                 {passiveObjectivesToRender.map(
                     (o: {
