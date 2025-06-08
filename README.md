@@ -1,5 +1,5 @@
 <!--markdownlint-disable md033 md026-->
-<h1 align="center">PersonaPlus</h1>
+# PersonaPlus · [![GitHub last commit](https://img.shields.io/github/last-commit/GiveItAPlus/personaplus?labelColor=%23000&logo=github&color=white)](https://github.com/GiveItAPlus/personaplus/commits/) · [![GitHub Repo size](https://img.shields.io/github/repo-size/GiveItAPlus/personaplus?labelColor=%23000&color=%23f54&logo=webpack&logoColor=white)](https://github.com/GiveItAPlus/personaplus/tree/master/app) · [![GitHub Repo stars](https://img.shields.io/github/stars/GiveItAPlus/personaplus?labelColor=%23000&logo=github&color=%23ff0)](https://github.com/GiveItAPlus/personaplus/stargazers) · [![GitHub License](https://img.shields.io/github/license/GiveItAPlus/personaplus?labelColor=%23000&color=%23d52e35)](https://github.com/GiveItAPlus/personaplus/blob/master/LICENSE.md) · [![Website](https://img.shields.io/website?url=https%3A%2F%2Fpersonaplus.vercel.app&up_message=WORKING%20%3A%5D&up_color=%2332FF80&down_message=NOT%20WORKING%20%3A%5B&down_color=%23FF3232&labelColor=%23000)](https://personaplus.vercel.app) · [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/GiveItAPlus/personaplus)
 
 ![PersonaPlus banner](https://raw.githubusercontent.com/GiveItAPlus/personaplus/master/assets/design/PP_BANNER.webp)
 
@@ -7,15 +7,6 @@
 
 <!--Se destacará el vídeo que a mi me parezca :v-->
 <!--[![YouTube Video Views](https://img.shields.io/youtube/views/cPSmVmsvkeY?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)-->
-
-[![GitHub last commit](https://img.shields.io/github/last-commit/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=white)](https://github.com/GiveItAPlus/personaplus/commits/)
-[![GitHub Repo size](https://img.shields.io/github/repo-size/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23f54&logo=webpack&logoColor=white)](https://github.com/GiveItAPlus/personaplus/tree/master/app)
-[![GitHub Repo stars](https://img.shields.io/github/stars/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=%23ff0)](https://github.com/GiveItAPlus/personaplus/stargazers)
-[![Created at](https://img.shields.io/github/created-at/GiveItAPlus/personaplus?style=for-the-badge&color=white&logo=github&labelColor=%23000)](https://personaplus.vercel.app)
-[![GitHub License](https://img.shields.io/github/license/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23d52e35)](https://github.com/GiveItAPlus/personaplus/blob/master/LICENSE.md)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Fpersonaplus.vercel.app&up_message=WORKING%20%3A%5D&up_color=%2332FF80&down_message=NOT%20WORKING%20%3A%5B&down_color=%23FF3232&style=for-the-badge&labelColor=%23000)](https://personaplus.vercel.app)
-[![App version](https://img.shields.io/github/package-json/v/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/GiveItAPlus/personaplus/blob/master/package.json#L3)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/GiveItAPlus/personaplus)
 
 </div>
 
