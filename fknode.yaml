@@ -10,3 +10,4 @@ flagless:
     flaglessPretty: true
     flaglessDestroy: true
     flaglessUpdate: true
+launchCmd: "start:dev" # would run 'npm run start'
