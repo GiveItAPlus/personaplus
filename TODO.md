@@ -6,13 +6,15 @@ Done tasks get checked immediately, then get removed once we make a release incl
 
 ## Overall plan
 
-- Active Objectives (push ups, running, etc...) are "paused" as of now, they imply a lot of nerdy medical stuff I don't want to waste my time with. CoreLibrary is "paused" as well (nothing official whatsoever, it's just that I'm not going to focus on them for now).
-- For now, Passive Objectives are done, and we're jumping from PREAPP to ALPHA! For now I'll take a time for only fixing bugs and working _a bit_ on the app's marketing. After that we'll see, by then I'll likely start suffering again with active objectives.
-- Diet and wellbeing features can wait, lol.
+- **Current priority are active objectives.** We have to rewrite the system to be MET-based. Once the system's done, using data from the PA Compendium we can finally add more exercises, ending with PersonaPlus' bottleneck 1/2.
+- Bottleneck 2/2 is the distance live tracker. Gotta do that somehow.
+- Once both things are done, we're ready for `0.2`.
 
 ---
 
 ## What we'll do short/mid term
+
+(OUTDATED AF)
 
 ### Planned features
 
