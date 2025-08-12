@@ -17,20 +17,11 @@ import {
     SchedulableTriggerInputTypes,
     scheduleNotificationAsync,
     setNotificationChannelAsync,
-    // setNotificationHandler
 } from "expo-notifications";
 import Constants from "expo-constants";
 import { TFunction } from "i18next";
 import { ShowToast } from "@/toolkit/android";
 import { GenerateRandomMessage } from "@/toolkit/strings";
-
-// setNotificationHandler({
-//     handleNotification: async (): Promise<NotificationBehavior> => ({
-//         shouldShowAlert: true,
-//         shouldPlaySound: true,
-//         shouldSetBadge: true,
-//     })
-// })
 
 /**
  * Function to register for using the push notifications.
@@ -59,10 +50,7 @@ async function registerForPushNotifications(
         finalStatus = status;
     }
     if (finalStatus !== "granted") {
-        console.error(
-            "Failed to get push token for push notification!",
-            "error",
-        );
+        console.error("Failed to get push token for push notification!");
         return;
     }
 

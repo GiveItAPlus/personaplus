@@ -634,8 +634,7 @@
                     "required": "Username cannot be empty.",
                     "length": "Your username must be between {{minCap}} and {{maxCap}} characters long.",
                     "forbidden": "This username contains forbidden terms.",
-                    "forbiddenError": "\"Error\" is not allowed as a username (we reserve it as a keyword for in-app error-handling).",
-                    "forbiddenPsoe": "not funny."
+                    "forbiddenError": "\"Error\" is not allowed as a username (we reserve it as a keyword for in-app error-handling)."
                 },
                 "age": {
                     "min": "You're NOT that young! Min age is {{minCap}}.",

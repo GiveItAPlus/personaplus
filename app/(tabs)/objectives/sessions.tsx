@@ -113,10 +113,7 @@ export default function Sessions(): ReactElement {
                 setObjective(obj);
                 setLoading(false);
             } catch (e) {
-                console.error(
-                    `Error fetching objective for session! ${e}`,
-                    "error",
-                );
+                console.error(`Error fetching objective for session! ${e}`);
                 setLoading(false);
             }
         }
@@ -198,7 +195,6 @@ export default function Sessions(): ReactElement {
                     `Error finishing session for ${
                         objective ? objective.identifier : "(UNKNOWN)"
                     }: ${e}`,
-                    "error",
                 );
             }
         }

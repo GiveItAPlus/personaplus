@@ -1,6 +1,6 @@
 # Developer Documentation
 
-_Dale un PLUS a tu Persona_ <!-- fun fact, this is the OG slogan -->
+Give a PLUS to your Persona <!-- fun fact, this is the OG slogan -->
 
 ![Banner](https://raw.githubusercontent.com/GiveItAPlus/personaplus/master/assets/design/PP_BANNER_DEV.webp)
 
@@ -47,7 +47,7 @@ We use certain keywords in comments, so it's easier to find problems when anyone
 // FAILING - code that is not broken but is not passing tests for whatever reason
 ```
 
-Thanks to _Better Comments_, one of our recommended extensions for this workspace, these keywords will make comments colored for a better experience.
+Be sure to write them in UPPERCASE (the keyword, not the entire comment), so that search can be filtered by casing (and thus not include useless content, like Spanish translations where "Todo" is a different word).
 
 ### Understanding data saving
 

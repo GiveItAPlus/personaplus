@@ -48,8 +48,7 @@ export const VALID_USER_CAPS = {
     USERNAME: {
         MIN: 3,
         MAX: 40,
-        /** the two last entries are a joke, somewhat. */
-        INVALID: ["error", "error.", "pedro sánchez", "pedro sanchez", "psoe"],
+        INVALID: ["error", "error."],
     },
 };
 
@@ -349,10 +348,7 @@ export const IndividualUserDataValidators = {
                     username.length < 40 &&
                     !(
                         username.toLowerCase() === "error" ||
-                        username.toLowerCase() === "error." ||
-                        username.toLowerCase().includes("pedro sánchez") ||
-                        username.toLowerCase().includes("pedro sanchez") ||
-                        username.toLowerCase().includes("psoe")
+                        username.toLowerCase() === "error."
                     ))
                 ? true
                 : false;

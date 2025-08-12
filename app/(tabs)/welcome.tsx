@@ -244,7 +244,6 @@ export default function WelcomePage(): ReactElement {
                 );
                 console.log(
                     `${userData.username} was successfully registered with no errors. Give yourself a plus!\n${validData}`,
-                    "success",
                 );
                 router.replace(Routes.MAIN.HOME);
             } catch (e) {
@@ -414,7 +413,6 @@ export default function WelcomePage(): ReactElement {
             default:
                 console.error(
                     `Someone forgot to assign a case for tab ${currentTab}.`,
-                    "warn",
                 );
                 buttonText = "Error";
                 style = "HMM";
@@ -635,26 +633,12 @@ export default function WelcomePage(): ReactElement {
                         {
                             /* LMAO */
                             (formData.username.toLowerCase() === "error" ||
-                                formData.username.toLowerCase() === "error." ||
-                                formData.username
-                                    .toLowerCase()
-                                    .includes("pedro sánchez") ||
-                                formData.username
-                                    .toLowerCase()
-                                    .includes("pedro sanchez") ||
-                                formData.username
-                                    .toLowerCase()
-                                    .includes("psoe")) && (
+                                formData.username.toLowerCase() ===
+                                    "error.") && (
                                 <BetterTextSmallerText>
-                                    {formData.username.toLowerCase() ===
-                                        "error" ||
-                                    formData.username.toLowerCase() === "error."
-                                        ? t(
-                                              "userData.formValidation.username.forbiddenError",
-                                          )
-                                        : t(
-                                              "userData.formValidation.username.forbiddenPsoe",
-                                          )}
+                                    {t(
+                                        "userData.formValidation.username.forbiddenError",
+                                    )}
                                 </BetterTextSmallerText>
                             )
                         }

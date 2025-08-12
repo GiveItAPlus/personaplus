@@ -94,10 +94,7 @@ async function SaveActiveObjectiveToDailyLog(
 
         // Updates data and puts it back to AsyncStorage
         await SaveGenericObjectiveDailyLog(dailyData, "active");
-        console.log(
-            `Success! Session ${id} data saved for ${today}.`,
-            "success",
-        );
+        console.log(`Success! Session ${id} data saved for ${today}.`);
     } catch (e) {
         throw new Error(
             `Error saving user's performance for objective ${id}: ${e}`,

@@ -634,8 +634,7 @@
                     "required": "El usuario no puede estar vacío.",
                     "length": "Tu usuario debe medir entre {{minCap}} y {{maxCap}} caracteres.",
                     "forbidden": "Este usuario incluye términos prohibidos.",
-                    "forbiddenError": "\"Error\" no se permite como usuario (lo reservamos como palabra clave para manejar errores dentro de la app).",
-                    "forbiddenPsoe": "no me seas gracioso."
+                    "forbiddenError": "\"Error\" no se permite como usuario (lo reservamos como palabra clave para manejar errores dentro de la app)."
                 },
                 "age": {
                     "min": "¡NO eres TAN joven! La edad mínima es de {{minCap}} años.",

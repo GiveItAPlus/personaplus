@@ -244,7 +244,7 @@ describe("ValidateUserData", () => {
     });
 
     test("should return false for wrong username", () => {
-        const result1 = ValidateUserData(
+        const result = ValidateUserData(
             {
                 gender: "male",
                 age: 25,
@@ -255,18 +255,6 @@ describe("ValidateUserData", () => {
             },
             "Basic",
         );
-        const result2 = ValidateUserData(
-            {
-                gender: "male",
-                age: 25,
-                weight: 75,
-                height: 180,
-                username: "PEdro Sánchez",
-                healthConditions: [],
-            },
-            "Basic",
-        );
-        expect(result1).toBe(false);
-        expect(result2).toBe(false);
+        expect(result).toBe(false);
     });
 });

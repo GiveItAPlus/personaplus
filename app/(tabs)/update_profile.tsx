@@ -189,23 +189,9 @@ export default function UpdateProfile(): ReactElement {
             {
                 /* LMAO */
                 (workingData!.username.toLowerCase() === "error" ||
-                    workingData!.username.toLowerCase() === "error." ||
-                    workingData!.username
-                        .toLowerCase()
-                        .includes("pedro sánchez") ||
-                    workingData!.username
-                        .toLowerCase()
-                        .includes("pedro sanchez") ||
-                    workingData!.username.toLowerCase().includes("psoe")) && (
+                    workingData!.username.toLowerCase() === "error.") && (
                     <BetterTextSmallerText>
-                        {workingData!.username.toLowerCase() === "error" ||
-                        workingData!.username.toLowerCase() === "error."
-                            ? t(
-                                  "userData.formValidation.username.forbiddenError",
-                              )
-                            : t(
-                                  "userData.formValidation.username.forbiddenPsoe",
-                              )}
+                        {t("userData.formValidation.username.forbiddenError")}
                     </BetterTextSmallerText>
                 )
             }
