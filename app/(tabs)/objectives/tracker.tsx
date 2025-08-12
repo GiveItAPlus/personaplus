@@ -8,13 +8,16 @@ import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterButton from "@/components/interaction/better_button";
 import TopBar from "@/components/navigation/top_bar";
 import { TopView } from "@/components/ui/pages/sessions";
+import { FullProfile } from "@/types/user";
+import { OrchestrateUserData } from "@/toolkit/user";
+import Loading from "@/components/static/loading";
 
 /** Settings for this thingy */
 const SETTINGS = {
     /** Interval (in meters) for the location to update. */
     DIST_INTERVAL_METERS: 1,
     /** Min amount of time (in milliseconds) for the location to update. */
-    TIME_INTERVAL_MS: 1000,
+    TIME_INTERVAL_MS: 1500,
     /** Min distance in meters required for the distance to update. */
     MIN_BUMP_DISTANCE: 1,
     /** Max distance in meters required for the distance to update. */
@@ -83,6 +86,8 @@ export default function PersonaPlusRunningTracker(): ReactElement {
     const [isTracking, setIsTracking] = useState(false);
     const [locationSubscription, setLocationSubscription] =
         useState<Location.LocationSubscription | null>(null);
+    const [user, setUser] = useState<FullProfile>();
+    const [loading, setLoading] = useState<boolean>(true);
 
     // startTracking and stopTracking were for whatever reason considered "dependencies" of the useEffect below (eslint)
     // so i wrapped them into a useCallback to memo them and avoid re-renders
@@ -171,6 +176,17 @@ export default function PersonaPlusRunningTracker(): ReactElement {
         };
     }, [isTracking, startTracking, stopTracking, locationSubscription]);
 
+    useEffect(() => {
+        async function handler() {
+            const data = await OrchestrateUserData();
+            setUser(data);
+            setLoading(false);
+        }
+        handler();
+    }, []);
+
+    if (loading) return <Loading />;
+
     return (
         <>
             <TopBar
@@ -186,6 +202,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                     specificData: { estimateSpeed: 9 },
                 }}
                 verbalName={isTracking ? `(RUNNING)` : "(PAUSED)"}
+                user={user!}
             />
             <GapView height={10} />
             <View style={styles.buttonContainer}>
