@@ -11,12 +11,12 @@
  * <=============================================================================>
  */
 
+import { validateStr } from "@/toolkit/glue_fix";
 import {
     GenericDailyLog,
     GenericObjective,
     ValidateGenericObjective,
 } from "./common_objectives";
-import { StrUtils } from "../toolkit/glue_fix";
 
 /**
  * A PersonaPlus Passive Objective™
@@ -49,7 +49,7 @@ export function ValidatePassiveObjective(
         if (
             !obj.goal ||
             typeof obj.goal !== "string" ||
-            !StrUtils.validate(obj.goal) ||
+            !validateStr(obj.goal) ||
             obj.goal.length < 3 ||
             obj.goal.length > 120
         )

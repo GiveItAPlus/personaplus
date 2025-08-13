@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import { StrUtils } from "../toolkit/glue_fix";
+import { validateStr } from "@/toolkit/glue_fix";
 import { ActiveObjective } from "./active_objectives";
 import { PassiveObjective } from "./passive_objectives";
 import { TodaysDate, ValidateTodaysDateString } from "./today";
@@ -48,14 +48,14 @@ export function ValidateGenericObjective(
         !omitIdentifier &&
         (!obj.identifier ||
             typeof obj.identifier !== "number" ||
-            !StrUtils.validate(obj.identifier.toString()) ||
+            !validateStr(obj.identifier.toString()) ||
             obj.identifier.toString().length !== 10)
     )
         return false; // if no ID or invalid ID, invalid. can be skipped because you might be creating the objective still.
     if (
         !obj.createdAt ||
         typeof obj.createdAt !== "string" ||
-        !StrUtils.validate(obj.createdAt) ||
+        !validateStr(obj.createdAt) ||
         !ValidateTodaysDateString(obj.createdAt)
     ) {
         return false;

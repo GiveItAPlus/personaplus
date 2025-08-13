@@ -98,11 +98,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
             const { status } =
                 await Location.requestForegroundPermissionsAsync();
             if (status !== "granted") {
-                console.error("Location permission not granted", {
-                    location: "@/objectives/exp_tracker.tsx",
-                    function: "startTracking",
-                    isHandler: false,
-                });
+                console.error("Location permission not granted");
                 return;
             }
 

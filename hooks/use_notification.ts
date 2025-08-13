@@ -96,11 +96,7 @@ export async function handleNotifications(channel: string): Promise<string> {
             );
         return token.data;
     } catch (e) {
-        console.error(`Error with notification handler: ${e}`, {
-            function: `handleNotificationsAsync(${channel})`,
-            location: "@/hooks/use_notification()",
-            isHandler: false,
-        });
+        console.error(`Error with handleNotificationsAsync: ${e}`);
         return "error";
     }
 }

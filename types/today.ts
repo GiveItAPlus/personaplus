@@ -1,4 +1,4 @@
-import { StrUtils } from "@/toolkit/glue_fix";
+import { validateStr } from "@/toolkit/glue_fix";
 
 /**
  * Correct current date as both an object and a string.
@@ -48,8 +48,7 @@ export function ValidateTodaysDateString(
     toValidate: any,
 ): toValidate is TodaysDate {
     return (
-        StrUtils.validate(toValidate) &&
-        TodaysDateRegularExpression.test(toValidate)
+        validateStr(toValidate) && TodaysDateRegularExpression.test(toValidate)
     );
 }
 

@@ -253,7 +253,6 @@ export async function OrchestrateUserData(
     }
 }
 
-// don't mind the name this function was given. do not change it :)
 /**
  * **Removes all of the users data.**
  *
@@ -261,14 +260,14 @@ export async function OrchestrateUserData(
  * @export
  * @param {TFunction} t Pass here the translate function, please.
  */
-export async function updateBrm5(t: TFunction): Promise<void> {
+export async function RemoveUserData(t: TFunction): Promise<void> {
     /**
      * Handles the removal.
      *
      * @async
      * @returns {Promise<number>} 0 if success, 1 if failure.
      */
-    async function releaseOperationResurgence(): Promise<number> {
+    async function removalHandler(): Promise<number> {
         try {
             await AsyncStorage.multiRemove([
                 StoredItemNames.userData,
@@ -281,16 +280,8 @@ export async function updateBrm5(t: TFunction): Promise<void> {
             router.replace(Routes.MAIN.WELCOME_SCREEN);
             return 0;
         } catch (e) {
-            ShowToast("Unknown error removing user data!"); // to the user, we show a normal message
-            console.error(
-                `Error releasing op. Resurgence AKA removing user data: ${e}`,
-                {
-                    function: "updateBrm5()",
-                    location: "@/toolkit/User.ts",
-                    isHandler: true,
-                    handlerName: "releaseOperationResurgence()",
-                },
-            ); // to the developer, the full error info and the real name of the function
+            ShowToast("Unknown error removing user data!");
+            console.error(`Error removing user data ${e}`);
             throw e;
         }
     }
@@ -304,7 +295,7 @@ export async function updateBrm5(t: TFunction): Promise<void> {
                 text: t("globals.interaction.goAheadBad"),
                 style: "destructive",
                 onPress: async (): Promise<void> => {
-                    await releaseOperationResurgence();
+                    await removalHandler();
                 },
             },
             {

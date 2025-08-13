@@ -18,7 +18,11 @@ import React, { useEffect, useState } from "react";
 import StoredItemNames from "@/constants/stored_item_names";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
-import { ErrorUserData, OrchestrateUserData, updateBrm5 } from "@/toolkit/user";
+import {
+    ErrorUserData,
+    OrchestrateUserData,
+    RemoveUserData,
+} from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
 import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
@@ -198,7 +202,7 @@ export default function Settings() {
                         )}
                         style="WOR"
                         action={async (): Promise<void> => {
-                            await updateBrm5(t);
+                            await RemoveUserData(t);
                         }}
                     />
                 </Division>

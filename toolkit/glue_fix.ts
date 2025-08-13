@@ -11,7 +11,6 @@
  * <=============================================================================>
  */
 
-import { type UnknownString } from "../node_modules/@zakahacecosas/string-utils/mod";
 import * as n from "../node_modules/@zakahacecosas/number-utils/mod";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 
@@ -28,39 +27,35 @@ export type ExpoRouterParams = Record<
 >;
 
 /**
- * [My own string utilities package, a fairly very good one.](https://jsr.io/@zakahacecosas/string-utils)
+ * Normalizes a string to help work around it.
  *
- * This export is a glue fix. The package is from JSR and not npm, and this error:
- * ```ts
- * Android Bundling failed 17621ms node_modules/expo-router/entry.js (1559 modules)
- * The package at "node_modules/@zakahacecosas/string-utils/mod.ts" attempted to import the Node standard library module "node:process".
- * It failed because the native React runtime does not include the Node standard library.
- * ```
- * forces me to copy paste the code I need from it and paste it here.
+ * [Copied from my own JSR package.](https://jsr.io/@zakahacecosas/string-utils). NodeJS gives issues trying to run with it installed.
  */
-export const StrUtils = {
-    normalize(str: string): string {
-        const normalizedStr = str
-            .normalize("NFD") // normalize á, é, etc.
-            .replace(/[\u0300-\u036f]/g, "") // remove accentuation
-            .replace(/\s+/g, " ") // turn "my      search  query" into "my search query"
-            .trim(); // turn "      my search query   " into "my search query"
+function normalizeStr(str: string): string {
+    return str
+        .normalize("NFD") // normalize á, é, etc.
+        .replace(/[\u0300-\u036f]/g, "") // remove accentuation
+        .replace(/\s+/g, " ") // turn "my      search  query" into "my search query"
+        .trim(); // turn "      my search query   " into "my search query"
+}
 
-        return normalizedStr;
-    },
-    validate(str: UnknownString): str is string {
-        if (
-            str === undefined ||
-            str === null ||
-            typeof str !== "string" ||
-            this.normalize(str) === ""
-        ) {
-            return false;
-        }
+/**
+ * Validates if a value that may be a string is really a string or not.
+ *
+ * [Copied from my own JSR package.](https://jsr.io/@zakahacecosas/string-utils). NodeJS gives issues trying to run with it installed.
+ */
+export function validateStr(str: any): str is string {
+    if (
+        str === undefined ||
+        str === null ||
+        typeof str !== "string" ||
+        normalizeStr(str) === ""
+    ) {
+        return false;
+    }
 
-        return true;
-    },
-};
+    return true;
+}
 
 /**
  * [My own string utilities package.](https://jsr.io/@zakahacecosas/number-utils)
