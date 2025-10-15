@@ -1,7 +1,7 @@
 lintCmd: "lint"
 prettyCmd: "prettify"
 destroy:
-    intensities: ["*"]
+    intensities: "*"
     targets:
         - ".expo/"
 updateCmdOverride: "dep:fix"
@@ -10,4 +10,5 @@ flagless:
     flaglessPretty: true
     flaglessDestroy: true
     flaglessUpdate: true
-launchCmd: "start:dev" # would run 'npm run start'
+launchCmd:
+    - $"start:dev"

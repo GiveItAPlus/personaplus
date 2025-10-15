@@ -1,4 +1,4 @@
-# CoreLibrary documentation
+# CoreLibrary documentation (OUTDATED AS HELL)
 
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
