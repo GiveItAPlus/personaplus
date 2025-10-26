@@ -12,6 +12,9 @@
 
 ## Give yourself a plus!
 
+> [!WARNING]
+> The app has spent a while unmaintained. I did not abandon it, I just lack the time to work on it (due to studies and higher priority projects). I promise to eventually retake it, but for now don't fork it or expect any release _soon_.
+
 **PersonaPlus** is a free and open source Android app to help you create healthy routines & habits, so you give yourself a better life, or "_give yourself a plus_" as we like to say.
 
 ### Download the app

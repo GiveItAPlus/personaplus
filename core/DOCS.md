@@ -1,5 +1,14 @@
 # CoreLibrary documentation (OUTDATED AS HELL)
 
+> [!DANGER]
+> this is extremely outdated.
+> it will be updated once I have
+>
+> - free time
+> - finished the new MET-based update
+
+---
+
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
 

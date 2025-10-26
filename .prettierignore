@@ -13,3 +13,4 @@ fknode.yaml
 .github/**
 .eslintignore
 .gitignore
+bun.lock

@@ -1,5 +1,8 @@
 # Roadmap
 
+> [!WARNING]
+> The app has spent a while unmaintained. I did not abandon it, I just lack the time to work on it (due to studies and higher priority projects). I promise to eventually retake it, but for now don't fork it or expect any release _soon_.
+
 Here I'll keep track of what I want to do short-term so I don't forget about it. It also serves as a roadmap; not as dynamic as a project / issue but simpler to maintain and gets the job done.
 
 Done tasks get checked immediately, then get removed once we make a release including that change.
@@ -13,8 +16,6 @@ Done tasks get checked immediately, then get removed once we make a release incl
 ---
 
 ## What we'll do short/mid term
-
-(OUTDATED AF)
 
 ### Planned features
 

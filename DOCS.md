@@ -125,10 +125,10 @@ Passive Objectives, on the other side, are more like goals. Ever seen any of tho
 
 ### Getting ready
 
-You'll need `npm` (I personally prefer `pnpm` but it just doesn't work good enough with Expo...). Create a fork of this project, clone it locally, and run `npm install` from the root. After that, `npm run start` every time you want to test your changes.
+You'll need `npm` (or `bun`, which is better, though it doesn't work 100% of the time). Create a fork of this project, clone it locally, and run `npm/bun install` from the root. After that, `npm/bun run start` every time you want to test your changes.
 
 > [!WARNING]
-> **Please do not manually run `npm update` or any other command EXCEPT `npm run dep:check`.**
+> **Please do not manually run `npm/bun update`, ONLY USE `npm/bun run dep:check`.**
 > Expo handles dependencies **by itself**, and it knows (probably better than both you and me) what versions of each package the project requires. Manual updates have proven to break stuff. We don't need the latest versions, we need versions that work!
 
 As an extra, while not needed, it is highly recommended to use [Microsoft Visual Studio Code](https://code.visualstudio.com/) or [VS Codium](https://vscodium.com/) with the **[Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)** extension. Additionally, `.vscode/extensions.json` includes other extensions we recommend you to have. They're optional, but will do a good job helping you work better with the project.

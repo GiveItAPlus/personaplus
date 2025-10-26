@@ -1,5 +1,5 @@
-lintCmd: "lint"
-prettyCmd: "prettify"
+lintScript: "lint"
+prettyScript: "prettify"
 destroy:
     intensities: "*"
     targets:
@@ -12,3 +12,8 @@ flagless:
     flaglessUpdate: true
 launchCmd:
     - $"start:dev"
+commitCmd:
+    # - $"project:check"
+    - $"dep:fix"
+    - $"lint"
+    - $"prettify"

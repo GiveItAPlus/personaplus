@@ -1,4 +1,7 @@
 // this comes from a self-maintained spreadsheet with all data from the PACompendium
+
+import { METCalculableActivities } from "./met_activities";
+
 // MET, ID
 const CSV = `
 3.5,bicycling_leisure-5.5mph
@@ -209,26 +212,6 @@ export const MET_DATA: Record<METCalculableActivity, number> =
 function isActivity(act: any): act is METCalculableActivity {
     return METCalculableActivities.includes(act);
 }
-
-const METCalculableActivities = [
-    "running_4-to-4.2mph",
-    "running-4.3-to-4.8mph",
-    "running_5.0-to-5.2mph",
-    "running_5.5-5.8mph",
-    "running_6-6.3mph",
-    "running_6.7mph",
-    "running_7mph",
-    "running_7.5mph",
-    "running_8mph",
-    "running_8.6mph",
-    "running_9mph",
-    "running_9.3-to-9.6mph",
-    "running_10mph",
-    "running_11mph",
-    "running_12mph",
-    "running_13mph",
-    "running_14mph",
-] as const;
 
 export type METCalculableActivity = (typeof METCalculableActivities)[number];
 
