@@ -15,7 +15,7 @@ export function HandlePendingReturn({
     renderer,
 }: {
     renderer: AllObjectivesPendingReturn;
-}): ReactElement {
+}): ReactElement | undefined {
     const { t } = useTranslation();
 
     if (!renderer || renderer === "noneExists") return <NoObjectivesExist />;
@@ -29,5 +29,5 @@ export function HandlePendingReturn({
             <Division header={t("objectives.common.noObjectives.allDone")} />
         );
 
-    return <></>;
+    return;
 }

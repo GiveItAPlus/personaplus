@@ -23,7 +23,7 @@ const config: ExpoConfig.ExpoConfig = {
         backgroundColor: "#0E1013",
     },
     notification: {
-        color: "#32FF80",
+        color: "#3280FF",
         androidMode: "default",
         icon: "./assets/resources/notification-icon.png",
         androidCollapsedTitle:
@@ -51,6 +51,7 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.RECEIVE_BOOT_COMPLETED",
             "android.permission.WAKE_LOCK",
             "android.permission.ACCESS_FINE_LOCATION",
+            "android.permission.ACCESS_COARSE_LOCATION",
         ],
         versionCode: 35,
         backgroundColor: "#0E1013",
@@ -106,7 +107,7 @@ const config: ExpoConfig.ExpoConfig = {
             "expo-notifications",
             {
                 icon: "./assets/resources/notification-icon.png",
-                color: "#32FF80",
+                color: "#3280FF",
                 defaultChannel: "default",
             },
         ],

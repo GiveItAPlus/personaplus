@@ -14,7 +14,6 @@
 import TopBar from "@/components/navigation/top_bar";
 import SessionTimer from "@/components/ui/pages/timer";
 import { ShowToast } from "@/toolkit/android";
-import React from "react";
 import { ReactElement, useState } from "react";
 import Colors from "@/constants/colors";
 import GapView from "@/components/ui/gap_view";

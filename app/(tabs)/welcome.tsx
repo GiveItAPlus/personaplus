@@ -11,8 +11,8 @@
  * <=============================================================================>
  */
 
-import React, {
-    MutableRefObject,
+import {
+    RefObject,
     ReactElement,
     ReactNode,
     useEffect,
@@ -118,7 +118,7 @@ export default function WelcomePage(): ReactElement {
     const [currentTab, setTab] = useState<number>(0);
     const amountOfTabs: number = 5;
     // hmm i don't know how to explain this one (but it works)
-    const inputRefs: MutableRefObject<TextInput[]> = useRef<TextInput[]>([]);
+    const inputRefs: RefObject<TextInput[]> = useRef<TextInput[]>([]);
 
     // formData
     const [formData, setFormData] = useState<FullProfileForCreation>({
@@ -513,8 +513,8 @@ export default function WelcomePage(): ReactElement {
         );
     }
 
-    function BottomView(): ReactElement {
-        if (currentTab === 0) return <></>;
+    function BottomView(): ReactElement | undefined {
+        if (currentTab === 0) return;
 
         return (
             <View style={styles.bottomWrapperView}>
@@ -539,7 +539,7 @@ export default function WelcomePage(): ReactElement {
         confirmButton: {
             backgroundColor: Colors.PRIMARIES.ACE.ACE,
             borderColor: Colors.PRIMARIES.ACE.ACE_STROKE,
-            color: Colors.BASIC.BLACK,
+            color: Colors.BASIC.WHITE,
             borderWidth: UniversalItemStyle.borderWidth,
             borderRadius: UniversalItemStyle.borderRadius,
             padding: UniversalItemStyle.padding,
@@ -630,18 +630,6 @@ export default function WelcomePage(): ReactElement {
                                 t,
                             ),
                         )}
-                        {
-                            /* LMAO */
-                            (formData.username.toLowerCase() === "error" ||
-                                formData.username.toLowerCase() ===
-                                    "error.") && (
-                                <BetterTextSmallerText>
-                                    {t(
-                                        "userData.formValidation.username.forbiddenError",
-                                    )}
-                                </BetterTextSmallerText>
-                            )
-                        }
                         <GapView height={5} />
                         {spawnInputField(
                             t("globals.userData.age.word"),

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import FontSizes from "@/constants/font_sizes";
 import GapView from "./gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";

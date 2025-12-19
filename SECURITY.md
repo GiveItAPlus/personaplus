@@ -28,7 +28,7 @@ Drawing attention will only increase chances of someone exploiting the app. We k
 Please follow these practices when submitting code to the project to ensure everything remains safe and sound.
 
 - **Review your code:** Okay, it might seem obvious, but everyone has probably submitted an auth token to production at least once - with this we mean, read your local diff before submitting your code.
-- **Keep dependencies up to date:** Run `npm/bun run dep:check` always before pushing your code.
+- **Keep dependencies up to date:** Run `npm run dep:check` always before pushing your code.
 - **Ensure everything is proven to work:** Make sure all tests are passing. If you even write your own tests for your new code (or for old code that wasn't test covered), even better.
 
 Thanks for helping us keeping PersonaPlus safe for everyone!

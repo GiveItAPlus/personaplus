@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import { ReactElement, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import {
     BetterTextNormalText,
@@ -51,6 +51,7 @@ import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
 import { GenerateRandomMessage } from "@/toolkit/strings";
 import { HandleEditObjective } from "@/toolkit/objectives/common";
+import { Fragment } from "react/jsx-runtime";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -389,7 +390,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                             daysOfWeek[key as keyof WeekTuple];
 
                         return (
-                            <React.Fragment key={key}>
+                            <Fragment key={key}>
                                 <View
                                     style={[
                                         styles.day,
@@ -429,11 +430,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                         style={styles.dayActualContainer}
                                     >
                                         <BetterText
-                                            textColor={
-                                                day
-                                                    ? Colors.BASIC.BLACK
-                                                    : Colors.BASIC.WHITE
-                                            }
+                                            textColor={Colors.BASIC.WHITE}
                                             fontSize={FontSizes.REGULAR}
                                             fontWeight="Medium"
                                         >
@@ -442,7 +439,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                     </Pressable>
                                 </View>
                                 {index !== 6 && <GapView width={10} />}
-                            </React.Fragment>
+                            </Fragment>
                         );
                     },
                 )}

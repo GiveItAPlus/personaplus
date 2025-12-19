@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
@@ -32,7 +32,6 @@ import {
  * Returns a view that represents the BMI context in a traffic light-like style.
  *
  * @param {("severely underweight" | "underweight" | "healthy weight" | "overweight" | "obesity")} context The BMI context
- * @returns {ReactElement}
  */
 function BMIView({
     context,
@@ -95,19 +94,17 @@ function BMIView({
 
     return (
         <View style={styles.wrapper}>
-            {Array.from({ length: 5 }).map(
-                (_: unknown, index: number): ReactElement => (
-                    <View
-                        key={index}
-                        style={[
-                            styles.cell,
-                            {
-                                backgroundColor: getColorForFragment(index, 5),
-                            },
-                        ]}
-                    />
-                ),
-            )}
+            {Array.from({ length: 5 }).map((_: unknown, index: number) => (
+                <View
+                    key={index}
+                    style={[
+                        styles.cell,
+                        {
+                            backgroundColor: getColorForFragment(index, 5),
+                        },
+                    ]}
+                />
+            ))}
         </View>
     );
 }
@@ -133,7 +130,7 @@ export default function Report(): ReactElement {
         async function handler(): Promise<void> {
             try {
                 // BMI data
-                const data: FullProfile = await OrchestrateUserData();
+                const data: FullProfile = (await OrchestrateUserData())!;
                 const BMISource: CoreLibraryResponse =
                     CoreLibrary.physicalHealth.BodyMassIndex.calculate(
                         data.age,
@@ -260,7 +257,7 @@ export default function Report(): ReactElement {
                                             string,
                                             ActiveObjectiveDailyLogEntry,
                                         ]): ReactElement => (
-                                            <React.Fragment key={id}>
+                                            <Fragment key={id}>
                                                 <BetterTextNormalText>
                                                     {entry.objective
                                                         ? t(
@@ -290,7 +287,7 @@ export default function Report(): ReactElement {
                                                           )}cal`
                                                         : "N/A"}
                                                 </BetterTextSmallText>
-                                            </React.Fragment>
+                                            </Fragment>
                                         ),
                                     )}
                                 </Division>

@@ -488,7 +488,7 @@
         },
         "toolkit": {
             "header": "Utilidades",
-            "subHeader": "Utilidades varias para diferentes tareas. Te serán útiles en algún momento.",
+            "subHeader": "Utilidades varias para diferentes tareas. Te serán útiles en algún momento. (De momento hay pocas, ya añadiremos más).",
             "buttonText": "Lanzar herramienta",
             "buttonHint": "Abre la herramienta seleccionada.",
             "stopwatchTool": {
@@ -632,9 +632,7 @@
             "formValidation": {
                 "username": {
                     "required": "El usuario no puede estar vacío.",
-                    "length": "Tu usuario debe medir entre {{minCap}} y {{maxCap}} caracteres.",
-                    "forbidden": "Este usuario incluye términos prohibidos.",
-                    "forbiddenError": "\"Error\" no se permite como usuario (lo reservamos como palabra clave para manejar errores dentro de la app)."
+                    "length": "Tu usuario debe medir entre {{minCap}} y {{maxCap}} caracteres."
                 },
                 "age": {
                     "min": "¡NO eres TAN joven! La edad mínima es de {{minCap}} años.",

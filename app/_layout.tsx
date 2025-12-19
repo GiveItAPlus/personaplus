@@ -18,6 +18,8 @@ import { Fragment, ReactElement, useEffect } from "react";
 import "@/translations/translate";
 import { StatusBar } from "react-native";
 import Colors from "@/constants/colors";
+import { OrchestrateUserData } from "@/toolkit/user";
+import i18n from "@/translations/translate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -57,6 +59,14 @@ export default function RootLayout(): ReactElement | null {
     useEffect((): void => {
         if (loaded) SplashScreen.hideAsync();
     }, [loaded]);
+
+    useEffect(() => {
+        async function h() {
+            const u = await OrchestrateUserData();
+            if (u) i18n.changeLanguage(u.language);
+        }
+        h();
+    });
 
     if (!loaded) return null;
 

@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
@@ -99,7 +99,6 @@ export default function BetterAlert({
             textColor = Colors.BASIC.BLACK;
             break;
         case "DEFAULT":
-        default:
             borderColor = Colors.MAIN.DEFAULT_ITEM.STROKE;
             backgroundColor = Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
             textColor = Colors.BASIC.WHITE;

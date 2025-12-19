@@ -7,6 +7,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 For the full commit history, keep in mind 1.200 commits exist in the [old repo](https://github.com/ZakaHaceCosas/personaplus).
 
+## Unreleased
+
+### Added
+
+- (Early work in progress, not yet finished) Added a new system for calculating calories based on MET. It should finally allow to add more exercises into the app.
+
+### Changed
+
+- Now the accent color is blue, matching the rest of the color hues.
+
+### Fixed
+
+- Fixed some internal aspects of the app (like npm-jsr interop or weird 'invalid usernames') for better functioning.
+
 ## [0.1.4] - 08-06-2025
 
 ### Fixed

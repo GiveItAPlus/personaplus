@@ -38,7 +38,7 @@ const resources = {
 export async function getDefaultLocale(): Promise<"es" | "en"> {
     try {
         const locales: Locale[] = getLocales();
-        const savedData: FullProfile = await OrchestrateUserData();
+        const savedData: FullProfile | null = await OrchestrateUserData();
 
         if (ValidateUserData(savedData, "Full") === false) {
             const locale: string | null | undefined = locales[0]?.languageCode;
@@ -61,36 +61,15 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
     }
 }
 
-/**
- * Function to initialize i18n
- *
- * @async
- * @returns {Promise<void>}
- */
-async function initializeI18n(): Promise<void> {
-    const defaultLanguage: "es" | "en" = await getDefaultLocale();
-
-    // try to init i18n with detected language and resources
-    try {
-        i18n.use(initReactI18next).init({
-            resources,
-            lng: defaultLanguage,
-            fallbackLng: "en",
-            interpolation: {
-                escapeValue: false,
-            },
-            compatibilityJSON: "v3",
-        });
-    } catch (e) {
-        console.error(`Error with i18n init: ${e}`, {
-            location: "@/translations/translate.ts",
-            isHandler: false,
-            function: "initializeI18n()",
-        });
-    }
-}
-
-initializeI18n();
+i18n.use(initReactI18next).init({
+    resources,
+    lng: "en",
+    fallbackLng: "en",
+    interpolation: {
+        escapeValue: false,
+    },
+    compatibilityJSON: "v3",
+});
 
 /**
  * Function to change the language and save it to the AsyncStorage. **Async function.**

@@ -1,5 +1,5 @@
 import { ActiveObjective } from "@/types/active_objectives";
-import React, { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import FontSizes from "@/constants/font_sizes";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import { StyleSheet, View } from "react-native";

@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import { validateStr } from "@/toolkit/glue_fix";
+import { validate } from "strings-utils";
 import {
     GenericDailyLog,
     GenericObjective,
@@ -49,7 +49,7 @@ export function ValidatePassiveObjective(
         if (
             !obj.goal ||
             typeof obj.goal !== "string" ||
-            !validateStr(obj.goal) ||
+            !validate(obj.goal) ||
             obj.goal.length < 3 ||
             obj.goal.length > 120
         )

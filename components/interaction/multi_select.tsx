@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import Colors from "@/constants/colors";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -66,13 +66,8 @@ const styles = StyleSheet.create({
 /**
  * A multiselect.
  *
- * @export
- * @param {{
- *     options: MultiSelectOption[];
- *     changeAction: (selectedValues: MultiSelectOption[]) => void;
- * }} p
- * @param {{}} p.options
- * @param {(selectedValues: {}) => void} p.changeAction
+ * @param {MultiSelectOption[]} options
+ * @param {(selectedValues: MultiSelectOption[]) => void} changeAction
  * @returns {ReactElement}
  */
 export default function MultiSelect({
@@ -123,11 +118,7 @@ export default function MultiSelect({
                             textAlign={"normal"}
                             fontSize={FontSizes.ALMOST_REGULAR}
                             fontWeight="SemiBold"
-                            textColor={
-                                isSelected
-                                    ? Colors.BASIC.BLACK
-                                    : Colors.BASIC.WHITE
-                            }
+                            textColor={Colors.BASIC.WHITE}
                         >
                             {option.label}
                         </BetterText>

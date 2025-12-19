@@ -5,7 +5,7 @@ CALCULATE THE METABOLIC EQUIVALENT OF A TASK
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { MET_DATA, METBaseActivity, METCalculableActivity } from "../met_data";
-import { kilometersPerHourToMilesPerHour } from "@zakahacecosas/number-utils";
+import { kilometersPerHourToMilesPerHour } from "numeric-utils";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024", // TODO change when we're done with this

@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import PageEnd from "@/components/static/page_end";
 import {
@@ -86,16 +86,15 @@ export default function EpicExperiments(): ReactElement {
             </BetterTextSmallerText>
             <GapView height={10} />
             <Section kind="Experiments">
-                {experiments &&
-                    experiments.map(
-                        (e: { id: string; page: string }): ReactElement => (
-                            <ExperimentDivision
-                                key={e.id}
-                                id={e.id}
-                                page={e.page}
-                            />
-                        ),
-                    )}
+                {experiments.map(
+                    (e: { id: string; page: string }): ReactElement => (
+                        <ExperimentDivision
+                            key={e.id}
+                            id={e.id}
+                            page={e.page}
+                        />
+                    ),
+                )}
             </Section>
             <PageEnd includeText={true} size={"tiny"} />
         </>

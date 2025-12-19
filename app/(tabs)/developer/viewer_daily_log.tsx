@@ -6,7 +6,7 @@ import { GetActiveObjectiveDailyLog } from "@/toolkit/objectives/active_objectiv
 import { GetPassiveObjectiveDailyLog } from "@/toolkit/objectives/passive_objectives";
 import { ActiveObjectiveDailyLog } from "@/types/active_objectives";
 import { PassiveObjectiveDailyLog } from "@/types/passive_objectives";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { ReactElement, useState } from "react";
 
 function render(

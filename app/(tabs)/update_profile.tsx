@@ -11,8 +11,8 @@
  * <=============================================================================>
  */
 
-import React, {
-    MutableRefObject,
+import {
+    RefObject,
     ReactElement,
     ReactNode,
     useEffect,
@@ -43,7 +43,6 @@ import { Routes } from "@/constants/routes";
 import { OptsForDataQuestions } from "@/constants/user_data";
 import { GetCommonScreenSize } from "@/constants/screen";
 import TopBar from "@/components/navigation/top_bar";
-import { BetterTextSmallerText } from "@/components/text/better_text_presets";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -64,7 +63,8 @@ export default function UpdateProfile(): ReactElement {
     useEffect((): void => {
         async function handle(): Promise<void> {
             try {
-                const data: BasicUserData = await OrchestrateUserData("basic");
+                const data: BasicUserData =
+                    (await OrchestrateUserData("basic"))!;
                 setWorkingData(data);
             } catch (e) {
                 console.error(`Error handling user data: ${e}`);
@@ -79,12 +79,12 @@ export default function UpdateProfile(): ReactElement {
         "gender",
         t,
     ) as SwapOption[];
-    const inputRefs: MutableRefObject<TextInput[]> = useRef<TextInput[]>([]);
+    const inputRefs: RefObject<TextInput[]> = useRef<TextInput[]>([]);
 
     async function submit(): Promise<void> {
         if (workingData && ValidateUserData(workingData, "Basic")) {
             try {
-                const data: FullProfile = await OrchestrateUserData();
+                const data: FullProfile = (await OrchestrateUserData())!;
                 const newData: FullProfile = {
                     ...data,
                     username: workingData.username,
@@ -186,16 +186,6 @@ export default function UpdateProfile(): ReactElement {
                     t,
                 ),
             )}
-            {
-                /* LMAO */
-                (workingData!.username.toLowerCase() === "error" ||
-                    workingData!.username.toLowerCase() === "error.") && (
-                    <BetterTextSmallerText>
-                        {t("userData.formValidation.username.forbiddenError")}
-                    </BetterTextSmallerText>
-                )
-            }
-
             <GapView height={5} />
             {spawnInputField(
                 t("globals.userData.age.word"),

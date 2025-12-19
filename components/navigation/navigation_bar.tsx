@@ -1,7 +1,7 @@
 // src/BottomNav.tsx
 // Navegación "de abajo" (está arriba, pero bueno)
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import BetterText from "@/components/text/better_text";

@@ -1,7 +1,7 @@
 // OpenSourceCredits.tsx
 // Credits to the amazing software that has saved me from my laziness to learn how to make a timer in React
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { View } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
 import BetterText from "@/components/text/better_text";

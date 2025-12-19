@@ -1,6 +1,6 @@
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
-import { NumUtils } from "@/toolkit/glue_fix";
+import { centimetersToInches } from "numeric-utils";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "17/04/2025",
@@ -31,10 +31,10 @@ export default function calculateUSNavyBodyFatPercentage(
     // because of the formula being... "complex", we'll convert from American't to American
     // to use the untouched US formula accurately
 
-    const freedomWaist = NumUtils.centimetersToInches(waist);
-    const freedomNeck = NumUtils.centimetersToInches(neck);
-    const freedomHeight = NumUtils.centimetersToInches(height);
-    const freedomHip = NumUtils.centimetersToInches(hip ?? 0);
+    const freedomWaist = centimetersToInches(waist);
+    const freedomNeck = centimetersToInches(neck);
+    const freedomHeight = centimetersToInches(height);
+    const freedomHip = centimetersToInches(hip ?? 0);
 
     // i'm impressed this is more accurate without using age or weight
     if (gender === "male") {

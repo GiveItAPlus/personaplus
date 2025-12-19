@@ -1,7 +1,7 @@
 // Loading.tsx
 // Página de carga
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import BetterText from "@/components/text/better_text";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";

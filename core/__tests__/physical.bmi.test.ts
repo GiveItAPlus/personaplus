@@ -74,7 +74,7 @@ describe("body mass index function handling", () => {
     test("should handle invalid age input", () => {
         expect(() => {
             calculateBodyMassIndex(-5, "male", 70, 175);
-        }).toThrowError("Invalid age provided.");
+        }).toThrow("Invalid age provided.");
     });
 
     test("should return context", () => {

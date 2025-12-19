@@ -29,6 +29,8 @@ yarn-error.*
 .DS_Store
 *.pem
 Thumbs.db
+# KDELinux
+.directory
 
 # env files
 .env*.local

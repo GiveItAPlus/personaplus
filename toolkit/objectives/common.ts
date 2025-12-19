@@ -50,7 +50,7 @@ import {
     TodaysDate,
     ValidateTodaysDateString,
 } from "@/types/today";
-import { validateStr } from "../glue_fix";
+import { validate } from "strings-utils";
 
 /**
  * Returns all objectives from AsyncStorage as an `ActiveObjective[]` or a `PassiveObjective[]` (depending on chosen category), or `null` if there aren't any objectives.
@@ -302,7 +302,7 @@ async function GetGenericObjectiveDailyLog(
                 ? StoredItemNames.activeDailyLog
                 : StoredItemNames.passiveDailyLog,
         );
-        if (!validateStr(response)) {
+        if (!validate(response)) {
             await AsyncStorage.setItem(
                 category === "active"
                     ? StoredItemNames.activeDailyLog

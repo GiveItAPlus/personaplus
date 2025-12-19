@@ -11,13 +11,7 @@
  * <=============================================================================>
  */
 
-import React, {
-    ReactElement,
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import {
     CalculateSessionPerformance,
@@ -92,7 +86,7 @@ export default function Sessions(): ReactElement {
 
     useEffect((): void => {
         async function handler(): Promise<void> {
-            setUserData(await OrchestrateUserData());
+            setUserData((await OrchestrateUserData())!);
         }
         handler();
     }, []);

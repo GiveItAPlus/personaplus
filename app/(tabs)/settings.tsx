@@ -11,18 +11,14 @@
  * <=============================================================================>
  */
 
+import { ReactElement, useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import Division from "@/components/ui/sections/division";
-import React, { useEffect, useState } from "react";
 import StoredItemNames from "@/constants/stored_item_names";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
-import {
-    ErrorUserData,
-    OrchestrateUserData,
-    RemoveUserData,
-} from "@/toolkit/user";
+import { OrchestrateUserData, RemoveUserData } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
 import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
@@ -34,15 +30,15 @@ import { cancelScheduledNotifications } from "@/hooks/use_notification";
 import { ShowToast } from "@/toolkit/android";
 import { ChangeLanguage } from "@/translations/translate";
 
-export default function Settings() {
-    const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
+export default function Settings(): ReactElement | undefined {
+    const [userData, setUserData] = useState<FullProfile | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     const { t } = useTranslation();
 
     useEffect((): void => {
         async function handler(): Promise<void> {
-            const profile: FullProfile = await OrchestrateUserData();
+            const profile: FullProfile | null = await OrchestrateUserData();
             setUserData(profile);
             setLoading(false);
         }
@@ -78,6 +74,11 @@ export default function Settings() {
     }
 
     if (loading) return <Loading />;
+
+    if (!userData) {
+        router.replace(Routes.MAIN.WELCOME_SCREEN);
+        return;
+    }
 
     return (
         <>

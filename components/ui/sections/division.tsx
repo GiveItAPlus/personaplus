@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import {

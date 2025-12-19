@@ -10,7 +10,8 @@ import GapView from "@/components/ui/gap_view";
 import { GetAllObjectives } from "@/toolkit/objectives/common";
 import { ActiveObjective, WeekTuple } from "@/types/active_objectives";
 import { PassiveObjective } from "@/types/passive_objectives";
-import React, { ReactElement, useEffect, useState } from "react";
+import { Fragment } from "react/jsx-runtime";
+import { ReactElement, useEffect, useState } from "react";
 
 export default function ViewerObjectives(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
@@ -117,7 +118,7 @@ export default function ViewerObjectives(): ReactElement {
             {activeObjectives &&
                 activeObjectives.map(
                     (obj: ActiveObjective, index: number): ReactElement => (
-                        <React.Fragment key={obj.identifier}>
+                        <Fragment key={obj.identifier}>
                             <BetterTextSmallHeader>
                                 {obj.identifier} - {obj.exercise}
                             </BetterTextSmallHeader>
@@ -157,7 +158,7 @@ export default function ViewerObjectives(): ReactElement {
                                     obj.specificData,
                                 )}
                             />
-                        </React.Fragment>
+                        </Fragment>
                     ),
                 )}
             <PageEnd includeText={false} size="tiny" />

@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { NamedExoticComponent, ReactElement } from "react";
+import { memo, NamedExoticComponent, ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 
 // TypeScript, supongo
@@ -44,16 +44,17 @@ interface GapViewProps {
  * @param {number} p.width
  * @returns {ReactElement}
  */
-const GapView: NamedExoticComponent<GapViewProps> = React.memo(
-    function GapView({ height, width }: GapViewProps): ReactElement {
-        const styles: {
-            view: { height: number | undefined; width: number | undefined };
-        } = StyleSheet.create({
-            view: { height, width },
-        });
+const GapView: NamedExoticComponent<GapViewProps> = memo(function GapView({
+    height,
+    width,
+}: GapViewProps): ReactElement {
+    const styles: {
+        view: { height: number | undefined; width: number | undefined };
+    } = StyleSheet.create({
+        view: { height, width },
+    });
 
-        return <View style={styles.view} />;
-    },
-);
+    return <View style={styles.view} />;
+});
 
 export default GapView;

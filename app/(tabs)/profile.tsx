@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import type { FullProfile } from "@/types/user";
 import BetterButton from "@/components/interaction/better_button";
-import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user";
+import { OrchestrateUserData } from "@/toolkit/user";
 import { router } from "expo-router";
 import { Routes } from "@/constants/routes";
 import { useEffect, useState } from "react";
@@ -30,15 +30,15 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function HomeScreen(): ReactElement {
-    const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
+export default function HomeScreen(): ReactElement | undefined {
+    const [userData, setUserData] = useState<FullProfile | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     const { t } = useTranslation();
 
     useEffect((): void => {
         async function handler(): Promise<void> {
-            const profile: FullProfile = await OrchestrateUserData();
+            const profile: FullProfile | null = await OrchestrateUserData();
             setUserData(profile);
             setLoading(false);
         }
@@ -114,7 +114,7 @@ export default function HomeScreen(): ReactElement {
                     {
                         text: t("globals.interaction.nevermind"),
                         style: "destructive",
-                        onPress: (): void => {}, // closes
+                        onPress: (): void => { }, // closes
                     },
                 ],
             );
@@ -126,13 +126,18 @@ export default function HomeScreen(): ReactElement {
 
     if (loading) return <Loading />;
 
+    if (!userData) {
+        router.replace(Routes.MAIN.WELCOME_SCREEN);
+        return;
+    }
+
     return (
         <>
             <TopBar
                 includeBackButton={false}
                 header={t("pages.profile.header")}
                 subHeader={t("pages.profile.subheader", {
-                    username: userData?.username,
+                    username: userData.username,
                 })}
             />
             <Section kind="Profile">
@@ -233,7 +238,6 @@ export default function HomeScreen(): ReactElement {
                     preHeader={t("globals.about")}
                     header={t("pages.profile.divisions.about.header")}
                     subHeader={t("pages.profile.divisions.about.subheader")}
-                    /* subHeader="Find out who's behind the app you're (hopefully!) enjoying right now." */
                     direction="vertical"
                     gap={0}
                 >

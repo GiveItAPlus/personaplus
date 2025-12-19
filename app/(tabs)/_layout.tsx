@@ -15,7 +15,7 @@ import NavigationBar from "@/components/navigation/navigation_bar";
 import Colors from "@/constants/colors";
 import { Routes } from "@/constants/routes";
 import { Slot, usePathname } from "expo-router";
-import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({

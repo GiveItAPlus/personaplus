@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
@@ -177,11 +177,7 @@ export default function Swap({
                             }
                             fontSize={FontSizes.ALMOST_REGULAR}
                             fontWeight="SemiBold"
-                            textColor={
-                                selectedOption?.value === option.value
-                                    ? Colors.BASIC.BLACK
-                                    : Colors.BASIC.WHITE
-                            }
+                            textColor={Colors.BASIC.WHITE}
                         >
                             {option.label}
                         </BetterText>

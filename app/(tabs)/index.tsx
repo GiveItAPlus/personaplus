@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import Section from "@/components/ui/sections/section";
@@ -82,7 +82,8 @@ export default function HomeScreen(): ReactElement {
         async function fetchData(): Promise<void> {
             try {
                 // fetch user
-                const userData: FullProfile = await OrchestrateUserData();
+                const userData: FullProfile | null =
+                    await OrchestrateUserData();
 
                 if (!ValidateUserData(userData, "Full")) {
                     router.replace(Routes.MAIN.WELCOME_SCREEN);

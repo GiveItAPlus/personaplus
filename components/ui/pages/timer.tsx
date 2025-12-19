@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
 import { HexColorString } from "@/types/color";

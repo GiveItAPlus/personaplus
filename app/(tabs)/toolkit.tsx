@@ -17,7 +17,6 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
-import React from "react";
 import { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 

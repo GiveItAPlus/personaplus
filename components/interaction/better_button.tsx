@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { DimensionValue, Pressable, StyleSheet } from "react-native";
 import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
@@ -117,7 +117,7 @@ export default function BetterButton({
         case "ACE":
             borderColor = Colors.PRIMARIES.ACE.ACE_STROKE;
             backgroundColor = Colors.PRIMARIES.ACE.ACE;
-            textColor = Colors.BASIC.BLACK;
+            textColor = Colors.BASIC.WHITE;
             break;
         case "WOR":
             borderColor = Colors.PRIMARIES.WOR.WOR_STROKE;

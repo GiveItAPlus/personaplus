@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActiveObjective } from "@/types/active_objectives";
 import Colors from "@/constants/colors";

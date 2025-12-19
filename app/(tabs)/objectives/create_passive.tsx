@@ -11,8 +11,8 @@
  * <=============================================================================>
  */
 
-import React, {
-    MutableRefObject,
+import {
+    RefObject,
     ReactElement,
     useEffect,
     useMemo,
@@ -135,7 +135,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
 
         return;
     }
-    const inputRef: MutableRefObject<TextInput[]> = useRef<TextInput[]>([]);
+    const inputRef: RefObject<TextInput[]> = useRef<TextInput[]>([]);
 
     return (
         <>

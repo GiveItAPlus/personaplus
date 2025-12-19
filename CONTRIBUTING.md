@@ -73,19 +73,19 @@ git checkout main
 
 ### 3. Install deps
 
-You'll require of NodeJS and NPM or Bun for that. We prefer `bun`, though compatibility issues _may_ appear (in which case just switch to `npm`).
+You'll require of NodeJS and npm for that.
 
 ```bash
-bun install
+npm install
 ```
 
 ### 4. Launch the dev server
 
 ```bash
-bun run start
+npm run start
 ```
 
-¡Aparcado! Now **open the Expo Go app in your Android phone** (you can get it from Google Play) and you should see PersonaPlus in the list of servers. Open it and you're ready to code! Start making changes and the app will live-refresh. Ensure to follow our [coding conventions (the docs)](https://github.com/GiveItAPlus/personaplus/blob/master/DOCS.md).
+_¡Aparcado!_ Now **open the Expo Go app in your Android phone** (you can get it from Google Play) and you should see PersonaPlus in the list of servers. Open it and you're ready to code! Start making changes and the app will live-refresh. Ensure to follow our [coding conventions (the docs)](https://github.com/GiveItAPlus/personaplus/blob/master/DOCS.md).
 
 [![Runs with Expo Go](https://img.shields.io/badge/Runs_with_Expo_Go-SDK_52-000.svg?style=for-the-badge&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/go)
 

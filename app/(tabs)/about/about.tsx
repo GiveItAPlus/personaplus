@@ -1,6 +1,6 @@
 // About.tsx
 // Info about the app
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { version } from "../../../package.json";
 import { Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";

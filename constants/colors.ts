@@ -66,15 +66,10 @@ const Colors: ColorsObject = {
     /** Primary colors */
     PRIMARIES: {
         ACE: {
-            // I'm testing full blue & full green. GREEN:
             /** Main color */
-            ACE: "#32FF80",
+            ACE: "#3280FF",
             /** Stroke color for ACE */
-            ACE_STROKE: "#198040",
-            /** Main color */
-            // ACE: "#3280FF",
-            /** Stroke color for ACE */
-            // ACE_STROKE: "#194080",
+            ACE_STROKE: "#194080",
             /** Special color used for sliders */
             // ACE_SCROLL: "#2A61BB",
         },

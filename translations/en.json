@@ -488,7 +488,7 @@
         },
         "toolkit": {
             "header": "Toolkit",
-            "subHeader": "Various tools for different tasks. They may come handy in certain moments. They're health related, of course.",
+            "subHeader": "Various tools for different tasks. They may come handy in certain moments. (For now they're just a few, we'll add more later on).",
             "buttonText": "Launch tool",
             "buttonHint": "Opens the chosen tool.",
             "stopwatchTool": {
@@ -632,9 +632,7 @@
             "formValidation": {
                 "username": {
                     "required": "Username cannot be empty.",
-                    "length": "Your username must be between {{minCap}} and {{maxCap}} characters long.",
-                    "forbidden": "This username contains forbidden terms.",
-                    "forbiddenError": "\"Error\" is not allowed as a username (we reserve it as a keyword for in-app error-handling)."
+                    "length": "Your username must be between {{minCap}} and {{maxCap}} characters long."
                 },
                 "age": {
                     "min": "You're NOT that young! Min age is {{minCap}}.",

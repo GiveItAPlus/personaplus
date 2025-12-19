@@ -10,7 +10,8 @@ import {
     getAllScheduledNotificationsAsync,
     NotificationRequest,
 } from "expo-notifications";
-import React, { ReactElement, useEffect, useState } from "react";
+import { Fragment } from "react/jsx-runtime";
+import { ReactElement, useEffect, useState } from "react";
 
 export default function ViewerNotifications(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
@@ -58,9 +59,7 @@ export default function ViewerNotifications(): ReactElement {
                                     notification.content;
 
                                 return (
-                                    <React.Fragment
-                                        key={notification.identifier}
-                                    >
+                                    <Fragment key={notification.identifier}>
                                         <BetterTextSmallHeader>
                                             Reminder
                                             {/* if we add more types of notifications, do here an if (title === t("whatever")) return "x" */}
@@ -75,7 +74,7 @@ export default function ViewerNotifications(): ReactElement {
                                             ].join("\n")}
                                         </BetterTextSmallText>
                                         <GapView height={5} />
-                                    </React.Fragment>
+                                    </Fragment>
                                 );
                             },
                         )

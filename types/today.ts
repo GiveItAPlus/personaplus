@@ -1,4 +1,4 @@
-import { validateStr } from "@/toolkit/glue_fix";
+import { validate } from "strings-utils";
 
 /**
  * Correct current date as both an object and a string.
@@ -47,9 +47,7 @@ const TodaysDateRegularExpression: RegExp = new RegExp(
 export function ValidateTodaysDateString(
     toValidate: any,
 ): toValidate is TodaysDate {
-    return (
-        validateStr(toValidate) && TodaysDateRegularExpression.test(toValidate)
-    );
+    return validate(toValidate) && TodaysDateRegularExpression.test(toValidate);
 }
 
 /**

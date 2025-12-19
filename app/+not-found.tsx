@@ -1,4 +1,3 @@
-import React from "react";
 import BetterButton from "@/components/interaction/better_button";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import * as Router from "expo-router";
@@ -7,8 +6,9 @@ import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";
+import { ReactElement } from "react";
 
-export default function NotFoundScreen(): React.ReactElement {
+export default function NotFoundScreen(): ReactElement {
     const requestedPath: string = Router.usePathname();
     const { t } = useTranslation();
 

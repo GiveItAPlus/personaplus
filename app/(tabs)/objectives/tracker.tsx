@@ -1,5 +1,5 @@
 // TODO - figure this thing out
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { StyleSheet, View } from "react-native";
 import { BetterTextNormalText } from "@/components/text/better_text_presets";
@@ -86,7 +86,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
     const [isTracking, setIsTracking] = useState(false);
     const [locationSubscription, setLocationSubscription] =
         useState<Location.LocationSubscription | null>(null);
-    const [user, setUser] = useState<FullProfile>();
+    const [user, setUser] = useState<FullProfile | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     // startTracking and stopTracking were for whatever reason considered "dependencies" of the useEffect below (eslint)

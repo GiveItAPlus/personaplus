@@ -33,7 +33,8 @@
         "suppressImplicitAnyIndexErrors": false,
         "diagnostics": true,
         "downlevelIteration": false,
-        "moduleResolution": "bundler", // this should fix JSR import from string-utils.
+        "jsx": "react-native",
+        "jsxImportSource": "react",
     },
     "include": [
         "**/*.ts",

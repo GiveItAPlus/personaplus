@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import Colors from "@/constants/colors";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";

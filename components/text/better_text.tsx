@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { Text, TextStyle } from "react-native";
 import Colors from "@/constants/colors";
 import { FontFamily, FontWeight } from "@/types/font_weights";

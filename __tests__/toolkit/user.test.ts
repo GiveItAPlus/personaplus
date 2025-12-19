@@ -1,8 +1,4 @@
-import {
-    ErrorUserData,
-    OrchestrateUserData,
-    ValidateUserData,
-} from "@/toolkit/user";
+import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { FullProfile } from "@/types/user";
 
@@ -47,14 +43,14 @@ describe("OrchestrateUserData", () => {
         mockGetItem.mockResolvedValueOnce(null);
 
         const result = await OrchestrateUserData();
-        expect(result).toEqual(ErrorUserData);
+        expect(result).toEqual(null);
     });
 
     test("should return null for empty or invalid JSON data", async () => {
         mockGetItem.mockResolvedValueOnce("");
 
         const result = await OrchestrateUserData();
-        expect(result).toEqual(ErrorUserData);
+        expect(result).toEqual(null);
     });
 });
 
@@ -241,20 +237,5 @@ describe("ValidateUserData", () => {
         );
         expect(result1).toBe(false);
         expect(result2).toBe(false);
-    });
-
-    test("should return false for wrong username", () => {
-        const result = ValidateUserData(
-            {
-                gender: "male",
-                age: 25,
-                weight: 75,
-                height: 180,
-                username: "ErrOr.",
-                healthConditions: [],
-            },
-            "Basic",
-        );
-        expect(result).toBe(false);
     });
 });

@@ -14,7 +14,6 @@
 import TopBar from "@/components/navigation/top_bar";
 import { BetterTextNormalText } from "@/components/text/better_text_presets";
 import { GetCommonScreenSize } from "@/constants/screen";
-import React from "react";
 import { ReactElement, useEffect, useRef, useState } from "react";
 import StopwatchTimer, {
     StopwatchTimerMethods,

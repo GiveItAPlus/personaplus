@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
 import { SafelyOpenUrl } from "@/toolkit/routing";

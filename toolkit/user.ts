@@ -48,7 +48,6 @@ export const VALID_USER_CAPS = {
     USERNAME: {
         MIN: 3,
         MAX: 40,
-        INVALID: ["error", "error."],
     },
 };
 
@@ -74,6 +73,7 @@ export function ValidateUserData(
     user: any,
     level: "BasicHealth" | "Basic" | "Full",
 ): user is BasicUserHealthData | BasicUserData | FullProfile {
+    if (!user || typeof user !== "object") return false;
     const {
         gender,
         age,
@@ -116,8 +116,7 @@ export function ValidateUserData(
         username !== undefined &&
         username.trim() !== "" &&
         username.trim().length >= VALID_USER_CAPS.USERNAME.MIN &&
-        username.trim().length <= VALID_USER_CAPS.USERNAME.MAX &&
-        !VALID_USER_CAPS.USERNAME.INVALID.includes(username.toLowerCase());
+        username.trim().length <= VALID_USER_CAPS.USERNAME.MAX;
     const isThinkHourValid: boolean =
         theThinkHour !== null &&
         theThinkHour !== undefined &&
@@ -185,72 +184,66 @@ export function ValidateUserData(
 type Filter = "basic" | "health";
 
 /**
- * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Returns `ErrorUserData` if an error happens - it shouldn't do that however. The home page validates user data, so you should assume data is valid.
+ * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Returns `null` if no data exists (new user). The home page validates user data, so you should assume data is valid.
  *
  * @export
  * @async
  * @param {"basic" | "health"} filter If passed, it will instead return the specified (basic data or health data).
- * @returns {Promise<FullProfile | BasicUserData | BasicUserHealthData>} The specified user data object (`FullProfile` by default) if a profile exists and the function succeeds in orchestrating it, `ErrorUserData` otherwise.
+ * @returns {Promise<FullProfile | BasicUserData | BasicUserHealthData | null>} The specified user data object (`FullProfile` by default) if a profile exists and the function succeeds in orchestrating it, `null` otherwise.
  */
 export async function OrchestrateUserData(
     filter: "basic",
-): Promise<BasicUserData>;
+): Promise<BasicUserData | null>;
 export async function OrchestrateUserData(
     filter: "health",
-): Promise<BasicUserHealthData>;
+): Promise<BasicUserHealthData | null>;
 export async function OrchestrateUserData(
     filter?: undefined,
-): Promise<FullProfile>;
+): Promise<FullProfile | null>;
 export async function OrchestrateUserData(
     filter?: Filter,
-): Promise<FullProfile | BasicUserData | BasicUserHealthData> {
-    try {
-        const data: string | null = await AsyncStorage.getItem(
-            StoredItemNames.userData,
-        );
+): Promise<FullProfile | BasicUserData | BasicUserHealthData | null> {
+    const data: string | null = await AsyncStorage.getItem(
+        StoredItemNames.userData,
+    );
 
-        if (
-            !data ||
-            data === null ||
-            data === "" ||
-            Object.keys(JSON.parse(data)).length === 0
-        ) {
-            throw new Error("NO_DATA");
-        }
+    if (
+        !data ||
+        data === null ||
+        data === "" ||
+        Object.keys(JSON.parse(data)).length === 0
+    )
+        return null;
 
-        const fullData: FullProfile = JSON.parse(data);
+    const fullData: FullProfile = JSON.parse(data);
 
-        if (filter === "basic") {
-            return {
-                username: fullData.username,
-                age: fullData.age,
-                weight: fullData.weight,
-                height: fullData.height,
-                gender: fullData.gender,
-                theThinkHour: fullData.theThinkHour,
-                activeness: fullData.activeness,
-                sleepHours: fullData.sleepHours,
-                healthConditions: fullData.healthConditions,
-            };
-        }
-
-        if (filter === "health") {
-            return {
-                age: fullData.age,
-                weight: fullData.weight,
-                height: fullData.height,
-                gender: fullData.gender,
-                activeness: fullData.activeness,
-                sleepHours: fullData.sleepHours,
-                healthConditions: fullData.healthConditions,
-            };
-        }
-
-        return fullData;
-    } catch (e) {
-        console.error(`Error orchestrating user data! ${e}`);
-        return ErrorUserData;
+    if (filter === "basic") {
+        return {
+            username: fullData.username,
+            age: fullData.age,
+            weight: fullData.weight,
+            height: fullData.height,
+            gender: fullData.gender,
+            theThinkHour: fullData.theThinkHour,
+            activeness: fullData.activeness,
+            sleepHours: fullData.sleepHours,
+            healthConditions: fullData.healthConditions,
+        };
     }
+
+    if (filter === "health") {
+        return {
+            age: fullData.age,
+            weight: fullData.weight,
+            height: fullData.height,
+            gender: fullData.gender,
+            activeness: fullData.activeness,
+            sleepHours: fullData.sleepHours,
+            healthConditions: fullData.healthConditions,
+        };
+    }
+
+    return fullData;
 }
 
 /**
@@ -308,39 +301,13 @@ export async function RemoveUserData(t: TFunction): Promise<void> {
     );
 }
 
-/**
- * Use this only as placeholder data in case an error happens fetching user data.
- *
- * @type {FullProfile}
- */
-export const ErrorUserData: FullProfile = {
-    username: "Error",
-    age: 0,
-    height: 0,
-    weight: 0,
-    theThinkHour: "0",
-    gender: "female",
-    language: "en",
-    activeness: "poor",
-    focus: "noPriority",
-    sleepHours: 3,
-    isNewUser: true,
-    wantsNotifications: true,
-    healthConditions: "none",
-};
-
 const validatorPrefix = "errors.userData.formValidation";
 
 export const IndividualUserDataValidators = {
     username: {
         validator: (username: string): boolean => {
             return username.length === 0 ||
-                (username.length >= 3 &&
-                    username.length < 40 &&
-                    !(
-                        username.toLowerCase() === "error" ||
-                        username.toLowerCase() === "error."
-                    ))
+                (username.length >= 3 && username.length < 40)
                 ? true
                 : false;
         },
@@ -353,11 +320,7 @@ export const IndividualUserDataValidators = {
                         minCap: VALID_USER_CAPS.USERNAME.MIN,
                         maxCap: VALID_USER_CAPS.USERNAME.MAX,
                     })
-                  : VALID_USER_CAPS.USERNAME.INVALID.includes(
-                          username.toLowerCase(),
-                      )
-                    ? t(`${validatorPrefix}.username.forbidden`)
-                    : "";
+                  : "";
         },
     },
     age: {

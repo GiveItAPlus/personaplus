@@ -1,7 +1,7 @@
 // Results.tsx
 // Results page for when a session is done.
 
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import { ReactElement, useEffect, useMemo, useState } from "react";
 import {
     router,
     UnknownOutputParams,
@@ -45,7 +45,7 @@ export default function Results(): ReactElement {
         async function fetchData(): Promise<void> {
             try {
                 // fetch user
-                const userData: FullProfile = await OrchestrateUserData();
+                const userData: FullProfile = (await OrchestrateUserData())!;
                 setUserData(userData);
             } finally {
                 // setLoading(false);

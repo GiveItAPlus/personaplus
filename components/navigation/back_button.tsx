@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { FC, memo, ReactElement } from "react";
 import BetterText from "@/components/text/better_text";
 import { useTranslation } from "react-i18next";
 import FontSizes from "@/constants/font_sizes";
@@ -28,7 +28,7 @@ interface BackButtonProps {
  * @param {TranslateFunction} p.t Pass here the translate function, please.
  * @returns {ReactElement} A JSX element
  */
-const BackButtonComponent: React.FC<BackButtonProps> = ({
+const BackButtonComponent: FC<BackButtonProps> = ({
     t,
 }: {
     t: TFunction;
@@ -43,7 +43,7 @@ const BackButtonComponent: React.FC<BackButtonProps> = ({
     </BetterText>
 );
 
-const BackButton = React.memo(BackButtonComponent);
+const BackButton = memo(BackButtonComponent);
 
 BackButton.displayName = "BackButton";
 

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import Colors from "@/constants/colors";
 import { GetCommonScreenSize } from "@/constants/screen";
@@ -25,7 +25,7 @@ export default function IslandDivision({
     children,
     alignment,
     direction,
-}: IslandDivisionProps) {
+}: IslandDivisionProps): ReactElement {
     return (
         <View
             style={[
