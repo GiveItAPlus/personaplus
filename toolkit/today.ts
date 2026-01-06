@@ -20,13 +20,6 @@ import {
 } from "@/types/today";
 
 /**
- * (not funny)
- *
- * @type {Date}
- */
-const reactsFunnyDate: Date = new Date();
-
-/**
  * Gets the current day of the week, adjusted to start on Monday.
  *
  * This adjustment is necessary because the `Date.getDay()` method returns
@@ -39,7 +32,7 @@ const reactsFunnyDate: Date = new Date();
  * @constant {number} ADJUSTED_TODAY - The adjusted index for today with Monday as 0 and Sunday as 6.
  */
 const ADJUSTED_TODAY: number =
-    reactsFunnyDate.getDay() === 0 ? 6 : new Date().getDay() - 1; // Adjust Sunday to index 6, otherwise shift back by one
+    new Date().getDay() === 0 ? 6 : new Date().getDay() - 1; // Adjust Sunday to index 6, otherwise shift back by one
 
 const TODAY_CODE_ARRAY: (keyof WeekTuple)[] = [
     "MO",
@@ -81,6 +74,13 @@ function StringifyDate(date: Date | TodaysDateObject): TodaysDate {
  * @returns {CorrectCurrentDate} An object with the date string and another object with the raw values.
  */
 function GetCurrentDateCorrectly(): CorrectCurrentDate {
+    /**
+     * (not funny)
+     *
+     * @type {Date}
+     */
+    const reactsFunnyDate: Date = new Date();
+
     return {
         string: StringifyDate(reactsFunnyDate),
         object: {
@@ -152,30 +152,6 @@ function AlterDate(date: TodaysDateObject, shift: number): TodaysDateObject {
         month: tempFunnyDate.getMonth() + 1,
         year: tempFunnyDate.getFullYear(),
     };
-}
-
-/**
- * Turns `x` minutes into an "x min.", "x s.", or "x h." string.
- *
- * @param {number} minutes Minute value.
- * @returns {string} Stringified value.
- */
-function StringifyMinutes(minutes: number): string {
-    let duration: number;
-    let word: string;
-
-    if (minutes < 1.0) {
-        duration = minutes * 60;
-        word = "s.";
-    } else if (minutes >= 60.0) {
-        duration = minutes / 60;
-        word = "h.";
-    } else {
-        duration = minutes;
-        word = minutes === 1 ? "min." : "mins.";
-    }
-
-    return `${duration} ${word}`;
 }
 
 /**
@@ -251,7 +227,6 @@ export {
     GetCurrentDateCorrectly,
     JavaScriptifyTodaysDate,
     StringifyDate,
-    StringifyMinutes,
     TurnJavaScriptDateIntoCurrentDate,
     TimeStringUtilities,
 };

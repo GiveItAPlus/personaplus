@@ -114,7 +114,7 @@ export default function HomeScreen(): ReactElement | undefined {
                     {
                         text: t("globals.interaction.nevermind"),
                         style: "destructive",
-                        onPress: (): void => { }, // closes
+                        onPress: (): void => {}, // closes
                     },
                 ],
             );

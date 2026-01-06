@@ -16,7 +16,6 @@
     "editor.insertSpaces": true,
     "editor.renderWhitespace": "trailing",
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "explorer.confirmDelete": true,
     "prettier.configPath": "./.prettierrc",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[json]": {

@@ -4,7 +4,7 @@ destroy:
     intensities: "*"
     targets:
         - ".expo/"
-updateCmdOverride: "dep:fix"
+updateCmdOverride: "upd"
 flagless:
     flaglessLint: true
     flaglessPretty: true
@@ -14,6 +14,6 @@ launchCmd:
     - $"start:dev"
 commitCmd:
     # - $"project:check"
-    - $"dep:fix"
+    - $"upd"
     - $"lint"
     - $"prettify"

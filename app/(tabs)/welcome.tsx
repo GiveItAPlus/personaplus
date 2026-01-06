@@ -243,7 +243,7 @@ export default function WelcomePage(): ReactElement {
                     "[]",
                 );
                 console.log(
-                    `${userData.username} was successfully registered with no errors. Give yourself a plus!\n${validData}`,
+                    `${userData.username} was successfully registered with no errors. Give yourself a plus!\n${JSON.stringify(validData)}`,
                 );
                 router.replace(Routes.MAIN.HOME);
             } catch (e) {
