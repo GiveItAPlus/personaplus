@@ -1,12 +1,11 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2026 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
  *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
- * You are in: @/app/(tabs)/about/license.tsx
- * Basically: The GPL license. A bit strict, but it is what it is.
+ * The GPL license. A bit strict, but it is what it is.
  *
  * <=============================================================================>
  */
@@ -30,7 +29,7 @@ export default function License(): ReactElement {
                 subHeader="GPL-3.0-only"
             />
             <BetterText fontSize={10} fontWeight="Regular">
-                Copyright (C) 2025 ZakaHaceCosas
+                Copyright (C) 2026 ZakaHaceCosas
             </BetterText>
             <GapView height={10} />
             <BetterText fontSize={15} fontWeight="Regular">

@@ -139,19 +139,18 @@ Before your actual code, care to place this comment at the beginning.
 ```ts
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2026 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
  *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
- * You are in: {LOCATION}
- * Basically: {DESCRIPTION}
+ * {DESCRIPTION}
  *
  * <=============================================================================>
  */
 ```
 
-Being {LOCATION} the `@/absolute/path.ts` (with file extension) to that file, and {DESCRIPTION} a brief description of what the code of that file should do.
+Being {DESCRIPTION} a brief description of what the code of that file should do.
 
 > [!TIP]
 > If you're using VSCode, just type `beginFile` - it's a VSCode workspace code snippet you can quickly complete with the `TAB` key.

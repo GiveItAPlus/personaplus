@@ -1,5 +1,14 @@
-// src/BottomNav.tsx
-// Navegación "de abajo" (está arriba, pero bueno)
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2023-2026 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this repository for more details.
+ * <=============================================================================>
+ *
+ * Bottom navbar.
+ *
+ * <=============================================================================>
+ */
 
 import { ReactElement } from "react";
 import { Pressable, StyleSheet, View } from "react-native";

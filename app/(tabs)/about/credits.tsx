@@ -1,5 +1,14 @@
-// OpenSourceCredits.tsx
-// Credits to the amazing software that has saved me from my laziness to learn how to make a timer in React
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2023-2026 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this repository for more details.
+ * <=============================================================================>
+ *
+ * Credits to the amazing software that has saved me from my laziness to learn how to make a timer in React (among many other things).
+ *
+ * <=============================================================================>
+ */
 
 import { ReactElement } from "react";
 import { View } from "react-native";

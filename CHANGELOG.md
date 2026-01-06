@@ -19,7 +19,8 @@ For the full commit history, keep in mind 1.200 commits exist in the [old repo](
 
 ### Fixed
 
-- Fixed some internal aspects of the app (like npm-jsr interop or weird 'invalid usernames') for better functioning.
+- Fixed some instability with language handling.
+- Fixed many internal aspects of the app for better and stabler functioning.
 
 ## [0.1.4] - 08-06-2025
 

@@ -1,6 +1,6 @@
 # PersonaPlus Branding
 
-© 2025. All rights reserved / Todos los derechos reservados.
+© 2026. All rights reserved / Todos los derechos reservados.
 
 [EN] All design elements are created by [@ZakaHaceCosas](https://github.com/ZakaHaceCosas) unless otherwise specified. Although this application, its source code, and associated materials are open-source [under the GPL-3.0 license](https://github.com/GiveItAPlus/personaplus/blob/master/LICENSE.md), the design works are protected as intellectual property.
 

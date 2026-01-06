@@ -1,12 +1,11 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2026 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
  *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
- * You are in: @/toolkit/objectives/active_objectives.ts
- * Basically: Objectives are one of the most important parts of the app, and this toolkit contains all the base functions to interact with ACTIVE objectives.
+ * Objectives are one of the most important parts of the app, and this toolkit contains all the base functions to interact with ACTIVE objectives.
  *
  * <=============================================================================>
  */

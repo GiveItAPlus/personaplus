@@ -1,12 +1,11 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2026 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
  *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
- * You are in: @/app/_layout.tsx
- * Basically: The layout of the entire app. It's the layout, font, and splashscreen loader.
+ * The layout of the entire app. It's the layout, font, and splashscreen loader.
  *
  * <=============================================================================>
  */
