@@ -21,7 +21,7 @@ export interface GenericObjective {
      *
      * @type {number}
      */
-    identifier: number;
+    id: number;
     /**
      * Date of the creation of this objective.
      *
@@ -45,10 +45,10 @@ export function ValidateGenericObjective(
     if (!obj || typeof obj !== "object") return false;
     if (
         !omitIdentifier &&
-        (!obj.identifier ||
-            typeof obj.identifier !== "number" ||
-            !validate(obj.identifier.toString()) ||
-            obj.identifier.toString().length !== 10)
+        (!obj.id ||
+            typeof obj.id !== "number" ||
+            !validate(obj.id.toString()) ||
+            obj.id.toString().length !== 10)
     )
         return false; // if no ID or invalid ID, invalid. can be skipped because you might be creating the objective still.
     if (
@@ -69,16 +69,13 @@ export function ValidateGenericObjective(
  * @export
  */
 export type GenericDailyLog<T> = {
-    /**
-     * Each entry uses the date as a key, and then each objective has its own entry.
-     */
-    [date: TodaysDate]: {
-        /**
-         * Each objective uses its ID as the key, then an entry of type `T` as the value.
-         */
-        [identifier: number]: T;
-    };
-};
+    /** ID of the objective. */
+    id: number;
+    /** Date of this log. */
+    date: TodaysDate;
+    /** Data itself. */
+    data: T;
+}[];
 
 /**
  * A daily log that may be both Active or Passive - it uses `unknown` to avoid type checking.

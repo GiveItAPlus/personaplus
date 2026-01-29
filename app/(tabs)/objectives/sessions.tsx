@@ -180,13 +180,13 @@ export default function Sessions(): ReactElement {
                     params: {
                         burntCalories: response.result,
                         elapsedTime: getTimeInMinutes(),
-                        id: objective.identifier,
+                        id: objective.id,
                     },
                 });
             } catch (e) {
                 console.error(
                     `Error finishing session for ${
-                        objective ? objective.identifier : "(UNKNOWN)"
+                        objective ? objective.id : "(UNKNOWN)"
                     }: ${e}`,
                 );
             }

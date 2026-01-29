@@ -19,8 +19,19 @@
     "preset": "jest-expo",
     "setupFiles": [
       "./jest.setup.js"
-    ]
+    ],
+    "transform": {},
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "testEnvironment": "node",
+    "globals": {
+      "ts-jest": {
+        "useESM": true
+      }
+    }
   },
+  "type": "module",
   "author": {
     "name": "ZakaHaceCosas",
     "url": "https://zakahacecosas.github.io/"
@@ -44,7 +55,7 @@
     "@react-native-picker/picker": "2.11.1",
     "@react-navigation/native": "^7.1.8",
     "dotenv": "^17.2.3",
-    "expo": "~54.0.30",
+    "expo": "~54.0.32",
     "expo-build-properties": "~1.0.10",
     "expo-constants": "~18.0.12",
     "expo-dev-client": "~6.0.20",
@@ -55,8 +66,8 @@
     "expo-linking": "~8.0.11",
     "expo-localization": "~17.0.8",
     "expo-location": "~19.0.8",
-    "expo-notifications": "~0.32.15",
-    "expo-router": "~6.0.21",
+    "expo-notifications": "~0.32.16",
+    "expo-router": "~6.0.22",
     "expo-splash-screen": "~31.0.13",
     "expo-sqlite": "~16.0.10",
     "expo-status-bar": "~3.0.9",

@@ -25,8 +25,12 @@ import type {
     PassiveObjectiveDailyLog,
     PassiveObjectiveWithoutId,
 } from "@/types/passive_objectives";
-import { TodaysDate, ValidateTodaysDateString } from "@/types/today";
-import { GetCurrentDateCorrectly, JavaScriptifyTodaysDate } from "../today";
+import { TodaysDate } from "@/types/today";
+import {
+    DifferenceInDays,
+    GetCurrentDateCorrectly,
+    JavaScriptifyTodaysDate,
+} from "../today";
 import { ShowToast } from "../android";
 import AsyncStorage from "expo-sqlite/kv-store";
 import StoredItemNames from "@/constants/stored_item_names";
@@ -72,14 +76,14 @@ async function EditPassiveObjective(
         const newObjective: PassiveObjective = {
             ...oldObj, // 1st go the oldies
             ...obj, // 2nd go the overrides
-            identifier: id, // 3rd goes the ID override
+            id, // 3rd goes the ID override
         };
 
         let objs: PassiveObjective[] | null = await GetAllObjectives("passive");
         if (!objs || objs.length === 0) objs = [];
 
         const index: number = objs.findIndex(
-            (o: PassiveObjective): boolean => o.identifier === id,
+            (o: PassiveObjective): boolean => o.id === id,
         );
 
         if (index !== -1) {
@@ -103,7 +107,7 @@ async function EditPassiveObjective(
                 }),
             );
             console.log(
-                `Edited ${newObjective.goal} objective with ID ${newObjective.identifier} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
+                `Edited ${newObjective.goal} objective with ID ${newObjective.id} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
                     newObjective,
                 )}"`,
             );
@@ -177,24 +181,25 @@ async function SavePassiveObjectiveToDailyLog(
         // Fetch old data
         const dailyData: PassiveObjectiveDailyLog =
             await GetPassiveObjectiveDailyLog();
-        const today: TodaysDate = GetCurrentDateCorrectly().string;
+        const date: TodaysDate = GetCurrentDateCorrectly().string;
         const objective: PassiveObjective | null =
             await GetPassiveObjective(id);
 
         if (!objective) throw new Error(`${id} is a wrong identifier.`);
 
-        // If there's no old data for today, creates an {} for today
-        if (!dailyData[today]) dailyData[today] = {};
-
         // Saves the objective data
-        dailyData[today][id] = {
-            wasDone: wasDone,
-            objective: objective,
-        };
+        dailyData.push({
+            id,
+            date,
+            data: {
+                wasDone,
+                objective,
+            },
+        });
 
         // Updates data and puts it back to AsyncStorage
         await SaveGenericObjectiveDailyLog(dailyData, "passive");
-        console.log(`Marked passive obj ${id} as done for ${today}.`);
+        console.log(`Marked passive obj ${id} as done for ${date}.`);
     } catch (e) {
         throw new Error(`Error saving user's goal for objective ${id}: ${e}`);
     }
@@ -214,64 +219,37 @@ async function GetPendingPassiveObjectives(): Promise<AllObjectivesPendingReturn
  * Gets the user's streak on a passive objective.
  *
  * @async
- * @param {number} identifier Identifier of the objective.
+ * @param {number} id Identifier of the objective.
  * @returns {Promise<number>} The number of days in a row the user's been complying with this passive objective.
  */
-async function GetPassiveObjectiveStreak(identifier: number): Promise<number> {
-    const log: PassiveObjectiveDailyLog = await GetPassiveObjectiveDailyLog();
+async function GetPassiveObjectiveStreak(
+    id: number,
+    __log?: PassiveObjectiveDailyLog,
+): Promise<number> {
+    const log: PassiveObjectiveDailyLog =
+        __log ?? (await GetPassiveObjectiveDailyLog());
     // no log no streak
-    if (!log) return 0;
+    if (!log || log.length === 0) return 0;
 
     let currentDate: Date = new Date();
-    currentDate.setUTCHours(23, 59, 0, 0);
-    // 00:00:00:00 is also an option, consider it in case this fails
-
-    type entry = [string, { [identifier: number]: { wasDone: boolean } }];
 
     // filter logs to only have the ones for the specified identifier
-    const userLogs: { date: TodaysDate; wasDone: boolean }[] = Object.entries(
-        log,
-    )
-        .filter(
-            ([_, entry]: entry): boolean | undefined =>
-                entry && entry[identifier] && entry[identifier].wasDone,
-        )
-        .filter(
-            ([date, entry]: entry): boolean =>
-                ValidateTodaysDateString(date) &&
-                entry[identifier] !== undefined,
-        )
-        .map(
-            ([date, entry]: entry): { date: TodaysDate; wasDone: boolean } => ({
-                date: date as TodaysDate,
-                wasDone: entry[identifier]!.wasDone,
-            }),
+    const userLogs: PassiveObjectiveDailyLog = log
+        .filter((entry) => entry.id === id)
+        .sort(
+            (a: { date: TodaysDate }, b: { date: TodaysDate }): number =>
+                JavaScriptifyTodaysDate(b.date).getTime() -
+                JavaScriptifyTodaysDate(a.date).getTime(),
         );
-
-    // sort logs by date
-    userLogs.sort(
-        (a: { date: TodaysDate }, b: { date: TodaysDate }): number =>
-            JavaScriptifyTodaysDate(a.date).getTime() -
-            JavaScriptifyTodaysDate(b.date).getTime(),
-    );
 
     let streak: number = 0;
 
     // loop thru all entries
-    for (let i: number = userLogs.length - 1; i >= 0; i--) {
-        const currentLog: { date: TodaysDate; wasDone: boolean } | undefined =
-            userLogs[i];
-        if (!currentLog) break;
+    for (const currentLog of userLogs) {
         const logDate: Date = JavaScriptifyTodaysDate(currentLog.date);
-        logDate.setUTCHours(23, 59, 0, 0);
+        const diffDays: number = DifferenceInDays(currentDate, logDate);
 
-        // check if the log is from yesterday
-        // .floor to obviously get 1 or 2 days streak and not 1.42
-        const diffDays: number = Math.ceil(
-            (currentDate.getTime() - logDate.getTime()) / (1000 * 60 * 60 * 24),
-        );
-
-        if (diffDays === 1 && currentLog.wasDone) {
+        if (diffDays === 1 && currentLog.data.wasDone) {
             streak += 1;
             currentDate = logDate;
         } else if (diffDays === 0) {

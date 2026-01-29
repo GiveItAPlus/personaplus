@@ -201,6 +201,15 @@ function parseTimeString(timeString: string): TimeObject {
     return time;
 }
 
+function DifferenceInDays(a: Date, b: Date): number {
+    const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+    return Math.floor((utc2 - utc1) / MS_PER_DAY);
+}
+
 const TimeStringUtilities = {
     Format: ({
         hours,
@@ -228,4 +237,5 @@ export {
     StringifyDate,
     TurnJavaScriptDateIntoCurrentDate,
     TimeStringUtilities,
+    DifferenceInDays,
 };

@@ -1,6 +1,6 @@
 // https://docs.expo.dev/guides/using-eslint/
 
-module.exports = {
+export default {
     extends: ["expo", "prettier"],
     plugins: ["prettier"],
     // disabled prettier warnings because they're making me go crazy

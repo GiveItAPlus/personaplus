@@ -63,12 +63,8 @@ export default function ViewerDailyLog(): ReactElement {
                     await GetActiveObjectiveDailyLog();
                 const passive: PassiveObjectiveDailyLog =
                     await GetPassiveObjectiveDailyLog();
-                setActiveDailyLog(
-                    Object.keys(active).length === 0 ? null : active,
-                );
-                setPassiveDailyLog(
-                    Object.keys(passive).length === 0 ? null : passive,
-                );
+                setActiveDailyLog(active.length === 0 ? null : active);
+                setPassiveDailyLog(passive.length === 0 ? null : passive);
             } finally {
                 setLoading(false);
             }

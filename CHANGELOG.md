@@ -9,6 +9,8 @@ For the full commit history, keep in mind 1.200 commits exist in the [old repo](
 
 ## Unreleased
 
+This release breaks the internal API, making earlier objectives unusable.
+
 ### Added
 
 - (Early work in progress, not yet finished) Added a new system for calculating calories based on MET. It should finally allow to add more exercises into the app.

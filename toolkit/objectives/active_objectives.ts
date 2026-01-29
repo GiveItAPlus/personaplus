@@ -74,26 +74,25 @@ async function SaveActiveObjectiveToDailyLog(
         // Fetch old data
         const dailyData: ActiveObjectiveDailyLog =
             await GetActiveObjectiveDailyLog();
-        const today: TodaysDate = GetCurrentDateCorrectly().string;
+        const date: TodaysDate = GetCurrentDateCorrectly().string;
         const objective: ActiveObjective | null = await GetActiveObjective(id);
 
         if (!objective) throw new Error(`${id} is a wrong identifier.`);
 
-        // If there's no old data for today, creates an {} for today
-        if (!dailyData[today]) {
-            dailyData[today] = {};
-        }
-
         // Saves the objective data
-        dailyData[today][id] = {
-            wasDone: wasDone,
-            objective: objective,
-            performance: performance ?? 0,
-        };
+        dailyData.push({
+            id,
+            date,
+            data: {
+                wasDone,
+                objective,
+                performance,
+            },
+        });
 
         // Updates data and puts it back to AsyncStorage
         await SaveGenericObjectiveDailyLog(dailyData, "active");
-        console.log(`Success! Session ${id} data saved for ${today}.`);
+        console.log(`Success! Session ${id} data saved for ${date}.`);
     } catch (e) {
         throw new Error(
             `Error saving user's performance for objective ${id}: ${e}`,
@@ -161,14 +160,14 @@ async function EditActiveObjective(
         const newObjective: ActiveObjective = {
             ...oldObj, // 1st go the oldies
             ...obj, // 2nd go the overrides
-            identifier: id, // 3rd goes the ID override
+            id, // 3rd goes the ID override
         };
 
         let objs: ActiveObjective[] | null = await GetAllObjectives("active");
         if (!objs || objs.length === 0) objs = [];
 
         const index: number = objs.findIndex(
-            (o: ActiveObjective): boolean => o.identifier === id,
+            (o: ActiveObjective): boolean => o.id === id,
         );
 
         if (index !== -1) {
@@ -194,7 +193,7 @@ async function EditActiveObjective(
                 }),
             );
             console.log(
-                `Edited ${newObjective.exercise} objective with ID ${newObjective.identifier} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
+                `Edited ${newObjective.exercise} objective with ID ${newObjective.id} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
                     newObjective,
                 )}"`,
             );

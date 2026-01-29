@@ -13,7 +13,5 @@ fknode.yaml
 .github/**
 .eslintignore
 .gitignore
-pnpm-lock.yaml
-bun.lock
 package-lock.json
 .directory

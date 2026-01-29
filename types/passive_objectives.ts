@@ -65,7 +65,7 @@ export function ValidatePassiveObjective(
  *
  * @export
  */
-export type PassiveObjectiveWithoutId = Omit<PassiveObjective, "identifier">;
+export type PassiveObjectiveWithoutId = Omit<PassiveObjective, "id">;
 
 /**
  * An entry within the PassiveObjectiveDailyLog

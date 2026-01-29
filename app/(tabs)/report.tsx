@@ -155,11 +155,9 @@ export default function Report(): ReactElement {
                 const passiveObjs = await GetAllPassiveObjectives();
                 if (Array.isArray(passiveObjs)) {
                     const objectivesWithStreak = await Promise.all(
-                        passiveObjs.map(async (o) => ({
-                            obj: o,
-                            streak: await GetPassiveObjectiveStreak(
-                                o.identifier,
-                            ),
+                        passiveObjs.map(async (obj) => ({
+                            obj,
+                            streak: await GetPassiveObjectiveStreak(obj.id),
                         })),
                     );
 
@@ -221,7 +219,7 @@ export default function Report(): ReactElement {
                     <Section kind="HowYouAreDoing">
                         {streaks.map((i) => (
                             <Division
-                                key={i.obj.identifier}
+                                key={i.obj.id}
                                 header={`${i.obj.goal} · ${i.streak}d`}
                                 subHeader={t("globals.interaction.createdAt", {
                                     date: i.obj.createdAt,

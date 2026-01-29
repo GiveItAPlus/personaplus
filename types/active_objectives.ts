@@ -183,7 +183,7 @@ export function ValidateActiveObjective(
  *
  * @export
  */
-export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
+export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "id">;
 
 /**
  * An entry within the ActiveObjectiveDailyLog
@@ -207,9 +207,9 @@ export interface ActiveObjectiveDailyLogEntry {
     /**
      * The performance data for this session (as it's an ActiveObjective). A CoreLibrary standard response. `0` represents a null / empty value (usually when `wasDone` is false).
      *
-     * @type {(CoreLibraryResponse | 0)}
+     * @type {(CoreLibraryResponse | undefined)}
      */
-    performance: CoreLibraryResponse | 0;
+    performance: CoreLibraryResponse | undefined;
 }
 
 /**

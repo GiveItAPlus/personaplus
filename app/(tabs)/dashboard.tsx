@@ -70,7 +70,7 @@ export default function Dashboard(): ReactElement {
                 {activeObjectives.map(
                     (obj: ActiveObjective): ReactElement => (
                         <Division
-                            key={obj.identifier}
+                            key={obj.id}
                             header={t(
                                 `globals.supportedActiveObjectives.${obj.exercise}.name`,
                             )}
@@ -108,23 +108,19 @@ export default function Dashboard(): ReactElement {
                                     )}
                                     style="WOR"
                                     action={async (): Promise<void> => {
-                                        await DeleteObjective(
-                                            obj.identifier,
-                                            "active",
-                                        );
+                                        await DeleteObjective(obj.id, "active");
                                         setActiveObjectives(
                                             activeObjectives.filter(
                                                 (
                                                     obj2: ActiveObjective,
                                                 ): boolean =>
-                                                    obj2.identifier !==
-                                                    obj.identifier,
+                                                    obj2.id !== obj.id,
                                             ),
                                         );
                                         ShowToast(
                                             t(
                                                 `objectives.common.feedback.deleted`,
-                                                { id: obj.identifier },
+                                                { id: obj.id },
                                             ),
                                         );
                                     }}
@@ -152,7 +148,7 @@ export default function Dashboard(): ReactElement {
                 {passiveObjectives.map(
                     (obj: PassiveObjective): ReactElement => (
                         <Division
-                            key={obj.identifier}
+                            key={obj.id}
                             header={`${obj.goal}`}
                             preHeader={t(`objectives.passive.allCapsSingular`)}
                             direction="vertical"
@@ -189,7 +185,7 @@ export default function Dashboard(): ReactElement {
                                     style="WOR"
                                     action={async (): Promise<void> => {
                                         await DeleteObjective(
-                                            obj.identifier,
+                                            obj.id,
                                             "passive",
                                         );
                                         setPassiveObjectives(
@@ -197,14 +193,13 @@ export default function Dashboard(): ReactElement {
                                                 (
                                                     obj2: PassiveObjective,
                                                 ): boolean =>
-                                                    obj2.identifier !==
-                                                    obj.identifier,
+                                                    obj2.id !== obj.id,
                                             ),
                                         );
                                         ShowToast(
                                             t(
                                                 `objectives.common.feedback.deleted`,
-                                                { id: obj.identifier },
+                                                { id: obj.id },
                                             ),
                                         );
                                     }}

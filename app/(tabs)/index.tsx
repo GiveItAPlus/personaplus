@@ -115,9 +115,7 @@ export default function HomeScreen(): ReactElement {
                     const objectivesWithStreak = await Promise.all(
                         arr.map(async (o) => ({
                             obj: o,
-                            streak: await GetPassiveObjectiveStreak(
-                                o.identifier,
-                            ),
+                            streak: await GetPassiveObjectiveStreak(o.id),
                         })),
                     );
 
@@ -210,7 +208,7 @@ export default function HomeScreen(): ReactElement {
                 {activeObjectivesToRender.map(
                     (obj: ActiveObjective): ReactElement => (
                         <Division
-                            key={obj.identifier}
+                            key={obj.id}
                             header={t(
                                 `globals.supportedActiveObjectives.${obj.exercise}.name`,
                             )}
@@ -229,7 +227,7 @@ export default function HomeScreen(): ReactElement {
                                 )}
                                 style="ACE"
                                 action={async (): Promise<void> =>
-                                    await LaunchActiveObjective(obj.identifier)
+                                    await LaunchActiveObjective(obj.id)
                                 }
                             />
                         </Division>
@@ -269,7 +267,7 @@ export default function HomeScreen(): ReactElement {
                         streak: number;
                     }): ReactElement => (
                         <Division
-                            key={o.obj.identifier}
+                            key={o.obj.id}
                             header={`${o.obj.goal} · ${o.streak}`}
                             preHeader={t(`objectives.passive.allCapsSingular`)}
                             direction="vertical"
@@ -280,14 +278,12 @@ export default function HomeScreen(): ReactElement {
                                 style="ACE"
                                 action={async (): Promise<void> => {
                                     await SavePassiveObjectiveToDailyLog(
-                                        o.obj.identifier,
+                                        o.obj.id,
                                         true,
                                     );
                                     setPassiveObjectivesToRender(
                                         passiveObjectivesToRender.filter(
-                                            (ob) =>
-                                                ob.obj.identifier !==
-                                                o.obj.identifier,
+                                            (ob) => ob.obj.id !== o.obj.id,
                                         ),
                                     );
                                 }}

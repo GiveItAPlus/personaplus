@@ -78,7 +78,7 @@ export default function ViewerObjectives(): ReactElement {
                                 (obj: PassiveObjective): BetterTableItem => {
                                     return {
                                         name: obj.goal,
-                                        value: obj.identifier.toString(),
+                                        value: obj.id.toString(),
                                     };
                                 },
                             )}
@@ -104,7 +104,7 @@ export default function ViewerObjectives(): ReactElement {
                                 (obj: ActiveObjective): BetterTableItem => {
                                     return {
                                         name: obj.exercise,
-                                        value: obj.identifier.toString(),
+                                        value: obj.id.toString(),
                                     };
                                 },
                             )}
@@ -118,9 +118,9 @@ export default function ViewerObjectives(): ReactElement {
             {activeObjectives &&
                 activeObjectives.map(
                     (obj: ActiveObjective, index: number): ReactElement => (
-                        <Fragment key={obj.identifier}>
+                        <Fragment key={obj.id}>
                             <BetterTextSmallHeader>
-                                {obj.identifier} - {obj.exercise}
+                                {obj.id} - {obj.exercise}
                             </BetterTextSmallHeader>
                             <GapView height={5} />
                             <BetterTable

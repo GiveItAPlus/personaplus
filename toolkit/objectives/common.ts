@@ -125,7 +125,7 @@ async function GetObjective(
         const objective: ActiveObjective | PassiveObjective | undefined =
             objectives.find(
                 (obj: ActiveObjective | PassiveObjective): boolean =>
-                    obj.identifier === identifier,
+                    obj.id === identifier,
             );
 
         if (objective === undefined) return null;
@@ -160,12 +160,10 @@ async function DeleteObjective(
         const updatedObjectives: PassiveObjective[] | ActiveObjective[] =
             category === "active"
                 ? (objectives as ActiveObjective[]).filter(
-                      (obj: ActiveObjective): boolean =>
-                          obj.identifier !== identifier,
+                      (obj: ActiveObjective): boolean => obj.id !== identifier,
                   )
                 : (objectives as PassiveObjective[]).filter(
-                      (obj: PassiveObjective): boolean =>
-                          obj.identifier !== identifier,
+                      (obj: PassiveObjective): boolean => obj.id !== identifier,
                   );
 
         await AsyncStorage.setItem(
@@ -218,7 +216,7 @@ async function CreateObjective(
             while (
                 objs.some(
                     (obj: ActiveObjective | PassiveObjective): boolean =>
-                        obj.identifier === newIdentifier,
+                        obj.id === newIdentifier,
                 )
             ) {
                 newIdentifier = generateObjectiveId();
@@ -228,7 +226,7 @@ async function CreateObjective(
 
         const newObjective: ActiveObjective | PassiveObjective = {
             ...(target as ActiveObjectiveWithoutId | PassiveObjectiveWithoutId),
-            identifier: generateIdentifier(objectives),
+            id: generateIdentifier(objectives),
         };
 
         if (category === "active") {
@@ -265,7 +263,7 @@ async function CreateObjective(
 
         ShowToast(message);
         console.log(
-            `Created objective with ID ${newObjective.identifier} successfully! Full JSON of the created objective:\n${JSON.stringify(
+            `Created objective with ID ${newObjective.id} successfully! Full JSON of the created objective:\n${JSON.stringify(
                 newObjective,
             )}`,
         );
@@ -308,7 +306,7 @@ async function GetGenericObjectiveDailyLog(
                     : StoredItemNames.passiveDailyLog,
                 "{}",
             );
-            return {};
+            return [];
         }
         return JSON.parse(response);
     } catch (e) {
@@ -322,31 +320,26 @@ async function GetGenericObjectiveDailyLog(
  * @param {UncheckedDailyLog} log
  * @returns {UncheckedDailyLog}
  */
-function CleanupGenericDailyLog(log: any): UncheckedDailyLog {
-    type entry = [string, { [identifier: number]: UncheckedDailyLog }];
-
-    const uniqueEntries = new Map<string, any>();
-    for (const [date, value] of Object.entries(log)) {
-        uniqueEntries.set(date, value);
-    }
-
-    return Object.fromEntries(
-        Object.entries(Object.fromEntries(uniqueEntries.entries())).sort(
-            ([dateA]: entry, [dateB]: entry): number => {
-                if (
-                    !ValidateTodaysDateString(dateA) ||
-                    !ValidateTodaysDateString(dateB)
-                )
-                    throw new Error(
-                        `Invalid dates, don't match TodaysDate type! dateA: ${dateA}, dateB: ${dateB}`,
+function CleanupGenericDailyLog(log: UncheckedDailyLog): UncheckedDailyLog {
+    return Array.from(
+        new Set(
+            log
+                .sort((dateA, dateB): number => {
+                    if (
+                        !ValidateTodaysDateString(dateA) ||
+                        !ValidateTodaysDateString(dateB)
+                    )
+                        throw new Error(
+                            `Invalid dates, don't match TodaysDate type! dateA: ${dateA}, dateB: ${dateB}`,
+                        );
+                    return (
+                        JavaScriptifyTodaysDate(dateB).getTime() -
+                        JavaScriptifyTodaysDate(dateA).getTime()
                     );
-                return (
-                    JavaScriptifyTodaysDate(dateB).getTime() -
-                    JavaScriptifyTodaysDate(dateA).getTime()
-                );
-            },
+                })
+                .map((x) => JSON.stringify(x)),
         ),
-    );
+    ).map((x) => JSON.parse(x));
 }
 
 /**
@@ -394,9 +387,7 @@ async function FailGenericObjectivesNotDoneYesterday(
                 : await GetGenericObjectiveDailyLog("passive");
         if (!objectives) return;
         const currentDate: CorrectCurrentDate = GetCurrentDateCorrectly();
-        let targetDateObj: Date = new Date(
-            JavaScriptifyTodaysDate(currentDate.string),
-        );
+        let targetDateObj: Date = JavaScriptifyTodaysDate(currentDate.string);
 
         // find the earliest not logged date
         let earliestNotLoggedDate: TodaysDate | null = null;
@@ -407,11 +398,8 @@ async function FailGenericObjectivesNotDoneYesterday(
                     -i,
                 ),
             );
-            if (!dailyLog[dateToCheck]) {
-                earliestNotLoggedDate = dateToCheck;
-            } else {
-                break;
-            }
+            if (dailyLog.find((e) => e.date === dateToCheck)) break;
+            earliestNotLoggedDate = dateToCheck;
         }
 
         if (!earliestNotLoggedDate) return;
@@ -420,7 +408,7 @@ async function FailGenericObjectivesNotDoneYesterday(
         const endDate: Date = JavaScriptifyTodaysDate(currentDate.string);
         // loop through all not logged dates
         while (startDate <= endDate) {
-            const dateString: TodaysDate = StringifyDate(startDate);
+            const date: TodaysDate = StringifyDate(startDate);
 
             for (const obj of objectives) {
                 const daysIndex: number = Math.floor(
@@ -440,22 +428,24 @@ async function FailGenericObjectivesNotDoneYesterday(
                 )
                     continue;
 
-                if (!dailyLog[dateString]) {
-                    dailyLog[dateString] = {};
-                }
+                if (dailyLog.find((e) => e.date === date && e.id === obj.id))
+                    continue;
 
-                if (dailyLog[dateString][obj.identifier]) continue;
-
-                dailyLog[dateString][obj.identifier] = IsActiveObjective(obj)
-                    ? {
-                          wasDone: false,
-                          objective: obj,
-                          performance: 0,
-                      }
-                    : {
-                          wasDone: false,
-                          objective: obj,
-                      };
+                dailyLog.push({
+                    id: obj.id,
+                    date,
+                    // @ts-expect-error: ts compiler had a cigarette or something
+                    data: IsActiveObjective(obj)
+                        ? {
+                              wasDone: false,
+                              objective: obj,
+                              performance: undefined,
+                          }
+                        : {
+                              wasDone: false,
+                              objective: obj,
+                          },
+                });
             }
 
             // Increment startDate by one day
@@ -481,8 +471,6 @@ async function IsGenericObjectivePending(
     objective: ActiveObjective | PassiveObjective,
 ): Promise<SingleObjectivePendingReturn> {
     try {
-        const { identifier } = objective;
-
         const dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog =
             IsActiveObjective(objective)
                 ? await GetGenericObjectiveDailyLog("active")
@@ -496,21 +484,15 @@ async function IsGenericObjectivePending(
             return "notDueToday";
 
         // log does not exist, so the objective is due today.
-        if (Object.keys(dailyLog).length === 0) return "pending";
+        if (dailyLog.length === 0) return "pending";
 
         const date: TodaysDate = GetCurrentDateCorrectly().string;
+        const entry = dailyLog.find((e) => e.date === date);
 
-        if (!dailyLog[date]) return "pending";
-
-        const entry: { wasDone: boolean } | undefined =
-            dailyLog[date][identifier];
-
-        if (entry) return entry.wasDone === true ? "done" : "pending"; // if it IS done, it IS NOT due today
-
-        return "pending"; // no interaction with the objective means no data logged.
+        return entry?.data.wasDone === true ? "done" : "pending"; // if it IS done, it IS NOT due today
     } catch (e) {
         throw new Error(
-            `Error checking if the ${objective.identifier} objective is due today: ${e}`,
+            `Error checking if the ${objective.id} objective is due today: ${e}`,
         );
     }
 }
@@ -541,7 +523,7 @@ async function GetPendingGenericObjectives(
 
         // there are only two hard things in computer science, cache invalidation and naming things
         type thing = {
-            identifier: number;
+            id: number;
             status: SingleObjectivePendingReturn;
         };
 
@@ -554,7 +536,7 @@ async function GetPendingGenericObjectives(
         ): Promise<thing | null> {
             const status: SingleObjectivePendingReturn =
                 await IsGenericObjectivePending(obj);
-            return { identifier: obj.identifier, status };
+            return { id: obj.id, status };
         }
 
         // TODO: i should review this code, again...
@@ -583,7 +565,7 @@ async function GetPendingGenericObjectives(
         // get the identifiers of objectives that are not done yet
         const pendingObjectives: number[] = dueTodayObjectives
             .filter((obj: thing): boolean => obj.status === "pending")
-            .map((obj: thing): number => obj.identifier);
+            .map((obj: thing): number => obj.id);
 
         // return pending objectives
         // because of the earlier .every(), we know there's at least one
@@ -619,7 +601,7 @@ function HandleEditObjective(
             !ValidatePassiveObjective(realParams.objective))
     )
         return "invalidData";
-    return realParams.objective.identifier;
+    return realParams.objective.id;
 }
 
 export {
