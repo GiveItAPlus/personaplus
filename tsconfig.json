@@ -35,6 +35,9 @@
         "downlevelIteration": false,
         "jsx": "react-native",
         "jsxImportSource": "react",
+        "customConditions": [
+            "react-native-strict-api"
+        ]
     },
     "include": [
         "**/*.ts",
