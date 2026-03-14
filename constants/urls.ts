@@ -23,7 +23,6 @@ const URLs = {
     releasesApi:
         "https://api.github.com/repos/GiveItAPlus/personaplus/releases",
     latestRelease: "https://github.com/GiveItAPlus/personaplus/releases/latest",
-    instagram: "https://www.instagram.com/giveitaplus/",
     yt: "https://youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW",
 } as const;
 

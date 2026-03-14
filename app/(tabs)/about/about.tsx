@@ -140,21 +140,6 @@ export default function About(): ReactElement {
             </BetterText>
             <GapView height={20} />
             <View style={styles.socialWrapper}>
-                {/* i don't post stuff here but well, keep it here anyway */}
-                <Pressable
-                    style={styles.buttonContainer}
-                    onPress={async (): Promise<void> => {
-                        await SafelyOpenUrl(URLs.instagram);
-                    }}
-                >
-                    <MaterialCommunityIcons
-                        name="instagram"
-                        color={Colors.BASIC.WHITE}
-                        size={FontSizes.LARGE}
-                    />
-                    <GapView width={5} />
-                    <BetterTextNormalText>giveitaplus</BetterTextNormalText>
-                </Pressable>
                 <Pressable
                     style={styles.buttonContainer}
                     onPress={async (): Promise<void> => {

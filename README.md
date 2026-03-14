@@ -64,6 +64,5 @@ PersonaPlus is under the GPL-3.0-only license. In short: You are free to use the
 
 [![YouTube button](https://img.shields.io/badge/YouTube-PersonaPlus-%23fb100a?style=for-the-badge&labelColor=%23000&logo=youtube)](https://www.youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW)
 [![Discord button](https://img.shields.io/badge/Discord-Discord_server-%235a68ed?style=for-the-badge&labelColor=%23000&logo=discord&logoColor=white)](https://discord.gg/wwzddK4Zpc)
-[![Instagram button](https://img.shields.io/badge/Instagram-giveitaplus-%23f71464?style=for-the-badge&labelColor=%23000&logo=instagram&logoColor=white)](https://www.instagram.com/giveitaplus/)
 
 </div>
