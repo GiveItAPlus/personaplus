@@ -20,9 +20,9 @@
     "setupFiles": [
       "./jest.setup.js"
     ],
-    "transform": {},
     "extensionsToTreatAsEsm": [
-      ".ts"
+      ".ts",
+      ".tsx"
     ],
     "testEnvironment": "node",
     "globals": {
@@ -55,10 +55,10 @@
     "@react-native-picker/picker": "2.11.4",
     "@react-navigation/native": "^7.1.8",
     "dotenv": "^17.2.3",
-    "expo": "~55.0.4",
+    "expo": "~55.0.5",
     "expo-build-properties": "~55.0.9",
     "expo-constants": "~55.0.7",
-    "expo-dev-client": "~55.0.10",
+    "expo-dev-client": "~55.0.16",
     "expo-device": "~55.0.9",
     "expo-doctor": "latest",
     "expo-font": "~55.0.4",
@@ -66,8 +66,8 @@
     "expo-linking": "~55.0.7",
     "expo-localization": "~55.0.8",
     "expo-location": "~55.1.2",
-    "expo-notifications": "~55.0.10",
-    "expo-router": "~55.0.3",
+    "expo-notifications": "~55.0.12",
+    "expo-router": "~55.0.5",
     "expo-splash-screen": "~55.0.10",
     "expo-sqlite": "~55.0.10",
     "expo-status-bar": "~55.0.4",
