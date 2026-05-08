@@ -22,13 +22,6 @@ const config: ExpoConfig.ExpoConfig = {
         resizeMode: "contain",
         backgroundColor: "#0E1013",
     },
-    notification: {
-        color: "#3280FF",
-        androidMode: "default",
-        icon: "./assets/resources/notification-icon.png",
-        androidCollapsedTitle:
-            "#{unread_notifications} PersonaPlus notifications",
-    },
     assetBundlePatterns: ["**/*"],
     android: {
         ...(process.env.PERSONAPLUS_ENV_APP_ICON && {
@@ -42,9 +35,7 @@ const config: ExpoConfig.ExpoConfig = {
             backgroundColor: "#0E1013",
         },
         allowBackup: false,
-        package:
-            process.env.PERSONAPLUS_ENV_PACKAGE ||
-            "com.zakahacecosas.personaplus",
+        package: process.env.PERSONAPLUS_ENV_PACKAGE || "es.zhc.personaplus",
         permissions: [
             "android.permission.SCHEDULE_EXACT_ALARM",
             "android.permission.POST_NOTIFICATIONS",
@@ -109,6 +100,8 @@ const config: ExpoConfig.ExpoConfig = {
                 icon: "./assets/resources/notification-icon.png",
                 color: "#3280FF",
                 defaultChannel: "default",
+                androidCollapsedTitle:
+                    "#{unread_notifications} PersonaPlus notifications",
             },
         ],
         [
@@ -142,7 +135,6 @@ const config: ExpoConfig.ExpoConfig = {
             projectId: process.env.EXPO_PROJECT_ID,
         },
     },
-    newArchEnabled: true,
 };
 
 export default ({

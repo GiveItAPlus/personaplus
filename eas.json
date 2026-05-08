@@ -18,7 +18,7 @@
                 "withoutCredentials": true
             },
             "env": {
-                "PERSONAPLUS_ENV_PACKAGE": "com.zakahacecosas.personaplus.development",
+                "PERSONAPLUS_ENV_PACKAGE": "es.zhc.personaplus.development",
                 "PERSONAPLUS_ENV_APP_ICON": "./assets/resources/icon-5050.png",
                 "PERSONAPLUS_ENV_APP_NAME": "PP Dev Build",
                 "PERSONAPLUS_ENV_APP_ADAPTIVE_ICON_BACKGROUND": "./assets/resources/aib-5050.png"
@@ -30,7 +30,7 @@
             },
             "distribution": "store",
             "env": {
-                "PERSONAPLUS_ENV_PACKAGE": "com.zakahacecosas.personaplus"
+                "PERSONAPLUS_ENV_PACKAGE": "es.zhc.personaplus"
             }
         }
     }

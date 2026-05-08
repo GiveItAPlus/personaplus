@@ -29,7 +29,7 @@ export default function License(): ReactElement {
                 subHeader="GPL-3.0-only"
             />
             <BetterText fontSize={10} fontWeight="Regular">
-                Copyright (C) 2026 ZakaHaceCosas
+                Copyright (C) 2026 Zakaria B. ("@ZakaHaceCosas")
             </BetterText>
             <GapView height={10} />
             <BetterText fontSize={15} fontWeight="Regular">

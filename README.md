@@ -37,7 +37,7 @@ PersonaPlus is a 100% free an open source app, and as such, accepts contribution
 
 ### Creators and contributors
 
-Created by [@ZakaHaceCosas](https://zakahacecosas.github.io).
+Created by [@ZakaHaceCosas](https://me.zhc.es).
 
 [All mighty contributors are shown in this page.](https://github.com/GiveItAPlus/personaplus/graphs/contributors). Those who make significant contributions will also be featured here. Thanks for the help!
 
