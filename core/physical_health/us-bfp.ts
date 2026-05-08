@@ -1,6 +1,6 @@
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
-import { centimetersToInches } from "numeric-utils";
+import { centimetersToInches } from "@zhc.js/number-utils";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "17/04/2025",

@@ -10,7 +10,7 @@
  * <=============================================================================>
  */
 
-import { validate } from "strings-utils";
+import { validate } from "@zhc.js/string-utils";
 import {
     GenericDailyLog,
     GenericObjective,

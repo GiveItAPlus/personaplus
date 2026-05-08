@@ -10,7 +10,7 @@
  * <=============================================================================>
  */
 
-import { validate } from "strings-utils";
+import { validate } from "@zhc.js/string-utils";
 import { ActiveObjective } from "./active_objectives";
 import { PassiveObjective } from "./passive_objectives";
 import { TodaysDate, ValidateTodaysDateString } from "./today";

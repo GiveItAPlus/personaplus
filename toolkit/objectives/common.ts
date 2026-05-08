@@ -49,7 +49,7 @@ import {
     TodaysDate,
     ValidateTodaysDateString,
 } from "@/types/today";
-import { validate } from "strings-utils";
+import { validate } from "@zhc.js/string-utils";
 
 /**
  * Returns all objectives from AsyncStorage as an `ActiveObjective[]` or a `PassiveObjective[]` (depending on chosen category), or `null` if there aren't any objectives.
