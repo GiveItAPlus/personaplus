@@ -229,7 +229,7 @@ async function GetPassiveObjectiveStreak(
     const log: PassiveObjectiveDailyLog =
         __log ?? (await GetPassiveObjectiveDailyLog());
     // no log no streak
-    if (!log || log.length === 0) return 0;
+    if (!log.length) return 0;
 
     let currentDate: Date = new Date();
 
@@ -247,9 +247,9 @@ async function GetPassiveObjectiveStreak(
     // loop thru all entries
     for (const currentLog of userLogs) {
         const logDate: Date = JavaScriptifyTodaysDate(currentLog.date);
-        const diffDays: number = DifferenceInDays(currentDate, logDate);
+        const diffDays: number = DifferenceInDays(logDate, currentDate);
 
-        if (diffDays === 1 && currentLog.data.wasDone) {
+        if (currentLog.data.wasDone) {
             streak += 1;
             currentDate = logDate;
         } else if (diffDays === 0) {
