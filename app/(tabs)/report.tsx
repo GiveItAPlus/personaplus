@@ -27,21 +27,19 @@ import {
     GetPassiveObjectiveStreak,
 } from "@/toolkit/objectives/passive_objectives";
 
+type TContext =
+    | "severely underweight"
+    | "underweight"
+    | "healthy weight"
+    | "overweight"
+    | "obesity";
+
 /**
  * Returns a view that represents the BMI context in a traffic light-like style.
  *
  * @param {("severely underweight" | "underweight" | "healthy weight" | "overweight" | "obesity")} context The BMI context
  */
-function BMIView({
-    context,
-}: {
-    context:
-        | "severely underweight"
-        | "underweight"
-        | "healthy weight"
-        | "overweight"
-        | "obesity";
-}): ReactElement {
+function BMIView({ context }: { context: TContext }): ReactElement {
     const styles = StyleSheet.create({
         wrapper: {
             height: 10,
@@ -112,7 +110,7 @@ export default function Report(): ReactElement {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
     const [report, setReport] = useState<{
-        BMI: { value: string; context: string };
+        BMI: { value: string; context: TContext };
     }>();
     const [dailyLog, setDailyLog] = useState<ActiveObjectiveDailyLog | null>(
         null,
@@ -138,7 +136,7 @@ export default function Report(): ReactElement {
                         data.height,
                     );
                 const BMI: number = BMISource.result;
-                const BMIContext: string | undefined = BMISource.context;
+                const BMIContext: TContext = BMISource.context as TContext;
 
                 setReport({
                     BMI: {
@@ -203,7 +201,6 @@ export default function Report(): ReactElement {
                             `pages.report.yourHealth.BMI.${report.BMI.context}`,
                         )}
                     >
-                        {/* @ts-expect-error TypeError */}
                         <BMIView context={report.BMI.context} />
                     </Division>
                 ) : (

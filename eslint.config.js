@@ -11,7 +11,7 @@ export default defineConfig([
     {
         files: ["babel.config.js"],
         languageOptions: {
-            globals: globals.node,
+            globals: { ...globals.node, ...globals.jest },
         },
     },
 ]);

@@ -263,7 +263,7 @@ export default function OpenSourceCredits(): ReactElement {
                                 fontSize={16}
                                 textColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             >
-                                "
+                                {'"'}
                             </BetterText>
                             {library.description}
                             <BetterText
@@ -271,7 +271,7 @@ export default function OpenSourceCredits(): ReactElement {
                                 fontSize={16}
                                 textColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             >
-                                "
+                                {'"'}
                             </BetterText>
                         </BetterText>
                         <GapView height={5} />

@@ -126,7 +126,7 @@ export interface ActiveObjective extends GenericObjective {
      *
      * @type {ActiveObjectiveSpecificData}
      */
-    specificData: ActiveObjectiveSpecificData;
+    specificData: Partial<ActiveObjectiveSpecificData>;
 }
 
 /**

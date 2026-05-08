@@ -385,7 +385,8 @@ async function FailGenericObjectivesNotDoneYesterday(
             category === "active"
                 ? await GetGenericObjectiveDailyLog("active")
                 : await GetGenericObjectiveDailyLog("passive");
-        if (!objectives) return;
+        if (!objectives || !objectives.length) return;
+        if (!dailyLog || !dailyLog.length) return;
         const currentDate: CorrectCurrentDate = GetCurrentDateCorrectly();
         let targetDateObj: Date = JavaScriptifyTodaysDate(currentDate.string);
 
@@ -434,17 +435,16 @@ async function FailGenericObjectivesNotDoneYesterday(
                 dailyLog.push({
                     id: obj.id,
                     date,
-                    // @ts-expect-error: ts compiler had a cigarette or something
                     data: IsActiveObjective(obj)
-                        ? {
+                        ? ({
                               wasDone: false,
                               objective: obj,
                               performance: undefined,
-                          }
-                        : {
+                          } as any)
+                        : ({
                               wasDone: false,
                               objective: obj,
-                          },
+                          } as any),
                 });
             }
 

@@ -194,8 +194,9 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 objective={{
                     exercise: "Running",
                     identifier: 0,
-                    // @ts-expect-error invalid (missing data)
-                    specificData: { estimateSpeed: 9 },
+                    specificData: {
+                        estimateSpeed: 9,
+                    },
                 }}
                 verbalName={isTracking ? `(RUNNING)` : "(PAUSED)"}
                 user={user!}

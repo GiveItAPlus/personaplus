@@ -10,7 +10,7 @@
  * <=============================================================================>
  */
 
-import i18n from "i18next";
+import i18n, { changeLanguage } from "i18next";
 import { initReactI18next } from "react-i18next";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { getLocales, Locale } from "expo-localization";
@@ -60,6 +60,7 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
     }
 }
 
+// eslint-disable-next-line import/no-named-as-default-member
 i18n.use(initReactI18next).init({
     resources,
     lng: "en",
@@ -92,7 +93,7 @@ async function ChangeLanguage(
             StoredItemNames.userData,
             JSON.stringify(newUserData),
         );
-        await i18n.changeLanguage(language);
+        await changeLanguage(language);
         ShowToast(
             userData.language === "es"
                 ? "¡Hecho! Reinicia la app para aplicar tus cambios."

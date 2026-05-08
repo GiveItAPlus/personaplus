@@ -10,12 +10,11 @@
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 5000,
     "editor.fontLigatures": true,
-    "editor.formatOnSave": true,
     "editor.detectIndentation": false,
     "files.insertFinalNewline": true,
     "editor.insertSpaces": true,
     "editor.renderWhitespace": "trailing",
-    "typescript.updateImportsOnFileMove.enabled": "always",
+    "js/ts.updateImportsOnFileMove.enabled": "always",
     "prettier.configPath": "./.prettierrc",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[json]": {
@@ -32,7 +31,6 @@
             "other": "on"
         }
     },
-    "editor.formatOnSaveMode": "file",
     "workbench.editor.customLabels.patterns": {
         "**/core/**": "Core Library @ ${dirname}, ${filename}.${extname} ",
         "**/app/**": "App layout, ${filename}.${extname}",
@@ -48,7 +46,7 @@
         "**/toolkit/**": "Toolkit, ${filename}.${extname}",
         "**/types/**": "TS types, ${filename}.${extname}"
     },
-    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "js/ts.tsdk.path": "node_modules\\typescript\\lib",
     "files.associations": {
         ".easignore": "ignore",
         "*.json": "json"
@@ -57,24 +55,15 @@
         "source.fixAll.eslint": "always"
     },
     "editor.inlayHints.enabled": "on",
-    "typescript.inlayHints.variableTypes.enabled": true,
-    "typescript.inlayHints.enumMemberValues.enabled": true,
-    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-    "typescript.inlayHints.parameterNames.enabled": "all",
-    "typescript.inlayHints.parameterTypes.enabled": true,
-    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-    "typescript.reportStyleChecksAsWarnings": true,
+    "js/ts.inlayHints.variableTypes.enabled": true,
+    "js/ts.inlayHints.enumMemberValues.enabled": true,
+    "js/ts.inlayHints.functionLikeReturnTypes.enabled": true,
+    "js/ts.inlayHints.parameterNames.enabled": "all",
+    "js/ts.inlayHints.parameterTypes.enabled": true,
+    "js/ts.inlayHints.propertyDeclarationTypes.enabled": true,
+    "js/ts.reportStyleChecksAsWarnings": true,
     "editor.lightbulb.enabled": "on",
     "better-comments.tags": [
-        {
-            "tag": "FAILING",
-            "color": "#FF2D00",
-            "strikethrough": false,
-            "underline": false,
-            "backgroundColor": "transparent",
-            "bold": true,
-            "italic": false
-        },
         {
             "tag": "NOTE",
             "color": "#676767",

@@ -13,37 +13,45 @@ function render(
 ): ReactElement {
     return (
         <>
-            {Object.entries(dailyLog).map((i) => {
-                return (
-                    <>
-                        <BetterTextSmallText key={i[0]}>
-                            {i[0]}
-                            {"\n"}
-                        </BetterTextSmallText>
-                        {Object.entries(i[1]).map((i) => {
-                            return (
-                                <>
-                                    <BetterTextSmallText key={i[0]}>
-                                        {"  > "}
-                                        {i[0]}
-                                        {"\n"}
-                                    </BetterTextSmallText>
-                                    {/* @ts-expect-error (idk why it shows an error, it works) */}
-                                    {Object.entries(i[1]).map((i) => (
-                                        <BetterTextSmallText key={i[0]}>
-                                            {"    > "}
-                                            {JSON.stringify(i[1])
-                                                .split(',"')[0]
-                                                ?.trim()}
+            {Object.entries(dailyLog).map(
+                ([key, val]: [
+                    string,
+                    ActiveObjectiveDailyLog | PassiveObjectiveDailyLog,
+                ]) => {
+                    return (
+                        <>
+                            <BetterTextSmallText key={key}>
+                                {key}
+                                {"\n"}
+                            </BetterTextSmallText>
+                            {Object.entries(val).map(([subKey, subVal]) => {
+                                return (
+                                    <>
+                                        <BetterTextSmallText key={subKey}>
+                                            {"  > "}
+                                            {subKey}
                                             {"\n"}
                                         </BetterTextSmallText>
-                                    ))}
-                                </>
-                            );
-                        })}
-                    </>
-                );
-            })}
+                                        {Object.entries(subVal).map(
+                                            ([subSubKey, subSubVal]) => (
+                                                <BetterTextSmallText
+                                                    key={subSubKey}
+                                                >
+                                                    {"    > "}
+                                                    {JSON.stringify(subSubVal)
+                                                        .split(',"')[0]
+                                                        ?.trim()}
+                                                    {"\n"}
+                                                </BetterTextSmallText>
+                                            ),
+                                        )}
+                                    </>
+                                );
+                            })}
+                        </>
+                    );
+                },
+            )}
         </>
     );
 }
