@@ -198,7 +198,7 @@ function getMetData(
     activity: METBaseActivity,
 ): [keyof typeof MET_DATA, number][] {
     return Object.entries(MET_DATA).filter(
-        ([k]) => k.split("-")[0] == activity,
+        ([k]) => k.split("-")[0] === activity,
     ) as [keyof typeof MET_DATA, number][];
 }
 

@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
@@ -10,7 +10,6 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import CoreLibrary from "@/core/core";
 import { OrchestrateUserData } from "@/toolkit/user";
-import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";
 import {

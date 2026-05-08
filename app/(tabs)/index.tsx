@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import Section from "@/components/ui/sections/section";
@@ -11,7 +11,6 @@ import {
 } from "@/toolkit/objectives/active_objectives";
 import { FullProfile } from "@/types/user";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import TopBar from "@/components/navigation/top_bar";
 import { setNotificationHandler } from "expo-notifications";

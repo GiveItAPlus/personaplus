@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
@@ -6,7 +6,6 @@ import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { ActiveObjective } from "@/types/active_objectives";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import TopBar from "@/components/navigation/top_bar";

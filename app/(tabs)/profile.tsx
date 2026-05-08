@@ -1,11 +1,10 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { FullProfile } from "@/types/user";
 import BetterButton from "@/components/interaction/better_button";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { router } from "expo-router";
 import { Routes } from "@/constants/routes";
-import { useEffect, useState } from "react";
 import Section from "@/components/ui/sections/section";
 import Division from "@/components/ui/sections/division";
 import Loading from "@/components/static/loading";

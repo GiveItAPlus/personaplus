@@ -14,11 +14,10 @@ import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { Fragment, ReactElement, useEffect } from "react";
-import "@/translations/translate";
+import i18n from "@/translations/translate";
 import { StatusBar } from "react-native";
 import Colors from "@/constants/colors";
 import { OrchestrateUserData } from "@/toolkit/user";
-import i18n from "@/translations/translate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
