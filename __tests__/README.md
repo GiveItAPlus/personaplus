@@ -2,6 +2,6 @@
 
 For CoreLibrary (CL) tests, go to `@/core/__tests__`.
 
-~~Note: As I am lazy to maintain this, most tests are failing. One day (soon) they'll get fixed, I promise...~~
+There are very few tests, but they all pass. Make sure they keep doing so before pushing. Any new test will be greatly appreciated!
 
-There are very few tests, but they all pass.
+I'd like to write tests for the existing code myself, as the more tests I write the more bugs I consistently find, however almost all of the codebase was written without TDD in mind and now it's hard to get to doing it. I'll do it eventually, hopefully.

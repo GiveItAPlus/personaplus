@@ -15,3 +15,4 @@ fknode.yaml
 .gitignore
 package-lock.json
 .directory
+.gitattributes

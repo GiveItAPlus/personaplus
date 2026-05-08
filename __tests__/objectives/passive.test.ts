@@ -6,8 +6,8 @@ import {
 } from "@/toolkit/today";
 
 describe("streaks", () => {
-    test("handles streak of 1", () => {
-        const out = GetPassiveObjectiveStreak(1234, [
+    test("handles streak of 1", async () => {
+        const out = await GetPassiveObjectiveStreak(1234, [
             {
                 id: 1234,
                 date: GetCurrentDateCorrectly().string,
@@ -25,8 +25,8 @@ describe("streaks", () => {
         expect(out).toEqual(1);
     });
 
-    test("handles streak of more than 1", () => {
-        const out = GetPassiveObjectiveStreak(1234, [
+    test("handles streak of more than 1", async () => {
+        const out = await GetPassiveObjectiveStreak(1234, [
             {
                 id: 1234,
                 date: GetCurrentDateCorrectly().string,

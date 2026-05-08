@@ -32,11 +32,13 @@
         "suppressExcessPropertyErrors": false,
         "suppressImplicitAnyIndexErrors": false,
         "diagnostics": true,
-        "downlevelIteration": false,
         "jsx": "react-native",
         "jsxImportSource": "react",
         "customConditions": [
             "react-native-strict-api"
+        ],
+        "types": [
+            "jest"
         ]
     },
     "include": [
