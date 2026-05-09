@@ -13,10 +13,10 @@
 import {
     RefObject,
     ReactElement,
-    ReactNode,
     useEffect,
     useRef,
     useState,
+    Fragment,
 } from "react";
 import { router } from "expo-router";
 import { StyleSheet, TextInput, View } from "react-native";
@@ -57,6 +57,7 @@ import MultiSelect, {
     MultiSelectOption,
 } from "@/components/interaction/multi_select";
 import TopBar from "@/components/navigation/top_bar";
+import { TFunction } from "i18next";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -110,7 +111,234 @@ const styles = StyleSheet.create({
     },
 });
 
-// We create the function
+/**
+ * Spawns the navigation buttons - "Go back" and "Continue" / "Let's go" if it's the last page.
+ *
+ * @returns {ReactElement}
+ */
+function NavigationButtons({
+    currentTab,
+    stepValidity,
+    goNext,
+    goBack,
+    t,
+}: {
+    currentTab: number;
+    stepValidity: Record<string, boolean>;
+    goNext: () => void;
+    goBack: () => void;
+    t: TFunction;
+}): ReactElement {
+    let buttonText: string;
+    let style: "ACE" | "HMM";
+    let action: () => void;
+
+    switch (currentTab) {
+        case 1:
+            buttonText = stepValidity.step1
+                ? t("globals.interaction.continue")
+                : t("globals.interaction.somethingIsWrong");
+            style = stepValidity.step1 ? "ACE" : "HMM";
+            action = stepValidity.step1 ? goNext : () => {};
+            break;
+        case 2:
+            buttonText = stepValidity.step2
+                ? t("globals.interaction.continue")
+                : t("globals.interaction.somethingIsWrong");
+            style = stepValidity.step2 ? "ACE" : "HMM";
+            action = stepValidity.step2 ? goNext : (): void => {};
+            break;
+        case 3:
+            buttonText = stepValidity.step3
+                ? t("globals.interaction.continue")
+                : t("globals.interaction.somethingIsWrong");
+            style = stepValidity.step3 ? "ACE" : "HMM";
+            action = stepValidity.step3 ? goNext : (): void => {};
+            break;
+        case 4:
+            buttonText = stepValidity.step4
+                ? t("globals.interaction.continue")
+                : t("globals.interaction.somethingIsWrong");
+            style = stepValidity.step4 ? "ACE" : "HMM";
+            action = stepValidity.step4 ? goNext : (): void => {};
+            break;
+        case 5:
+            buttonText = stepValidity.step5
+                ? t("globals.interaction.goAheadGood")
+                : t("globals.interaction.somethingIsWrong");
+            style = stepValidity.step5 ? "ACE" : "HMM";
+            action = stepValidity.step5 ? goNext : (): void => {};
+            break;
+        default:
+            console.error(
+                `Someone forgot to assign a case for tab ${currentTab}.`,
+            );
+            buttonText = "Error";
+            style = "HMM";
+            action = (): void => {};
+    }
+
+    return (
+        <View style={styles.buttonWrapper}>
+            <BetterButton
+                buttonText={t("globals.interaction.goBack")}
+                buttonHint={t("pages.welcome.accessibility.goesBack")}
+                style="DEFAULT"
+                action={goBack}
+            />
+            <GapView width={10} />
+            <BetterButton
+                buttonText={buttonText}
+                buttonHint={
+                    currentTab === 5
+                        ? t("pages.welcome.accessibility.finishes")
+                        : t("pages.welcome.accessibility.goesFwd")
+                }
+                style={style}
+                action={action}
+            />
+        </View>
+    );
+}
+
+/**
+ * Spawns a progress bar at the bottom that keeps track of how much is left to finish registration, and shows it to the user in an intuitive way. Everything's handled automatically and returns a `<View>` with absolute positioning, so no configuration is required.
+ *
+ * @returns {ReactElement}
+ */
+function ProgressBar({
+    currentTab,
+    amountOfTabs,
+}: {
+    currentTab: number;
+    amountOfTabs: number;
+}): ReactElement {
+    return (
+        <View style={styles.progressBar}>
+            {Array.from({ length: amountOfTabs }, (_, i) => (
+                <Fragment key={i}>
+                    <View
+                        style={[
+                            styles.progressBarItem,
+                            {
+                                backgroundColor:
+                                    currentTab >= i + 1
+                                        ? Colors.PRIMARIES.ACE.ACE
+                                        : Colors.MAIN.DIVISION_BORDER,
+                            },
+                        ]}
+                    />
+                    {i < amountOfTabs - 1 && <GapView width={5} />}
+                </Fragment>
+            ))}
+        </View>
+    );
+}
+
+/**
+ * Spawns an input field with the given parameters.
+ *
+ * @param {string} label A short text to show before the input to give indications.
+ * @param {string} placeholder The placeholder of the input.
+ * @param {string | number} value The value of the input. Set it to a stateful value, e.g. `formData.username`.
+ * @param {string} name The name of the property / stateful value it's linked to, e.g. `username` for `formData.username`.
+ * @param {number} refIndex It's index. _yes, you have to count all the calls the `spawnInputField` can keep an incremental index_.
+ * @param {("default" | "numeric")} [keyboardType="default"] Whether to use the normal keyboard or a numeric pad.
+ * @param {number} length Max length of the input.
+ * @param {boolean} isValid Whether the input is valid or not.
+ * @param {string} errorMessage Message to show if the input is not valid.
+ * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
+ */
+function WelcomeInputField({
+    label,
+    placeholder,
+    value,
+    name,
+    refIndex,
+    keyboardType = "default",
+    length,
+    isValid,
+    errorMessage,
+    inputRefs,
+    handleChange,
+}: {
+    label: string;
+    placeholder: string;
+    value: string | number;
+    name: "username" | "age" | "height" | "weight";
+    refIndex: number;
+    keyboardType?: "default" | "numeric";
+    length: number;
+    isValid: boolean;
+    errorMessage: string;
+    inputRefs: RefObject<TextInput[]>;
+    handleChange: (name: keyof FullProfileForCreation, value: string) => void;
+}): ReactElement {
+    return (
+        <BetterInputField
+            readOnly={false}
+            label={label}
+            placeholder={placeholder}
+            value={value}
+            name={name}
+            refIndex={refIndex}
+            length={length}
+            refParams={{ inputRefs, totalRefs: 4 }}
+            keyboardType={keyboardType}
+            changeAction={(text: string): void => handleChange(name, text)}
+            isValid={isValid}
+            validatorMessage={errorMessage}
+        />
+    );
+}
+
+/**
+ * Spawns an input select _based on_ the given parameters.
+ *
+ * @param {("activeness" | "sleepHours")} associatedValue What is this select related to. Only two fixed options, `"activeness"` and `"sleepHours"`, so you don't have to specify all the values / options. It's done by the function itself ;].
+ * @returns {ReactElement} Returns a Fragment with a `<BetterText>` (label), `<Select />` with the associated options, and a `<GapView />` between them.
+ */
+function WelcomeInputSelect({
+    associatedValue,
+    currentValue,
+    handleChange,
+    t,
+}: {
+    associatedValue: "activeness" | "sleepHours";
+    currentValue: string | number | null;
+    handleChange: (
+        name: "activeness" | "sleepHours",
+        value: string | number | null,
+    ) => void;
+    t: TFunction;
+}): ReactElement {
+    const options: SelectOption[] =
+        associatedValue === "activeness"
+            ? OptsForDataQuestions("activeness", t)
+            : OptsForDataQuestions("sleepTime", t);
+
+    return (
+        <>
+            <BetterTextSmallText>
+                {associatedValue === "activeness"
+                    ? t("pages.welcome.questions.activeness.ask")
+                    : t("pages.welcome.questions.sleepTime.ask")}
+            </BetterTextSmallText>
+            <GapView height={5} />
+            <Select
+                mode="dropdown"
+                dialogPrompt={t("globals.interaction.chooseAnOption")}
+                changeAction={(value) =>
+                    handleChange(associatedValue, value ?? null)
+                }
+                currentValue={currentValue ?? ""}
+                selectOptions={options}
+                t={t}
+            />
+        </>
+    );
+}
+
 export default function WelcomePage(): ReactElement {
     const { t } = useTranslation();
     // what "tab" of the page the user's on
@@ -153,8 +381,8 @@ export default function WelcomePage(): ReactElement {
      * @see submitUser()
      */
     function goNext(): void {
-        if (currentTab >= 0 && currentTab <= amountOfTabs - 1) {
-            setTab((prevPage: number): number => prevPage + 1);
+        if (currentTab < amountOfTabs) {
+            setTab((prevPage) => prevPage + 1);
         } else {
             submitUser();
         }
@@ -175,17 +403,7 @@ export default function WelcomePage(): ReactElement {
      * @param {string | number} value The value you want to set the `item` to.
      */
     function handleChange(
-        item:
-            | "username"
-            | "age"
-            | "height"
-            | "weight"
-            | "gender"
-            | "language"
-            | "activeness"
-            | "focus"
-            | "sleepHours"
-            | "theThinkHour",
+        item: keyof FullProfileForCreation,
         value: string | number | null,
     ): void {
         setFormData((prevData: FullProfileForCreation) => ({
@@ -202,9 +420,9 @@ export default function WelcomePage(): ReactElement {
      */
     async function submitUser(): Promise<void> {
         if (
-            !Object.values(formData).some(
+            Object.values(formData).every(
                 (value): boolean =>
-                    value === null || value === 0 || value === "",
+                    value !== null && value !== 0 && value !== "",
             ) &&
             Object.values(stepValidity).every((v) => v === true)
         ) {
@@ -261,90 +479,6 @@ export default function WelcomePage(): ReactElement {
         }
     }
 
-    /**
-     * Spawns an input field with the given parameters.
-     *
-     * @param {string} label A short text to show before the input to give indications.
-     * @param {string} placeholder The placeholder of the input.
-     * @param {string | number} value The value of the input. Set it to a stateful value, e.g. `formData.username`.
-     * @param {string} name The name of the property / stateful value it's linked to, e.g. `username` for `formData.username`.
-     * @param {number} refIndex It's index. _yes, you have to count all the calls the `spawnInputField` can keep an incremental index_.
-     * @param {("default" | "numeric")} [keyboardType="default"] Whether to use the normal keyboard or a numeric pad.
-     * @param {number} length Max length of the input.
-     * @param {boolean} isValid Whether the input is valid or not.
-     * @param {string} errorMessage Message to show if the input is not valid.
-     * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
-     */
-    function spawnInputField(
-        label: string,
-        placeholder: string,
-        value: string | number,
-        name: "username" | "age" | "height" | "weight",
-        refIndex: number,
-        keyboardType: "default" | "numeric" = "default",
-        length: number,
-        isValid: boolean,
-        errorMessage: string,
-    ): ReactNode {
-        return (
-            <BetterInputField
-                readOnly={false}
-                label={label}
-                placeholder={placeholder}
-                value={value}
-                name={name}
-                refIndex={refIndex}
-                length={length}
-                refParams={{ inputRefs, totalRefs: 4 }}
-                keyboardType={keyboardType}
-                changeAction={(text: string): void => handleChange(name, text)}
-                isValid={isValid}
-                validatorMessage={errorMessage}
-            />
-        );
-    }
-
-    /**
-     * Spawns an input select _based on_ the given parameters.
-     *
-     * @param {("activeness" | "sleepHours")} associatedValue What is this select related to. Only two fixed options, `"activeness"` and `"sleepHours"`, so you don't have to specify all the values / options. It's done by the function itself ;].
-     * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<Select />` with the associated options, and a `<GapView />` between them.
-     */
-    function spawnInputSelect(
-        associatedValue: "activeness" | "sleepHours",
-    ): ReactNode {
-        const options: SelectOption[] =
-            associatedValue === "activeness"
-                ? OptsForDataQuestions("activeness", t)
-                : OptsForDataQuestions("sleepTime", t);
-
-        return (
-            <>
-                <BetterTextSmallText>
-                    {associatedValue === "activeness"
-                        ? t("pages.welcome.questions.activeness.ask")
-                        : t("pages.welcome.questions.sleepTime.ask")}
-                </BetterTextSmallText>
-                <GapView height={5} />
-                <Select
-                    mode="dropdown"
-                    dialogPrompt={t("globals.interaction.chooseAnOption")}
-                    changeAction={(value: string | number): void =>
-                        handleChange(
-                            associatedValue,
-                            value !== null && value !== undefined
-                                ? value
-                                : null,
-                        )
-                    }
-                    currentValue={formData[associatedValue] ?? ""}
-                    selectOptions={options}
-                    t={t}
-                />
-            </>
-        );
-    }
-
     useEffect((): void => {
         try {
             setStepValidity({
@@ -363,163 +497,23 @@ export default function WelcomePage(): ReactElement {
         }
     }, [formData]);
 
-    /**
-     * Spawns the navigation buttons - "Go back" and "Continue" / "Let's go" if it's the last page.
-     *
-     * @returns {ReactElement}
-     */
-    function NavigationButtons(): ReactElement {
-        let buttonText: string;
-        let style: "ACE" | "HMM";
-        let action: () => void;
-
-        switch (currentTab) {
-            case 1:
-                buttonText = stepValidity.step1
-                    ? t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
-                style = stepValidity.step1 ? "ACE" : "HMM";
-                action = stepValidity.step1 ? goNext : () => {};
-                break;
-            case 2:
-                buttonText = stepValidity.step2
-                    ? t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
-                style = stepValidity.step2 ? "ACE" : "HMM";
-                action = stepValidity.step2 ? goNext : (): void => {};
-                break;
-            case 3:
-                buttonText = stepValidity.step3
-                    ? t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
-                style = stepValidity.step3 ? "ACE" : "HMM";
-                action = stepValidity.step3 ? goNext : (): void => {};
-                break;
-            case 4:
-                buttonText = stepValidity.step4
-                    ? t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
-                style = stepValidity.step4 ? "ACE" : "HMM";
-                action = stepValidity.step4 ? goNext : (): void => {};
-                break;
-            case 5:
-                buttonText = stepValidity.step5
-                    ? t("globals.interaction.goAheadGood")
-                    : t("globals.interaction.somethingIsWrong");
-                style = stepValidity.step5 ? "ACE" : "HMM";
-                action = stepValidity.step5 ? goNext : (): void => {};
-                break;
-            default:
-                console.error(
-                    `Someone forgot to assign a case for tab ${currentTab}.`,
-                );
-                buttonText = "Error";
-                style = "HMM";
-                action = (): void => {};
-        }
-
-        return (
-            <View style={styles.buttonWrapper}>
-                <BetterButton
-                    buttonText={t("globals.interaction.goBack")}
-                    buttonHint={t("pages.welcome.accessibility.goesBack")}
-                    style="DEFAULT"
-                    action={goBack}
-                />
-                <GapView width={10} />
-                <BetterButton
-                    buttonText={buttonText}
-                    buttonHint={
-                        currentTab === 5
-                            ? t("pages.welcome.accessibility.finishes")
-                            : t("pages.welcome.accessibility.goesFwd")
-                    }
-                    style={style}
-                    action={action}
-                />
-            </View>
-        );
-    }
-
-    /**
-     * Spawns a progress bar at the bottom that keeps track of how much is left to finish registration, and shows it to the user in an intuitive way. Everything's handled automatically and returns a `<View>` with absolute positioning, so no configuration is required.
-     *
-     * @returns {ReactElement}
-     */
-    function ProgressBar(): ReactElement {
-        return (
-            <View style={styles.progressBar}>
-                <View
-                    style={[
-                        styles.progressBarItem,
-                        {
-                            backgroundColor:
-                                currentTab >= 1
-                                    ? Colors.PRIMARIES.ACE.ACE
-                                    : Colors.MAIN.DIVISION_BORDER,
-                        },
-                    ]}
-                />
-                <GapView width={5} />
-                <View
-                    style={[
-                        styles.progressBarItem,
-                        {
-                            backgroundColor:
-                                currentTab >= 2
-                                    ? Colors.PRIMARIES.ACE.ACE
-                                    : Colors.MAIN.DIVISION_BORDER,
-                        },
-                    ]}
-                />
-                <GapView width={5} />
-                <View
-                    style={[
-                        styles.progressBarItem,
-                        {
-                            backgroundColor:
-                                currentTab >= 3
-                                    ? Colors.PRIMARIES.ACE.ACE
-                                    : Colors.MAIN.DIVISION_BORDER,
-                        },
-                    ]}
-                />
-                <GapView width={5} />
-                <View
-                    style={[
-                        styles.progressBarItem,
-                        {
-                            backgroundColor:
-                                currentTab >= 4
-                                    ? Colors.PRIMARIES.ACE.ACE
-                                    : Colors.MAIN.DIVISION_BORDER,
-                        },
-                    ]}
-                />
-                <GapView width={5} />
-                <View
-                    style={[
-                        styles.progressBarItem,
-                        {
-                            backgroundColor:
-                                currentTab >= 5
-                                    ? Colors.PRIMARIES.ACE.ACE
-                                    : Colors.MAIN.DIVISION_BORDER,
-                        },
-                    ]}
-                />
-            </View>
-        );
-    }
-
-    function BottomView(): ReactElement | undefined {
-        if (currentTab === 0) return;
+    function BottomView(): ReactElement | null {
+        if (currentTab === 0) return null;
 
         return (
             <View style={styles.bottomWrapperView}>
-                <NavigationButtons />
+                <NavigationButtons
+                    currentTab={currentTab}
+                    stepValidity={stepValidity}
+                    goNext={goNext}
+                    goBack={goBack}
+                    t={t}
+                />
                 <GapView height={10} />
-                <ProgressBar />
+                <ProgressBar
+                    currentTab={currentTab}
+                    amountOfTabs={amountOfTabs}
+                />
                 <PageEnd size="tiny" includeText={false} />
             </View>
         );
@@ -611,81 +605,89 @@ export default function WelcomePage(): ReactElement {
                             )}
                             includeBackButton={false}
                         />
-                        {spawnInputField(
-                            t("globals.userData.username.wordShorter"),
-                            t(
+                        <WelcomeInputField
+                            label={t("globals.userData.username.wordShorter")}
+                            placeholder={t(
                                 "pages.welcome.questions.aboutYou.placeholders.username",
-                            ),
-                            formData.username,
-                            "username",
-                            0,
-                            "default",
-                            40,
-                            IndividualUserDataValidators.username.validator(
+                            )}
+                            value={formData.username}
+                            name={"username"}
+                            refIndex={0}
+                            keyboardType={"default"}
+                            length={40}
+                            isValid={IndividualUserDataValidators.username.validator(
                                 formData.username,
-                            ),
-                            IndividualUserDataValidators.username.message(
+                            )}
+                            errorMessage={IndividualUserDataValidators.username.message(
                                 formData.username,
                                 t,
-                            ),
-                        )}
+                            )}
+                            inputRefs={inputRefs}
+                            handleChange={handleChange}
+                        />
                         <GapView height={5} />
-                        {spawnInputField(
-                            t("globals.userData.age.word"),
-                            t(
+                        <WelcomeInputField
+                            label={t("globals.userData.age.word")}
+                            placeholder={t(
                                 "pages.welcome.questions.aboutYou.placeholders.age",
-                            ),
-                            formData.age,
-                            "age",
-                            1,
-                            "numeric",
-                            3,
-                            IndividualUserDataValidators.age.validator(
+                            )}
+                            value={formData.age}
+                            name={"age"}
+                            refIndex={1}
+                            keyboardType={"numeric"}
+                            length={3}
+                            isValid={IndividualUserDataValidators.age.validator(
                                 formData.age,
-                            ),
-                            IndividualUserDataValidators.age.message(
+                            )}
+                            errorMessage={IndividualUserDataValidators.age.message(
                                 formData.age,
                                 t,
-                            ),
-                        )}
+                            )}
+                            inputRefs={inputRefs}
+                            handleChange={handleChange}
+                        />
                         <GapView height={5} />
-                        {spawnInputField(
-                            t("globals.userData.weight"),
-                            t(
+                        <WelcomeInputField
+                            label={t("globals.userData.weight")}
+                            placeholder={t(
                                 "pages.welcome.questions.aboutYou.placeholders.weight",
-                            ),
-                            formData.weight,
-                            "weight",
-                            2,
-                            "numeric",
-                            5,
-                            IndividualUserDataValidators.weight.validator(
+                            )}
+                            value={formData.weight}
+                            name={"weight"}
+                            refIndex={2}
+                            keyboardType={"numeric"}
+                            length={5}
+                            isValid={IndividualUserDataValidators.weight.validator(
                                 formData.weight,
-                            ),
-                            IndividualUserDataValidators.weight.message(
+                            )}
+                            errorMessage={IndividualUserDataValidators.weight.message(
                                 formData.weight,
                                 t,
-                            ),
-                        )}
+                            )}
+                            inputRefs={inputRefs}
+                            handleChange={handleChange}
+                        />
                         <GapView height={5} />
-                        {spawnInputField(
-                            t("globals.userData.height"),
-                            t(
+                        <WelcomeInputField
+                            label={t("globals.userData.height")}
+                            placeholder={t(
                                 "pages.welcome.questions.aboutYou.placeholders.height",
-                            ),
-                            formData.height,
-                            "height",
-                            3,
-                            "numeric",
-                            5,
-                            IndividualUserDataValidators.height.validator(
+                            )}
+                            value={formData.height}
+                            name={"height"}
+                            refIndex={3}
+                            keyboardType={"numeric"}
+                            length={5}
+                            isValid={IndividualUserDataValidators.height.validator(
                                 formData.height,
-                            ),
-                            IndividualUserDataValidators.height.message(
+                            )}
+                            errorMessage={IndividualUserDataValidators.height.message(
                                 formData.height,
                                 t,
-                            ),
-                        )}
+                            )}
+                            inputRefs={inputRefs}
+                            handleChange={handleChange}
+                        />
                         <GapView height={5} />
                         <BetterText
                             textAlign="normal"
@@ -747,9 +749,19 @@ export default function WelcomePage(): ReactElement {
                             )}
                             includeBackButton={false}
                         />
-                        {spawnInputSelect("sleepHours")}
+                        <WelcomeInputSelect
+                            associatedValue="sleepHours"
+                            handleChange={handleChange}
+                            currentValue={formData["sleepHours"]}
+                            t={t}
+                        />
                         <GapView height={10} />
-                        {spawnInputSelect("activeness")}
+                        <WelcomeInputSelect
+                            associatedValue="activeness"
+                            handleChange={handleChange}
+                            currentValue={formData["activeness"]}
+                            t={t}
+                        />
                     </>
                 )}
                 {currentTab === 4 && (

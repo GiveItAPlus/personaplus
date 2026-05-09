@@ -121,7 +121,7 @@ export default function HomeScreen(): ReactElement {
                     setPassiveObjectivesToRender(objectivesWithStreak);
                 }
             } catch (e) {
-                ShowToast(e as string);
+                ShowToast(e);
                 console.error(`Error fetching data: ${e}`);
             } finally {
                 setIdentifiersLoaded(true);

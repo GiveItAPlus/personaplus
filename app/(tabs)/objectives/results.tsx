@@ -69,14 +69,6 @@ export default function Results(): ReactElement {
         !originalParams.elapsedTime ||
         !originalParams.id
     ) {
-        console.error(
-            `Missing required parameters. Params: BURNT CALORIES ${originalParams.burntCalories}, ELAPSED TIME ${originalParams.elapsedTime}, ID ${originalParams.id}`,
-            {
-                location: "@/app/(tabs)/objectives/Results.tsx",
-                function: "useGlobalSearchParams()",
-                isHandler: false,
-            },
-        );
         throw new Error(
             `Missing required parameters. Params: BURNT CALORIES ${originalParams.burntCalories}, ELAPSED TIME ${originalParams.elapsedTime}, ID ${originalParams.id}`,
         );

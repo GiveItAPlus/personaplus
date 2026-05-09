@@ -21,6 +21,7 @@ This release breaks the internal API, making earlier objectives unusable.
 
 ### Fixed
 
+- Fixed the app randomly failing to load daily logs (and thereby erroring with any use).
 - Fixed some instability with language handling.
 - Fixed many internal aspects of the app for better and stabler functioning.
 

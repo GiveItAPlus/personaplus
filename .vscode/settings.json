@@ -167,5 +167,6 @@
     },
     "[lua]": {
         "editor.defaultFormatter": "sumneko.lua"
-    }
+    },
+    "discord.enabled": true
 }

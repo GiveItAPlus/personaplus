@@ -567,7 +567,7 @@
         "experiments": {
             "header": "LEE ESTO O VAS A EXPLOTAR!!",
             "subheader": "quiero decir no vas a explotar en realidad pero porfa lee",
-            "disclaimer": "Básicamente: Los experimentos son funciones chulas en las que estoy trabajando PERO que no he terminado. ¡Puedes probarlas anticipadamente! Pero puede que tengan errores, así que no prometo que no causen problemas.\n\nSi encuentras cualquier fallo o tienes cualquier sugerencia, házmela saber*—¡todo ayuda a que la app sea mejor!\n\n*Desde la página 'Sobre' tienes el Instagram oficial, puedes mandar un mensaje ahí.",
+            "disclaimer": "Básicamente: Los experimentos son funciones chulas en las que estoy trabajando PERO que no he terminado. ¡Puedes probarlas anticipadamente! Pero puede que tengan errores, así que no prometo que no causen problemas.\n\nSi encuentras cualquier fallo o tienes cualquier sugerencia, házmela saber*—¡todo ayuda a que la app sea mejor!",
             "realHeader": "Experimentos",
             "realSubheader": "Funciones experimentales de PersonaPlus",
             "test": "Probar experimento",

@@ -51,6 +51,7 @@ import { ShowToast } from "@/toolkit/android";
 import { GenerateRandomMessage } from "@/toolkit/strings";
 import { HandleEditObjective } from "@/toolkit/objectives/common";
 import { Fragment } from "react/jsx-runtime";
+import { TFunction } from "i18next";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -89,6 +90,108 @@ const styles = StyleSheet.create({
     },
 });
 
+// type to avoid duplication
+type Value =
+    | "dumbbellWeight"
+    | "reps"
+    | "amountOfHands"
+    | "estimateSpeed"
+    | "amountOfPushUps";
+
+function ObjectiveToggle({
+    associatedValue,
+    objectiveToCreate,
+    handleToggle,
+    handleChange,
+    t,
+}: {
+    associatedValue: Value;
+    objectiveToCreate: ActiveObjectiveWithoutId;
+    handleToggle: (op: "increase" | "decrease", value: Value) => void;
+    handleChange: (value: Value, raw: string) => void;
+    t: TFunction;
+}): ReactElement {
+    let displayValue;
+    let target;
+
+    const baseTranslateKey =
+        "pages.createActiveObjective.questions.actualQuestions";
+
+    const translateKeys = {
+        header: `${baseTranslateKey}.${associatedValue}`,
+        subHeader:
+            associatedValue === "amountOfHands"
+                ? objectiveToCreate.exercise === "Push Ups"
+                    ? `${baseTranslateKey}.amountOfHandsPushUpHint`
+                    : `${baseTranslateKey}.amountOfHandsLiftingHint`
+                : `${baseTranslateKey}.${associatedValue}Hint`,
+    };
+
+    switch (associatedValue) {
+        case "amountOfHands":
+        case "amountOfPushUps":
+        case "dumbbellWeight":
+        case "estimateSpeed":
+        case "reps":
+            target = objectiveToCreate.specificData[associatedValue];
+            break;
+    }
+
+    displayValue = String(target);
+
+    return (
+        <>
+            <BetterTextSmallHeader>
+                {t(translateKeys.header)}
+            </BetterTextSmallHeader>
+            <BetterTextSmallText>
+                {t(translateKeys.subHeader)}
+            </BetterTextSmallText>
+            <GapView height={10} />
+            <View style={styles.toggleView}>
+                <BetterButton
+                    layout="box"
+                    buttonText="-"
+                    buttonHint={t(
+                        "pages.createActiveObjectives.accessibility.reduces",
+                    )}
+                    style="ACE"
+                    action={() => handleToggle("decrease", associatedValue)}
+                />
+                <TextInput
+                    placeholder={t(translateKeys.header)}
+                    value={displayValue}
+                    placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
+                    style={styles.textInput}
+                    autoCorrect={false}
+                    multiline={false}
+                    maxLength={5}
+                    textAlign="center"
+                    keyboardType="decimal-pad"
+                    inputMode="decimal"
+                    returnKeyType="done"
+                    enterKeyHint="done"
+                    onChangeText={(value: string): void => {
+                        handleChange(associatedValue, value);
+                    }}
+                />
+                <BetterButton
+                    layout="box"
+                    buttonText="+"
+                    buttonHint={t(
+                        "pages.createActiveObjectives.accessibility.increases",
+                    )}
+                    style="ACE"
+                    action={(): void => {
+                        handleToggle("increase", associatedValue);
+                    }}
+                />
+            </View>
+            <GapView height={20} />
+        </>
+    );
+}
+
 export default function CreateActiveObjectivePage(): ReactElement {
     const { t } = useTranslation();
 
@@ -119,26 +222,21 @@ export default function CreateActiveObjectivePage(): ReactElement {
     });
 
     useEffect((): void => {
-        const edit: number | "invalidData" | "noEdit" = HandleEditObjective(
-            params,
-            "active",
-        );
-        if (edit === "invalidData") {
+        const editResult: number | "invalidData" | "noEdit" =
+            HandleEditObjective(params, "active");
+        if (editResult === "invalidData") {
             ShowToast(t("errors.activeObjectives.invalidData"));
             router.replace(Routes.MAIN.HOME);
             return;
         }
-        if (edit === "noEdit") return;
-        setEdit({
-            enable: true,
-            id: edit,
-        });
+        if (editResult === "noEdit") return;
+        setEdit({ enable: true, id: editResult });
     }, [params, t]);
 
     useEffect(() => {
         if (edit.enable === false) return;
         async function handler() {
-            if (!edit.id) return;
+            if (edit.id === null) return;
             const o = await GetActiveObjective(edit.id);
             if (!o) {
                 console.error(
@@ -157,14 +255,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
         [t],
     );
 
-    // type to avoid duplication
-    type Value =
-        | "dumbbellWeight"
-        | "reps"
-        | "amountOfHands"
-        | "estimateSpeed"
-        | "amountOfPushUps";
-
     function handleToggle(
         operation: "increase" | "decrease",
         value: Value,
@@ -180,16 +270,16 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 if (result < speedOptions.length) data.estimateSpeed = result;
             } else if (value === "amountOfHands") {
                 if (operation === "increase" && data.amountOfHands < 2)
-                    data.amountOfHands += 1 as 1 | 2;
+                    data.amountOfHands = (data.amountOfHands + 1) as 1 | 2;
                 if (operation === "decrease" && data.amountOfHands > 1)
-                    data.amountOfHands -= 1 as 1 | 2;
+                    data.amountOfHands = (data.amountOfHands - 1) as 1 | 2;
             } else {
                 data[value] = op(data[value]);
             }
 
             return {
                 ...prev,
-                info: { days: prev.info.days },
+                info: { ...prev.info },
                 specificData: data,
             };
         });
@@ -214,97 +304,14 @@ export default function CreateActiveObjectivePage(): ReactElement {
         [t("Maximum Speed"), t("more than 16.1 km/h")],
     ];
 
-    function handleChange(associatedValue: Value, value: number): void {
+    function handleChange(associatedValue: Value, _value: string): void {
+        // TODO: stop this from stopping the user from inputting decimal values
+        const parsedValue: number = parseFloat(_value);
+        const value: number = isNaN(parsedValue) ? 0 : Math.max(0, parsedValue);
         updateObjectiveToCreate((prev) => ({
             ...prev,
             specificData: { ...prev.specificData, [associatedValue]: value },
         }));
-    }
-
-    function spawnToggle(associatedValue: Value): ReactElement {
-        let displayValue;
-        let target;
-
-        const baseTranslateKey =
-            "pages.createActiveObjective.questions.actualQuestions";
-
-        const translateKeys = {
-            header: `${baseTranslateKey}.${associatedValue}`,
-            subHeader:
-                associatedValue === "amountOfHands"
-                    ? objectiveToCreate.exercise === "Push Ups"
-                        ? `${baseTranslateKey}.amountOfHandsPushUpHint`
-                        : `${baseTranslateKey}.amountOfHandsLiftingHint`
-                    : `${baseTranslateKey}.${associatedValue}Hint`,
-        };
-
-        switch (associatedValue) {
-            case "amountOfHands":
-            case "amountOfPushUps":
-            case "dumbbellWeight":
-            case "estimateSpeed":
-            case "reps":
-                target = objectiveToCreate.specificData[associatedValue];
-                break;
-        }
-
-        displayValue = String(target);
-
-        return (
-            <>
-                <BetterTextSmallHeader>
-                    {t(translateKeys.header)}
-                </BetterTextSmallHeader>
-                <BetterTextSmallText>
-                    {t(translateKeys.subHeader)}
-                </BetterTextSmallText>
-                <GapView height={10} />
-                <View style={styles.toggleView}>
-                    <BetterButton
-                        layout="box"
-                        buttonText="-"
-                        buttonHint={t(
-                            "pages.createActiveObjectives.accessibility.reduces",
-                        )}
-                        style="ACE"
-                        action={() => handleToggle("decrease", associatedValue)}
-                    />
-                    <TextInput
-                        placeholder={t(translateKeys.header)}
-                        value={displayValue}
-                        placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
-                        style={styles.textInput}
-                        autoCorrect={false}
-                        multiline={false}
-                        maxLength={5}
-                        textAlign="center"
-                        keyboardType="decimal-pad"
-                        inputMode="decimal"
-                        returnKeyType="done"
-                        enterKeyHint="done"
-                        onChangeText={(value: string): void => {
-                            const parsedValue: number = parseFloat(value);
-                            const validValue: number = isNaN(parsedValue)
-                                ? 0
-                                : Math.max(0, parsedValue);
-                            handleChange(associatedValue, validValue);
-                        }}
-                    />
-                    <BetterButton
-                        layout="box"
-                        buttonText="+"
-                        buttonHint={t(
-                            "pages.createActiveObjectives.accessibility.increases",
-                        )}
-                        style="ACE"
-                        action={(): void => {
-                            handleToggle("increase", associatedValue);
-                        }}
-                    />
-                </View>
-                <GapView height={20} />
-            </>
-        );
     }
 
     useEffect((): void => {
@@ -320,8 +327,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
             await CreateActiveObjective(objectiveToCreate, t);
         }
         router.replace(Routes.MAIN.HOME);
-
-        return;
     }
 
     return (
@@ -444,11 +449,33 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 )}
             </View>
             <GapView height={20} />
-            {objectiveToCreate.exercise === "Push Ups" &&
-                spawnToggle("amountOfPushUps")}
-            {objectiveToCreate.exercise === "Lifting" && spawnToggle("reps")}
-            {objectiveToCreate.exercise === "Lifting" &&
-                spawnToggle("dumbbellWeight")}
+            {objectiveToCreate.exercise === "Push Ups" && (
+                <ObjectiveToggle
+                    associatedValue="amountOfPushUps"
+                    objectiveToCreate={objectiveToCreate}
+                    handleToggle={handleToggle}
+                    handleChange={handleChange}
+                    t={t}
+                />
+            )}
+            {objectiveToCreate.exercise === "Lifting" && (
+                <ObjectiveToggle
+                    associatedValue="reps"
+                    objectiveToCreate={objectiveToCreate}
+                    handleToggle={handleToggle}
+                    handleChange={handleChange}
+                    t={t}
+                />
+            )}
+            {objectiveToCreate.exercise === "Lifting" && (
+                <ObjectiveToggle
+                    associatedValue="dumbbellWeight"
+                    objectiveToCreate={objectiveToCreate}
+                    handleToggle={handleToggle}
+                    handleChange={handleChange}
+                    t={t}
+                />
+            )}
             {objectiveToCreate.exercise === "Running" && (
                 <>
                     <BetterTextSmallHeader>
@@ -513,8 +540,15 @@ export default function CreateActiveObjectivePage(): ReactElement {
             )}
 
             {(objectiveToCreate.exercise === "Lifting" ||
-                objectiveToCreate.exercise === "Push Ups") &&
-                spawnToggle("amountOfHands")}
+                objectiveToCreate.exercise === "Push Ups") && (
+                <ObjectiveToggle
+                    associatedValue="amountOfHands"
+                    objectiveToCreate={objectiveToCreate}
+                    handleToggle={handleToggle}
+                    handleChange={handleChange}
+                    t={t}
+                />
+            )}
             <BetterButton
                 style={canCreateObjective ? "ACE" : "DEFAULT"}
                 buttonText={

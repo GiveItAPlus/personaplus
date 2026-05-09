@@ -65,29 +65,16 @@ type ActiveObjectiveInfo = {
     days: WeekTuple;
 };
 
-/**
- * Specific objective data for exercises.
- */
-
-interface ActiveObjectiveSpecificData {
-    /**
-     * LIFTING - Weight of each thingamabob that weights
-     *
-     * @type {number}
-     */
-    dumbbellWeight: number;
-    /**
-     * LIFTING - How many lifts
-     *
-     * @type {number}
-     */
-    reps: number;
+type POD_G_AmountOfHands = {
     /**
      * GENERIC - Amount of hands - AKA amount of dumbbells for lifting - AKA amount of hands to be used when pushing up (<- this one is why it defaults to two).
      *
      * @type {(1 | 2)}
      */
     amountOfHands: 1 | 2;
+};
+
+type POD_Running = {
     /**
      * RUNNING - Speed (value equals the INDEX in the speed array, not the actual speed!)
      *
@@ -95,39 +82,68 @@ interface ActiveObjectiveSpecificData {
      * @type {number}
      */
     estimateSpeed: number;
+};
+type POD_PushUps = {
     /**
-     * PUSH UPS - Amount of push ups
+     * Amount of push ups
      *
      * @type {number}
      */
     amountOfPushUps: number;
-}
+} & POD_G_AmountOfHands;
+type POD_Lifting = {
+    /**
+     * Weight of each thingamabob that weights
+     *
+     * @type {number}
+     */
+    dumbbellWeight: number;
+    /**
+     * How many lifts
+     *
+     * @type {number}
+     */
+    reps: number;
+} & POD_G_AmountOfHands;
+
+type ActiveObjectiveSpecificDataMap = {
+    "Push Ups": POD_PushUps;
+    Lifting: POD_Lifting;
+    Running: POD_Running;
+    "": any;
+};
+
+/**
+ * Specific objective data for exercises.
+ */
+type ActiveObjectiveData = {
+    [K in keyof ActiveObjectiveSpecificDataMap]: {
+        /**
+         * What exercise is the user supposed to do.
+         *
+         * @type {SupportedActiveObjectives}
+         */
+        exercise: K;
+        /**
+         * Exercise-specific data for the objective.
+         *
+         * @type {ActiveObjectiveSpecificData}
+         */
+        specificData: ActiveObjectiveSpecificDataMap[K];
+    };
+}[keyof ActiveObjectiveSpecificDataMap];
 
 /**
  * A PersonaPlus Active Objective™
- *
- * @export
  */
-export interface ActiveObjective extends GenericObjective {
-    /**
-     * What exercise is the user supposed to do.
-     *
-     * @type {SupportedActiveObjectives}
-     */
-    exercise: SupportedActiveObjectives;
+export type ActiveObjective = GenericObjective & {
     /**
      * Global info about the objective, such as it's duration.
      *
      * @type {ActiveObjectiveInfo}
      */
     info: ActiveObjectiveInfo;
-    /**
-     * Exercise-specific data for the objective.
-     *
-     * @type {ActiveObjectiveSpecificData}
-     */
-    specificData: Partial<ActiveObjectiveSpecificData>;
-}
+} & ActiveObjectiveData;
 
 /**
  * Validates an ActiveObjective
@@ -153,29 +169,49 @@ export function ValidateActiveObjective(
             return false; // if all days are disabled, invalid
         }
         if (!obj.specificData) return false;
-        const specificData = obj.specificData as ActiveObjectiveSpecificData;
-        const exercise = obj.exercise as SupportedActiveObjectives;
 
-        let isSpecificDataValid = false;
-
-        if (exercise === "Lifting") {
-            isSpecificDataValid =
-                (specificData?.dumbbellWeight || 0) > 0 &&
-                [1, 2].includes(specificData?.amountOfHands || 0) &&
-                (specificData?.reps || 0) > 0;
-        } else if (exercise === "Push Ups") {
-            isSpecificDataValid = specificData?.amountOfPushUps > 0;
-        } else if (exercise === "Running") {
-            isSpecificDataValid = true; // mo additional validation required
-            // in reality i should validate the estimateSpeed thingy but i don't care about it, as soon as i get the tracker to work it's getting removed anyway
-        } else if (exercise === "") {
-            isSpecificDataValid = false; // :D
-        }
-
-        return isSpecificDataValid;
+        return ValidateSpecificData(obj.exercise, obj.specificData);
     } catch {
         return false; // :(
     }
+}
+
+export function ValidateLifting(
+    specificData: any,
+): specificData is POD_Lifting {
+    return (
+        (specificData?.dumbbellWeight || 0) > 0 &&
+        [1, 2].includes(specificData?.amountOfHands || 0) &&
+        (specificData?.reps || 0) > 0
+    );
+}
+
+export function ValidatePushUps(
+    specificData: any,
+): specificData is POD_PushUps {
+    return specificData?.amountOfPushUps > 0;
+}
+
+export function ValidateRunning(
+    specificData: any,
+): specificData is POD_Running {
+    return true; // no additional validation required
+    // in reality i should validate the estimateSpeed thingy but i don't care about it, as soon as i get the tracker to work it's getting removed anyway
+}
+
+function ValidateSpecificData<K extends keyof ActiveObjectiveSpecificDataMap>(
+    exercise: K,
+    specificData: any,
+): specificData is ActiveObjectiveSpecificDataMap[K] {
+    type a = Exclude<SupportedActiveObjectives, "">;
+    const validators: Record<a, (data: any) => boolean> = {
+        Lifting: ValidateLifting,
+        "Push Ups": ValidatePushUps,
+        Running: ValidateRunning,
+    };
+
+    if (!(exercise in validators)) return false; // :D
+    return validators[exercise as a](specificData);
 }
 
 /**

@@ -162,12 +162,7 @@ export default function Report(): ReactElement {
                 }
                 // streak data
             } catch (e) {
-                console.error(`Error handling your report! ${e}`, {
-                    location: "@/app/(tabs)/Report.tsx",
-                    function: "fetchUserData()",
-                    isHandler: true,
-                    handlerName: "handler()",
-                });
+                console.error(`Error handling your report! ${e}`);
             } finally {
                 setLoading(false);
             }

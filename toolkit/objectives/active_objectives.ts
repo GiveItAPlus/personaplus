@@ -70,34 +70,28 @@ async function SaveActiveObjectiveToDailyLog(
     wasDone: boolean,
     performance?: CoreLibraryResponse,
 ): Promise<void> {
-    try {
-        // Fetch old data
-        const dailyData: ActiveObjectiveDailyLog =
-            await GetActiveObjectiveDailyLog();
-        const date: TodaysDate = GetCurrentDateCorrectly().string;
-        const objective: ActiveObjective | null = await GetActiveObjective(id);
+    // Fetch old data
+    const dailyData: ActiveObjectiveDailyLog =
+        await GetActiveObjectiveDailyLog();
+    const date: TodaysDate = GetCurrentDateCorrectly().string;
+    const objective: ActiveObjective | null = await GetActiveObjective(id);
 
-        if (!objective) throw new Error(`${id} is a wrong identifier.`);
+    if (!objective) throw new Error(`${id} is a wrong identifier.`);
 
-        // Saves the objective data
-        dailyData.push({
-            id,
-            date,
-            data: {
-                wasDone,
-                objective,
-                performance,
-            },
-        });
+    // Saves the objective data
+    dailyData.push({
+        id,
+        date,
+        data: {
+            wasDone,
+            objective,
+            performance,
+        },
+    });
 
-        // Updates data and puts it back to AsyncStorage
-        await SaveGenericObjectiveDailyLog(dailyData, "active");
-        console.log(`Success! Session ${id} data saved for ${date}.`);
-    } catch (e) {
-        throw new Error(
-            `Error saving user's performance for objective ${id}: ${e}`,
-        );
-    }
+    // Updates data and puts it back to AsyncStorage
+    await SaveGenericObjectiveDailyLog(dailyData, "active");
+    console.log(`Success! Session ${id} data saved for ${date}.`);
 }
 
 /**
@@ -152,60 +146,44 @@ async function EditActiveObjective(
     id: number,
     t: TFunction,
 ): Promise<void> {
-    try {
-        const oldObj: ActiveObjective | null = await GetObjective(id, "active");
+    const oldObj: ActiveObjective | null = await GetObjective(id, "active");
 
-        if (!oldObj) throw new Error(`No active objective with ID ${id}`);
+    if (!oldObj) throw new Error(`No active objective with ID ${id}`);
 
-        const newObjective: ActiveObjective = {
-            ...oldObj, // 1st go the oldies
-            ...obj, // 2nd go the overrides
-            id, // 3rd goes the ID override
-        };
+    const newObjective: ActiveObjective = {
+        ...oldObj, // 1st go the oldies
+        ...obj, // 2nd go the overrides
+        id, // 3rd goes the ID override
+    };
 
-        let objs: ActiveObjective[] | null = await GetAllObjectives("active");
-        if (!objs || objs.length === 0) objs = [];
+    let objs: ActiveObjective[] | null = await GetAllObjectives("active");
+    if (!objs || objs.length === 0) objs = [];
 
-        const index: number = objs.findIndex(
-            (o: ActiveObjective): boolean => o.id === id,
-        );
+    const index: number = objs.findIndex(
+        (o: ActiveObjective): boolean => o.id === id,
+    );
 
-        if (index !== -1) {
-            // overwrite
-            objs[index] = newObjective;
-        } else {
-            // this shouldn't happen
-            throw new Error(
-                `Objective with ID ${id} not found in the objectives list!`,
-            );
-        }
-
-        try {
-            await AsyncStorage.setItem(
-                StoredItemNames.activeObjectives,
-                JSON.stringify(objs),
-            );
-            ShowToast(
-                t("pages.createActiveObjective.doneFeedback", {
-                    obj: t(
-                        `globals.supportedActiveObjectives.${newObjective.exercise}.name`,
-                    ),
-                }),
-            );
-            console.log(
-                `Edited ${newObjective.exercise} objective with ID ${newObjective.id} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
-                    newObjective,
-                )}"`,
-            );
-        } catch (e) {
-            throw new Error(`Failed to save objectives! ${e}`);
-        }
-    } catch (e) {
-        ShowToast("Error :c");
+    if (index !== -1) {
+        // overwrite
+        objs[index] = newObjective;
+    } else {
+        // this shouldn't happen
         throw new Error(
-            `Something went wrong editing active objective ${id}.\n\nError: ${e}`,
+            `Objective with ID ${id} not found in the objectives list!`,
         );
     }
+
+    await AsyncStorage.setItem(
+        StoredItemNames.activeObjectives,
+        JSON.stringify(objs),
+    );
+    ShowToast(
+        t("pages.createActiveObjective.doneFeedback", {
+            obj: t(
+                `globals.supportedActiveObjectives.${newObjective.exercise}.name`,
+            ),
+        }),
+    );
 }
 
 /**
@@ -261,43 +239,32 @@ function CalculateSessionPerformance(
     userData: BasicUserHealthData,
     elapsedTime: number,
 ): CoreLibraryResponse {
-    try {
-        if (objective.exercise === "Running")
-            return CoreLibrary.performance.RunningPerformance.calculate(
-                userData.weight,
-                objective.specificData.estimateSpeed,
-                elapsedTime,
-            );
-        if (objective.exercise === "Lifting")
-            return CoreLibrary.performance.LiftingPerformance.calculate(
-                userData.age,
-                userData.gender,
-                userData.weight,
-                objective.specificData.dumbbellWeight,
-                objective.specificData.amountOfHands,
-                elapsedTime,
-                objective.specificData.reps,
-            );
-        if (objective.exercise === "Push Ups")
-            return CoreLibrary.performance.PushingUpPerformance.calculate(
-                userData.gender,
-                userData.weight,
-                elapsedTime,
-                objective.specificData.amountOfPushUps,
-                objective.specificData.amountOfHands,
-            );
+    if (objective.exercise === "")
         throw "Invalid exercise type"; // we should never get here, however TS wants me to add this
-    } catch (e) {
-        throw new Error(
-            `Error handling post-session calculations: ${e}\n${{
-                location:
-                    "USE: @/app/(tabs)/objectives/Sessions.tsx; FUNC: @/toolkit/objectives/ActiveObjectives.ts",
-                function: "FinishSession()",
-                isHandler: true,
-                handlerName: "Toolkified CalculateSessionPerformance()",
-            }}`,
+    else if (objective.exercise === "Running")
+        return CoreLibrary.performance.RunningPerformance.calculate(
+            userData.weight,
+            objective.specificData.estimateSpeed,
+            elapsedTime,
         );
-    }
+    else if (objective.exercise === "Lifting")
+        return CoreLibrary.performance.LiftingPerformance.calculate(
+            userData.age,
+            userData.gender,
+            userData.weight,
+            objective.specificData.dumbbellWeight,
+            objective.specificData.amountOfHands,
+            elapsedTime,
+            objective.specificData.reps,
+        );
+    else
+        return CoreLibrary.performance.PushingUpPerformance.calculate(
+            userData.gender,
+            userData.weight,
+            elapsedTime,
+            objective.specificData.amountOfPushUps,
+            objective.specificData.amountOfHands,
+        );
 }
 
 const DEFAULT_ACTIVE_OBJECTIVE: ActiveObjectiveWithoutId = {

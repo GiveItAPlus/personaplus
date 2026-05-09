@@ -65,61 +65,42 @@ async function EditPassiveObjective(
     id: number,
     t: TFunction,
 ): Promise<void> {
-    try {
-        const oldObj: PassiveObjective | null = await GetObjective(
-            id,
-            "passive",
-        );
+    const oldObj: PassiveObjective | null = await GetObjective(id, "passive");
 
-        if (!oldObj) throw new Error(`No active objective with ID ${id}`);
+    if (!oldObj) throw new Error(`No active objective with ID ${id}`);
 
-        const newObjective: PassiveObjective = {
-            ...oldObj, // 1st go the oldies
-            ...obj, // 2nd go the overrides
-            id, // 3rd goes the ID override
-        };
+    const newObjective: PassiveObjective = {
+        ...oldObj, // 1st go the oldies
+        ...obj, // 2nd go the overrides
+        id, // 3rd goes the ID override
+    };
 
-        let objs: PassiveObjective[] | null = await GetAllObjectives("passive");
-        if (!objs || objs.length === 0) objs = [];
+    let objs: PassiveObjective[] | null = await GetAllObjectives("passive");
+    if (!objs || objs.length === 0) objs = [];
 
-        const index: number = objs.findIndex(
-            (o: PassiveObjective): boolean => o.id === id,
-        );
+    const index: number = objs.findIndex(
+        (o: PassiveObjective): boolean => o.id === id,
+    );
 
-        if (index !== -1) {
-            // overwrite
-            objs[index] = newObjective;
-        } else {
-            // this shouldn't happen
-            throw new Error(
-                `Objective with ID ${id} not found in the objectives list!`,
-            );
-        }
-
-        try {
-            await AsyncStorage.setItem(
-                StoredItemNames.activeObjectives,
-                JSON.stringify(objs),
-            );
-            ShowToast(
-                t("pages.createActiveObjective.doneFeedback", {
-                    obj: newObjective.goal,
-                }),
-            );
-            console.log(
-                `Edited ${newObjective.goal} objective with ID ${newObjective.id} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
-                    newObjective,
-                )}"`,
-            );
-        } catch (e) {
-            throw new Error(`Failed to save objectives! ${e}`);
-        }
-    } catch (e) {
-        ShowToast("Error :c");
+    if (index !== -1) {
+        // overwrite
+        objs[index] = newObjective;
+    } else {
+        // this shouldn't happen
         throw new Error(
-            `Something went wrong editing passive objective ${id}.\n\nError: ${e}`,
+            `Objective with ID ${id} not found in the objectives list!`,
         );
     }
+
+    await AsyncStorage.setItem(
+        StoredItemNames.activeObjectives,
+        JSON.stringify(objs),
+    );
+    ShowToast(
+        t("pages.createActiveObjective.doneFeedback", {
+            obj: newObjective.goal,
+        }),
+    );
 }
 
 /**
@@ -177,32 +158,26 @@ async function SavePassiveObjectiveToDailyLog(
     id: number,
     wasDone: boolean,
 ): Promise<void> {
-    try {
-        // Fetch old data
-        const dailyData: PassiveObjectiveDailyLog =
-            await GetPassiveObjectiveDailyLog();
-        const date: TodaysDate = GetCurrentDateCorrectly().string;
-        const objective: PassiveObjective | null =
-            await GetPassiveObjective(id);
+    // Fetch old data
+    const dailyData: PassiveObjectiveDailyLog =
+        await GetPassiveObjectiveDailyLog();
+    const date: TodaysDate = GetCurrentDateCorrectly().string;
+    const objective: PassiveObjective | null = await GetPassiveObjective(id);
 
-        if (!objective) throw new Error(`${id} is a wrong identifier.`);
+    if (!objective) throw new Error(`${id} is a wrong identifier.`);
 
-        // Saves the objective data
-        dailyData.push({
-            id,
-            date,
-            data: {
-                wasDone,
-                objective,
-            },
-        });
+    // Saves the objective data
+    dailyData.push({
+        id,
+        date,
+        data: {
+            wasDone,
+            objective,
+        },
+    });
 
-        // Updates data and puts it back to AsyncStorage
-        await SaveGenericObjectiveDailyLog(dailyData, "passive");
-        console.log(`Marked passive obj ${id} as done for ${date}.`);
-    } catch (e) {
-        throw new Error(`Error saving user's goal for objective ${id}: ${e}`);
-    }
+    // Updates data and puts it back to AsyncStorage
+    await SaveGenericObjectiveDailyLog(dailyData, "passive");
 }
 
 /**

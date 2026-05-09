@@ -47,9 +47,7 @@ const GapView: NamedExoticComponent<GapViewProps> = memo(function GapView({
     height,
     width,
 }: GapViewProps): ReactElement {
-    const styles: {
-        view: { height: number | undefined; width: number | undefined };
-    } = StyleSheet.create({
+    const styles = StyleSheet.create({
         view: { height, width },
     });
 

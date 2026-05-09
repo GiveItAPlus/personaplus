@@ -46,30 +46,24 @@ export default function Settings(): ReactElement | undefined {
     }, []);
 
     async function changeNotifications(): Promise<void> {
-        try {
-            if (!userData) throw new Error("Why is userData (still) null?");
-            userData.wantsNotifications = !userData.wantsNotifications;
-            await AsyncStorage.setItem(
-                StoredItemNames.userData,
-                JSON.stringify(userData),
-            );
-            switch (userData.wantsNotifications) {
-                case false:
-                    await cancelScheduledNotifications(t, true);
-                    break;
-                case true:
-                    ShowToast(
-                        t(
-                            "pages.settings.preferences.notifications.flow.enabled",
-                        ),
-                    );
-                    break;
-            }
-            router.replace(Routes.MAIN.PROFILE);
-            router.replace(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
-        } catch (e) {
-            console.error(`Error toggling notifications: ${e}`);
+        if (!userData) throw new Error("Why is userData (still) null?");
+        userData.wantsNotifications = !userData.wantsNotifications;
+        await AsyncStorage.setItem(
+            StoredItemNames.userData,
+            JSON.stringify(userData),
+        );
+        switch (userData.wantsNotifications) {
+            case false:
+                await cancelScheduledNotifications(t, true);
+                break;
+            case true:
+                ShowToast(
+                    t("pages.settings.preferences.notifications.flow.enabled"),
+                );
+                break;
         }
+        router.replace(Routes.MAIN.PROFILE);
+        router.replace(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
     }
 
     if (loading) return <Loading />;

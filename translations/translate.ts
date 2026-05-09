@@ -49,12 +49,7 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
         return savedLanguage;
     } catch (e) {
         console.warn(
-            `Error handling getDefaultLocale(): ${e}. This is a warning and not an error because it doesn't have severe side effects. Fallback to English.`,
-            {
-                location: "@/translations/translate.ts",
-                isHandler: false,
-                function: "getDefaultLocale() @ try-catch #1",
-            },
+            `Error handling getDefaultLocale(): ${e}. Fallback to English.`,
         );
         return "en";
     }
@@ -83,32 +78,22 @@ async function ChangeLanguage(
     userData: FullProfile,
     language: "es" | "en",
 ): Promise<void> {
-    try {
-        if (!userData) throw new Error("Why is userData (still) null?");
-        const newUserData: FullProfile = {
-            ...userData,
-            language,
-        };
-        await AsyncStorage.setItem(
-            StoredItemNames.userData,
-            JSON.stringify(newUserData),
-        );
-        await changeLanguage(language);
-        ShowToast(
-            userData.language === "es"
-                ? "¡Hecho! Reinicia la app para aplicar tus cambios."
-                : "Done! Restart the app to apply your changes.",
-        );
-        return;
-    } catch (e) {
-        throw new Error(
-            `Error changing language: ${e}\n${{
-                function: "changeLanguage",
-                isHandler: false,
-                location: "@/translations/translate.ts",
-            }}`,
-        );
-    }
+    if (!userData) throw new Error("Why is userData (still) null?");
+    const newUserData: FullProfile = {
+        ...userData,
+        language,
+    };
+    await AsyncStorage.setItem(
+        StoredItemNames.userData,
+        JSON.stringify(newUserData),
+    );
+    await changeLanguage(language);
+    ShowToast(
+        userData.language === "es"
+            ? "¡Hecho! Reinicia la app para aplicar tus cambios."
+            : "Done! Restart the app to apply your changes.",
+    );
+    return;
 }
 
 export default i18n;

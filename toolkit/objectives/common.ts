@@ -84,11 +84,7 @@ async function GetAllObjectives(
 
         return objectives;
     } catch (e) {
-        console.error(`Failed to get objectives: ${e}`, {
-            location: "@/toolkit/objectives/common.ts",
-            isHandler: false,
-            function: "GetAllObjectives()",
-        });
+        console.error(`Failed to get objectives: ${e}`);
         return null;
     }
 }
@@ -113,29 +109,23 @@ async function GetObjective(
     identifier: number,
     category: "active" | "passive",
 ): Promise<ActiveObjective | PassiveObjective | null> {
-    try {
-        // PS. doing GetAllObjectives(category) sounds smarter BUT gives a type error
-        const objectives: (PassiveObjective[] | ActiveObjective[]) | null =
-            category === "active"
-                ? await GetAllObjectives("active")
-                : await GetAllObjectives("passive");
+    // PS. doing GetAllObjectives(category) sounds smarter BUT gives a type error
+    const objectives: (PassiveObjective[] | ActiveObjective[]) | null =
+        category === "active"
+            ? await GetAllObjectives("active")
+            : await GetAllObjectives("passive");
 
-        if (!objectives) return null;
+    if (!objectives) return null;
 
-        const objective: ActiveObjective | PassiveObjective | undefined =
-            objectives.find(
-                (obj: ActiveObjective | PassiveObjective): boolean =>
-                    obj.id === identifier,
-            );
-
-        if (objective === undefined) return null;
-
-        return objective;
-    } catch (e) {
-        throw new Error(
-            `Got an error getting ${category} objective ${identifier}: ${e}`,
+    const objective: ActiveObjective | PassiveObjective | undefined =
+        objectives.find(
+            (obj: ActiveObjective | PassiveObjective): boolean =>
+                obj.id === identifier,
         );
-    }
+
+    if (objective === undefined) return null;
+
+    return objective;
 }
 
 /**
@@ -192,89 +182,73 @@ async function CreateObjective(
     category: "active" | "passive",
     t: TFunction,
 ): Promise<void> {
-    try {
-        const nullishObjectives: ActiveObjective[] | PassiveObjective[] | null =
-            category === "active"
-                ? await GetAllObjectives("active")
-                : await GetAllObjectives("passive");
-        const objectives: ActiveObjective[] | PassiveObjective[] =
-            !nullishObjectives || nullishObjectives.length === 0
-                ? category === "active"
-                    ? ([] as ActiveObjective[])
-                    : ([] as PassiveObjective[])
-                : nullishObjectives;
+    const nullishObjectives: ActiveObjective[] | PassiveObjective[] | null =
+        category === "active"
+            ? await GetAllObjectives("active")
+            : await GetAllObjectives("passive");
+    const objectives: ActiveObjective[] | PassiveObjective[] =
+        !nullishObjectives || nullishObjectives.length === 0
+            ? category === "active"
+                ? ([] as ActiveObjective[])
+                : ([] as PassiveObjective[])
+            : nullishObjectives;
 
-        function generateIdentifier(
-            objs: ActiveObjective[] | PassiveObjective[],
-        ): number {
-            const generateObjectiveId: () => number = (): number => {
-                return Math.floor(Math.random() * 9000000000) + 1000000000;
-            };
-
-            let newIdentifier: number = generateObjectiveId();
-            // verify there aren't duplicates
-            while (
-                objs.some(
-                    (obj: ActiveObjective | PassiveObjective): boolean =>
-                        obj.id === newIdentifier,
-                )
-            ) {
-                newIdentifier = generateObjectiveId();
-            }
-            return newIdentifier;
-        }
-
-        const newObjective: ActiveObjective | PassiveObjective = {
-            ...(target as ActiveObjectiveWithoutId | PassiveObjectiveWithoutId),
-            id: generateIdentifier(objectives),
+    function generateIdentifier(
+        objs: ActiveObjective[] | PassiveObjective[],
+    ): number {
+        const generateObjectiveId: () => number = (): number => {
+            return Math.floor(Math.random() * 9000000000) + 1000000000;
         };
 
-        if (category === "active") {
-            (objectives as ActiveObjective[]).push(
-                newObjective as ActiveObjective,
-            );
-        } else {
-            (objectives as PassiveObjective[]).push(
-                newObjective as PassiveObjective,
-            );
+        let newIdentifier: number = generateObjectiveId();
+        // verify there aren't duplicates
+        while (
+            objs.some(
+                (obj: ActiveObjective | PassiveObjective): boolean =>
+                    obj.id === newIdentifier,
+            )
+        ) {
+            newIdentifier = generateObjectiveId();
         }
+        return newIdentifier;
+    }
 
-        await AsyncStorage.setItem(
-            category === "active"
-                ? StoredItemNames.activeObjectives
-                : StoredItemNames.passiveObjectives,
-            JSON.stringify(objectives),
-        );
+    const newObjective: ActiveObjective | PassiveObjective = {
+        ...(target as ActiveObjectiveWithoutId | PassiveObjectiveWithoutId),
+        id: generateIdentifier(objectives),
+    };
 
-        let message: string;
-        if (category === "active") {
-            const activeTarget = target as ActiveObjectiveWithoutId;
-            message = t("pages.createActiveObjective.doneFeedback", {
-                obj: t(
-                    `globals.supportedActiveObjectives.${activeTarget.exercise}.name`,
-                ),
-            });
-        } else {
-            const passiveTarget = target as PassiveObjectiveWithoutId;
-            message = t("pages.createPassiveObjective.doneFeedback", {
-                obj: passiveTarget.goal,
-            });
-        }
-
-        ShowToast(message);
-        console.log(
-            `Created objective with ID ${newObjective.id} successfully! Full JSON of the created objective:\n${JSON.stringify(
-                newObjective,
-            )}`,
-        );
-        return;
-    } catch (e) {
-        throw new Error(
-            `Something went wrong creating an objective.\nJSON:\n${JSON.stringify(
-                target,
-            )}\n\nError: ${e}`,
+    if (category === "active") {
+        (objectives as ActiveObjective[]).push(newObjective as ActiveObjective);
+    } else {
+        (objectives as PassiveObjective[]).push(
+            newObjective as PassiveObjective,
         );
     }
+
+    await AsyncStorage.setItem(
+        category === "active"
+            ? StoredItemNames.activeObjectives
+            : StoredItemNames.passiveObjectives,
+        JSON.stringify(objectives),
+    );
+
+    let message: string;
+    if (category === "active") {
+        const activeTarget = target as ActiveObjectiveWithoutId;
+        message = t("pages.createActiveObjective.doneFeedback", {
+            obj: t(
+                `globals.supportedActiveObjectives.${activeTarget.exercise}.name`,
+            ),
+        });
+    } else {
+        const passiveTarget = target as PassiveObjectiveWithoutId;
+        message = t("pages.createPassiveObjective.doneFeedback", {
+            obj: passiveTarget.goal,
+        });
+    }
+
+    ShowToast(message);
 }
 
 /**
@@ -293,25 +267,32 @@ async function GetGenericObjectiveDailyLog(
 async function GetGenericObjectiveDailyLog(
     category: "active" | "passive",
 ): Promise<ActiveObjectiveDailyLog | PassiveObjectiveDailyLog> {
-    try {
-        const response: string | null = await AsyncStorage.getItem(
+    const response: string | null = await AsyncStorage.getItem(
+        category === "active"
+            ? StoredItemNames.activeDailyLog
+            : StoredItemNames.passiveDailyLog,
+    );
+    if (!validate(response)) {
+        await AsyncStorage.setItem(
             category === "active"
                 ? StoredItemNames.activeDailyLog
                 : StoredItemNames.passiveDailyLog,
+            "[]",
         );
-        if (!validate(response)) {
-            await AsyncStorage.setItem(
-                category === "active"
-                    ? StoredItemNames.activeDailyLog
-                    : StoredItemNames.passiveDailyLog,
-                "{}",
-            );
-            return [];
-        }
-        return JSON.parse(response);
-    } catch (e) {
-        throw new Error(`Error getting ${category} daily log: ${e}`);
+        return [];
     }
+    const parsed = JSON.parse(response);
+    // TODO where the fuck is this turning into {}?
+    // (Vietnam memories i swear)
+    if (!Array.isArray(parsed)) {
+        await AsyncStorage.setItem(
+            category === "active"
+                ? StoredItemNames.activeDailyLog
+                : StoredItemNames.passiveDailyLog,
+            "[]",
+        );
+        return [];
+    } else return parsed;
 }
 
 /**
@@ -354,16 +335,12 @@ async function SaveGenericObjectiveDailyLog(
     log: UncheckedDailyLog,
     category: "active" | "passive",
 ): Promise<void> {
-    try {
-        await AsyncStorage.setItem(
-            category === "active"
-                ? StoredItemNames.activeDailyLog
-                : StoredItemNames.passiveDailyLog,
-            JSON.stringify(CleanupGenericDailyLog(log)),
-        );
-    } catch (e) {
-        throw new Error(`Error saving to ${category} daily log: ${e}`);
-    }
+    await AsyncStorage.setItem(
+        category === "active"
+            ? StoredItemNames.activeDailyLog
+            : StoredItemNames.passiveDailyLog,
+        JSON.stringify(CleanupGenericDailyLog(log)),
+    );
 }
 
 /**
@@ -376,88 +353,84 @@ async function SaveGenericObjectiveDailyLog(
 async function FailGenericObjectivesNotDoneYesterday(
     category: "active" | "passive",
 ): Promise<void> {
-    try {
-        const objectives: (PassiveObjective[] | ActiveObjective[]) | null =
-            category === "active"
-                ? await GetAllObjectives("active")
-                : await GetAllObjectives("passive");
-        const dailyLog: PassiveObjectiveDailyLog | ActiveObjectiveDailyLog =
-            category === "active"
-                ? await GetGenericObjectiveDailyLog("active")
-                : await GetGenericObjectiveDailyLog("passive");
-        if (!objectives || !objectives.length) return;
-        if (!dailyLog || !dailyLog.length) return;
-        const currentDate: CorrectCurrentDate = GetCurrentDateCorrectly();
-        let targetDateObj: Date = JavaScriptifyTodaysDate(currentDate.string);
+    const objectives: (PassiveObjective[] | ActiveObjective[]) | null =
+        category === "active"
+            ? await GetAllObjectives("active")
+            : await GetAllObjectives("passive");
+    const dailyLog: PassiveObjectiveDailyLog | ActiveObjectiveDailyLog =
+        category === "active"
+            ? await GetGenericObjectiveDailyLog("active")
+            : await GetGenericObjectiveDailyLog("passive");
+    if (!objectives || !objectives.length) return;
+    if (!dailyLog || !dailyLog.length) return;
+    const currentDate: CorrectCurrentDate = GetCurrentDateCorrectly();
+    let targetDateObj: Date = JavaScriptifyTodaysDate(currentDate.string);
 
-        // find the earliest not logged date
-        let earliestNotLoggedDate: TodaysDate | null = null;
-        for (let i: number = 0; i < 365; i++) {
-            const dateToCheck: TodaysDate = StringifyDate(
-                AlterDate(
-                    TurnJavaScriptDateIntoCurrentDate(targetDateObj).object,
-                    -i,
-                ),
-            );
-            if (dailyLog.find((e) => e.date === dateToCheck)) break;
-            earliestNotLoggedDate = dateToCheck;
-        }
-
-        if (!earliestNotLoggedDate) return;
-
-        let startDate: Date = JavaScriptifyTodaysDate(earliestNotLoggedDate);
-        const endDate: Date = JavaScriptifyTodaysDate(currentDate.string);
-        // loop through all not logged dates
-        while (startDate <= endDate) {
-            const date: TodaysDate = StringifyDate(startDate);
-
-            for (const obj of objectives) {
-                const daysIndex: number = Math.floor(
-                    (startDate.getTime() -
-                        JavaScriptifyTodaysDate(obj.createdAt).getTime()) /
-                        (1000 * 60 * 60 * 24),
-                );
-
-                const TODAY_INDEX: keyof WeekTuple | undefined =
-                    TODAY_CODE_ARRAY[daysIndex];
-
-                if (
-                    daysIndex < 0 ||
-                    daysIndex >= TODAY_CODE_ARRAY.length ||
-                    !TODAY_INDEX ||
-                    (IsActiveObjective(obj) && !obj.info.days[TODAY_INDEX])
-                )
-                    continue;
-
-                if (dailyLog.find((e) => e.date === date && e.id === obj.id))
-                    continue;
-
-                dailyLog.push({
-                    id: obj.id,
-                    date,
-                    data: IsActiveObjective(obj)
-                        ? ({
-                              wasDone: false,
-                              objective: obj,
-                              performance: undefined,
-                          } as any)
-                        : ({
-                              wasDone: false,
-                              objective: obj,
-                          } as any),
-                });
-            }
-
-            // Increment startDate by one day
-            startDate.setDate(startDate.getDate() + 1);
-        }
-
-        await SaveGenericObjectiveDailyLog(dailyLog, category);
-
-        return;
-    } catch (e) {
-        throw new Error(`Error failing objectives: ${e}`);
+    // find the earliest not logged date
+    let earliestNotLoggedDate: TodaysDate | null = null;
+    for (let i: number = 0; i < 365; i++) {
+        const dateToCheck: TodaysDate = StringifyDate(
+            AlterDate(
+                TurnJavaScriptDateIntoCurrentDate(targetDateObj).object,
+                -i,
+            ),
+        );
+        if (dailyLog.find((e) => e.date === dateToCheck)) break;
+        earliestNotLoggedDate = dateToCheck;
     }
+
+    if (!earliestNotLoggedDate) return;
+
+    let startDate: Date = JavaScriptifyTodaysDate(earliestNotLoggedDate);
+    const endDate: Date = JavaScriptifyTodaysDate(currentDate.string);
+    // loop through all not logged dates
+    while (startDate <= endDate) {
+        const date: TodaysDate = StringifyDate(startDate);
+
+        for (const obj of objectives) {
+            const daysIndex: number = Math.floor(
+                (startDate.getTime() -
+                    JavaScriptifyTodaysDate(obj.createdAt).getTime()) /
+                    (1000 * 60 * 60 * 24),
+            );
+
+            const TODAY_INDEX: keyof WeekTuple | undefined =
+                TODAY_CODE_ARRAY[daysIndex];
+
+            if (
+                daysIndex < 0 ||
+                daysIndex >= TODAY_CODE_ARRAY.length ||
+                !TODAY_INDEX ||
+                (IsActiveObjective(obj) && !obj.info.days[TODAY_INDEX])
+            )
+                continue;
+
+            if (dailyLog.find((e) => e.date === date && e.id === obj.id))
+                continue;
+
+            dailyLog.push({
+                id: obj.id,
+                date,
+                data: IsActiveObjective(obj)
+                    ? ({
+                          wasDone: false,
+                          objective: obj,
+                          performance: undefined,
+                      } as any)
+                    : ({
+                          wasDone: false,
+                          objective: obj,
+                      } as any),
+            });
+        }
+
+        // Increment startDate by one day
+        startDate.setDate(startDate.getDate() + 1);
+    }
+
+    await SaveGenericObjectiveDailyLog(dailyLog, category);
+
+    return;
 }
 
 /**
@@ -470,31 +443,25 @@ async function FailGenericObjectivesNotDoneYesterday(
 async function IsGenericObjectivePending(
     objective: ActiveObjective | PassiveObjective,
 ): Promise<SingleObjectivePendingReturn> {
-    try {
-        const dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog =
-            IsActiveObjective(objective)
-                ? await GetGenericObjectiveDailyLog("active")
-                : await GetGenericObjectiveDailyLog("passive");
+    const dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog =
+        IsActiveObjective(objective)
+            ? await GetGenericObjectiveDailyLog("active")
+            : await GetGenericObjectiveDailyLog("passive");
 
-        // not due today
-        if (
-            IsActiveObjective(objective) &&
-            objective.info.days[ADJUSTED_TODAY_INDEX] === false
-        )
-            return "notDueToday";
+    // not due today
+    if (
+        IsActiveObjective(objective) &&
+        objective.info.days[ADJUSTED_TODAY_INDEX] === false
+    )
+        return "notDueToday";
 
-        // log does not exist, so the objective is due today.
-        if (dailyLog.length === 0) return "pending";
+    // log does not exist, so the objective is due today.
+    if (!dailyLog || !dailyLog.length) return "pending";
 
-        const date: TodaysDate = GetCurrentDateCorrectly().string;
-        const entry = dailyLog.find((e) => e.date === date);
+    const date: TodaysDate = GetCurrentDateCorrectly().string;
+    const entry = dailyLog.find((e) => e.date === date);
 
-        return entry?.data.wasDone === true ? "done" : "pending"; // if it IS done, it IS NOT due today
-    } catch (e) {
-        throw new Error(
-            `Error checking if the ${objective.id} objective is due today: ${e}`,
-        );
-    }
+    return entry?.data.wasDone === true ? "done" : "pending"; // if it IS done, it IS NOT due today
 }
 
 /**

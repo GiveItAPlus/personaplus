@@ -567,7 +567,7 @@
         "experiments": {
             "header": "READ THIS OR YOU WILL EXPLODE!!",
             "subheader": "i mean you wont actually explode but pls read",
-            "disclaimer": "TL;DR: experiments are cool features I'm working on BUT aren't done yet. You get to try them early!! But they might have bugs, so I can't promise they won't cause issues.\n\nIf you find any problems (or have feedback), let me know*—your help the app better!\n\n*On the 'About' page you got the official Instagram, you can message us there.",
+            "disclaimer": "TL;DR: experiments are cool features I'm working on BUT aren't done yet. You get to try them early!! But they might have bugs, so I can't promise they won't cause issues.\n\nIf you find any problems (or have feedback), let me know—your help makes the app better!",
             "realHeader": "Experiments",
             "realSubheader": "PersonaPlus experimental features",
             "test": "Test experiment",

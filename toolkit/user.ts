@@ -22,7 +22,6 @@ import { router } from "expo-router";
 import StoredItemNames from "@/constants/stored_item_names";
 import { Routes } from "@/constants/routes";
 import { TFunction } from "i18next";
-import { ShowToast } from "./android";
 
 /**
  * Limits to what we consider "real" user data.
@@ -257,25 +256,18 @@ export async function RemoveUserData(t: TFunction): Promise<void> {
      * Handles the removal.
      *
      * @async
-     * @returns {Promise<number>} 0 if success, 1 if failure.
+     * @returns {Promise<void>}
      */
-    async function removalHandler(): Promise<number> {
-        try {
-            await AsyncStorage.multiRemove([
-                StoredItemNames.userData,
-                StoredItemNames.activeObjectives,
-                StoredItemNames.passiveObjectives,
-                StoredItemNames.activeDailyLog,
-                StoredItemNames.passiveDailyLog,
-                StoredItemNames.colorTheme,
-            ]);
-            router.replace(Routes.MAIN.WELCOME_SCREEN);
-            return 0;
-        } catch (e) {
-            ShowToast("Unknown error removing user data!");
-            console.error(`Error removing user data ${e}`);
-            throw e;
-        }
+    async function removalHandler(): Promise<void> {
+        await AsyncStorage.multiRemove([
+            StoredItemNames.userData,
+            StoredItemNames.activeObjectives,
+            StoredItemNames.passiveObjectives,
+            StoredItemNames.activeDailyLog,
+            StoredItemNames.passiveDailyLog,
+            StoredItemNames.colorTheme,
+        ]);
+        router.replace(Routes.MAIN.WELCOME_SCREEN);
     }
 
     Alert.alert(

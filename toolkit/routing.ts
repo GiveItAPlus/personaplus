@@ -21,9 +21,5 @@ export function SafelyGoBack(target?: string): void {
 
 /** Safely opens a URL. Can be a `URLValues` (app related URL) or any other string. */
 export async function SafelyOpenUrl(url: URLValues | string): Promise<void> {
-    try {
-        await Linking.openURL(url);
-    } catch (e) {
-        throw new Error(`Can't open ${url}: ${e}`);
-    }
+    await Linking.openURL(url);
 }

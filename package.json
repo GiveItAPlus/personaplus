@@ -3,15 +3,13 @@
   "main": "expo-router/entry",
   "version": "0.1.4",
   "scripts": {
-    "start": "expo start --go",
-    "start:dev": "expo start",
-    "start:clear": "expo start --go --clear",
-    "start:dev:clear": "expo start --clear",
+    "start": "expo start",
+    "start:clear": "expo start --clear",
     "test": "jest --verbose",
     "lint": "eslint --fix .",
     "prettify": "prettier --w .",
     "upd": "expo install --fix",
-    "project:check": "expo-doctor",
+    "check": "expo-doctor",
     "build": "eas build -p android --profile production",
     "build:dev": "eas build -p android --profile development"
   },
